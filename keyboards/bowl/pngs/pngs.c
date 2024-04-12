@@ -17,7 +17,11 @@
 #include "quantum.h"
 
 void keyboard_post_init_kb(void) {
-	gpio_set_pin_input_high(B2);
+    gpio_set_pin_output(B1);
+    gpio_set_pin_output(C10);
+    gpio_set_pin_output(A15);
+    gpio_set_pin_output(C13);
+    gpio_set_pin_input_high(B2);
 }	
 
 bool led_update_kb(led_t led_state) {
@@ -25,8 +29,8 @@ bool led_update_kb(led_t led_state) {
     if(res) {
         gpio_write_pin(B1, led_state.caps_lock);
         gpio_write_pin(C10, led_state.num_lock);
-        gpio_write_pin(A14, led_state.num_lock);
-        gpio_write_pin(C13, led_state.caps_lock);
+        gpio_write_pin(A15, led_state.num_lock);
+        gpio_write_pin(C13, led_state.scroll_lock);
     }
     return res;
 }
