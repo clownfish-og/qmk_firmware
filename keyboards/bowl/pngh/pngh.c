@@ -19,9 +19,9 @@
 bool led_update_kb(led_t led_state) {
     bool res = led_update_user(led_state);
     if(res) {
-        led_state.caps_lock ? rgblight_setrgb_at(RGB_WHITE, 1) : rgblight_setrgb_at(RGB_OFF, 2);
-        led_state.caps_lock ? rgblight_setrgb_at(RGB_WHITE, 2) : rgblight_setrgb_at(RGB_OFF, 2); 
-        led_state.num_lock  ? rgblight_setrgb_at(RGB_WHITE, 3) : rgblight_setrgb_at(RGB_OFF, 3); 
+        led_state.caps_lock ? rgblight_setrgb_at(RGB_WHITE, 0) : rgblight_setrgb_at(RGB_OFF, 0);
+        led_state.caps_lock ? rgblight_setrgb_at(RGB_WHITE, 1) : rgblight_setrgb_at(RGB_OFF, 1); 
+        led_state.num_lock  ? rgblight_setrgb_at(RGB_WHITE, 2) : rgblight_setrgb_at(RGB_OFF, 2); 
     }
     return res;
 }
