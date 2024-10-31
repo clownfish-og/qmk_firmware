@@ -1,0 +1,2 @@
+make smart875:via
+    1. 初步测试通过
