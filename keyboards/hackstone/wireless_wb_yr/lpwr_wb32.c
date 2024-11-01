@@ -16,8 +16,8 @@ static ioline_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 #    error PAL_USE_CALLBACKS must be set to TRUE!
 #endif
 
-#if !((DIODE_DIRECTION == ROW2COL) || (DIODE_DIRECTION == COL2ROW))
-#    error DIODE_DIRECTION must be one of COL2ROW or ROW2COL!
+#if !((LPWR_DIODE_DIRECTION == ROW2COL) || (LPWR_DIODE_DIRECTION == COL2ROW))
+#    error LPWR_DIODE_DIRECTION must be one of COL2ROW or ROW2COL!
 #endif
 
 // clang-format off
@@ -69,11 +69,11 @@ void lpwr_exti_init(void) {
 
     pal_events_init();
 
-#if DIODE_DIRECTION == ROW2COL
+#if LPWR_DIODE_DIRECTION == ROW2COL
     for (uint8_t i = 0; i < ARRAY_SIZE(col_pins); i++) {
         if (col_pins[i] != NO_PIN) {
             setPinOutputOpenDrain(col_pins[i]);
-            writePinLow(col_pins[i]);
+            writePin(col_pins[i], LPWR_OUTPUT_STATE);
         }
     }
 
@@ -84,11 +84,11 @@ void lpwr_exti_init(void) {
             palEnableLineEvent(row_pins[i], PAL_EVENT_MODE_BOTH_EDGES);
         }
     }
-#elif DIODE_DIRECTION == COL2ROW
+#elif LPWR_DIODE_DIRECTION == COL2ROW
     for (uint8_t i = 0; i < ARRAY_SIZE(row_pins); i++) {
         if (row_pins[i] != NO_PIN) {
             setPinOutputOpenDrain(row_pins[i]);
-            writePinLow(row_pins[i]);
+            writePin(col_pins[i], LPWR_OUTPUT_STATE);
         }
     }
 

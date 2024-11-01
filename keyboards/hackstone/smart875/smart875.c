@@ -4,6 +4,7 @@
 #include QMK_KEYBOARD_H
 
 #include "wireless.h"
+#include "eeconfig.h"
 
 // clang-format off
 
@@ -99,9 +100,10 @@ void keyboard_post_init_kb(void) {
 
     gpio_set_pin_output(LED_POWER_EN_PIN);
     gpio_write_pin_high(LED_POWER_EN_PIN);
-
+#ifdef USB_POWER_EN_PIN
     gpio_write_pin_low(USB_POWER_EN_PIN);
     gpio_set_pin_output(USB_POWER_EN_PIN);
+#endif
     gpio_set_pin_input_high(BT_MODE_SW_PIN);
     gpio_set_pin_input_high(RF_MODE_SW_PIN);
 
@@ -223,7 +225,6 @@ bool process_record_wls(uint16_t keycode, keyrecord_t *record) {
 
     return false;
 }
-#endif
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 
@@ -231,11 +232,9 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
 
-#ifdef WIRELESS_ENABLE
     if (process_record_wls(keycode, record) != true) {
         return false;
     }
-#endif
 
     switch (keycode) {
         default:

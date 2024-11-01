@@ -1,5 +1,5 @@
 WIRELESS_ENABLE ?= yes
-WIRELESS_DIR = $(TOP_DIR)/keyboards/hackstone/wireless
+WIRELESS_DIR = $(TOP_DIR)/keyboards/hackstone/wireless_wb_yr
 
 ifeq ($(strip $(WIRELESS_ENABLE)), yes)
     OPT_DEFS += -DWIRELESS_ENABLE -DNO_USB_STARTUP_CHECK

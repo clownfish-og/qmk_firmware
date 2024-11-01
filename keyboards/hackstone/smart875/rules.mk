@@ -16,11 +16,11 @@ WEAR_LEVELING_DRIVER = spi_flash
 RGBLIGHT_ENABLE = no          # Enable keyboard RGB underglow
 RGB_MATRIX_ENABLE = yes        # RGB matrix
 
-RGB_MATRIX_DRIVER = WS2812
+RGB_MATRIX_DRIVER = ws2812
 WS2812_DRIVER = spi
 
 OPT_DEFS += -DSMT875_SPP
 
 # Wireless
-include keyboards/hackstone/wireless/wireless.mk
+include keyboards/hackstone/wireless_wb_yr/wireless.mk
 DEFERRED_EXEC_ENABLE = yes

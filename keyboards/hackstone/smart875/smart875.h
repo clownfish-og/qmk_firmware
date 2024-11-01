@@ -5,22 +5,6 @@
 
 #include "quantum.h"
 
-#ifdef MULTIMODE_ENABLE
-#    include "multimode.h"
-#endif
-
-#ifdef RGB_MATRIX_BLINK_ENABLE
-#    include "rgb_matrix_blink.h"
-#endif
-
-#ifdef IMMOBILE_ENABLE
-#    include "immobile.h"
-#endif
-
-#ifdef RGB_RECORD_ENABLE
-#    include "rgb_record.h"
-#endif
-
 #define ___ KC_NO
 
 // clang-format off
@@ -41,4 +25,25 @@
     { k40, ___, k42, k43, k44, k45, k46, k47, k48, k49, k4a, k4b, ___, k4d, k4e, ___ }, \
     { k50, k51, k52, ___, k54, ___, k56, k57, ___, K59, k5a, k5b, k5c, k5d, k5e, k5f }  \
 }
+
+
 // clang-format on
+enum im_keys {
+    KC_BT1 = QK_KB_0,
+    KC_BT2,
+    KC_BT3,
+    KC_2G4,
+    KC_USB,
+    KC_BATQ,
+    KCC_USER, // 暴露给终端用户使用
+};
+
+enum im_keys_user {
+    LRGB_TOG = KCC_USER,// 暴露给终端用户使用
+    KRGB_TOG, // 暴露给终端用户使用
+    KC_MAC,
+    KC_WDS,
+    KC_RGBT,
+    SW_WASD
+};
+
