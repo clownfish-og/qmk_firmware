@@ -73,7 +73,6 @@ void eeconfig_confinfo_init(void) {
 }
 
 static void bt_scan_mode(void) {
-#ifdef BT_MODE_SW_PIN
     if (readPin(RF_MODE_SW_PIN) && !readPin(BT_MODE_SW_PIN)) {
         if ((wireless_get_current_devs() == DEVS_USB) || (wireless_get_current_devs() == DEVS_2G4)) {
             wireless_devs_change(wireless_get_current_devs(), confinfo.devs, false);
@@ -87,7 +86,6 @@ static void bt_scan_mode(void) {
     if (readPin(BT_MODE_SW_PIN) && readPin(RF_MODE_SW_PIN)) {
         if (wireless_get_current_devs() != DEVS_USB) wireless_devs_change(wireless_get_current_devs(), DEVS_USB, false); // usb mode
     }
-#endif
 }
 
 void keyboard_post_init_kb(void) {
@@ -244,9 +242,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     return false;
 }
 
-#ifdef RGB_MATRIX_ENABLE
 
-#    ifdef WIRELESS_ENABLE
 bool wls_rgb_indicator_reset        = false;
 uint32_t wls_rgb_indicator_timer    = 0x00;
 uint32_t wls_rgb_indicator_interval = 0;
@@ -346,7 +342,7 @@ void rgb_matrix_wls_indicator(void) {
         }
     }
 }
-#    endif
+
 
 bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
 
@@ -403,7 +399,6 @@ void md_devs_change(uint8_t devs, bool reset) {
     }
 }
 
-#endif
 void wireless_send_nkro(report_nkro_t *report) {
     static report_keyboard_t temp_report_keyboard = {0};
     uint8_t wls_report_nkro[MD_SND_CMD_NKRO_LEN]  = {0};

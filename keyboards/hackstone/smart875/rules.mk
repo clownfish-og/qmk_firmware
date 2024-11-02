@@ -13,9 +13,7 @@ CONSOLE_ENABLE = no            # Console for debug
 EEPROM_DRIVER = wear_leveling
 WEAR_LEVELING_DRIVER = spi_flash
 
-RGBLIGHT_ENABLE = no          # Enable keyboard RGB underglow
 RGB_MATRIX_ENABLE = yes        # RGB matrix
-
 RGB_MATRIX_DRIVER = ws2812
 WS2812_DRIVER = spi
 

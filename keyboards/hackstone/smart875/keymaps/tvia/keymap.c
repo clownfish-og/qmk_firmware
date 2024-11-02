@@ -27,10 +27,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
     [WIN_FN] = LAYOUT(  /* FN */
         _______,  KC_BRID,  KC_BRIU,  LWIN(KC_TAB),  LWIN(KC_D),  KC_WBAK,  KC_WSCH,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU, _______,  _______, _______,
-        _______,  IM_BT1,   IM_BT2,   IM_BT3,   IM_2G4,   IM_USB,   _______,  _______,  _______,  _______,  _______,  RGB_SPD,  RGB_SPI, _______,  _______, _______,
+        _______,  KC_BT1,   KC_BT2,   KC_BT3,   KC_2G4,   KC_USB,   _______,  _______,  _______,  _______,  _______,  RGB_SPD,  RGB_SPI, _______,  _______, _______,
         KRGB_TOG, RGB_MOD,  SW_WASD,  _______,  RGB_SAI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______, LRGB_TOG, KC_RGBT, _______,
         _______,  RGB_RMOD, _______,  _______,  RGB_SAD,  _______,  _______,  _______,  _______,  _______,  _______,  _______,           _______,
-        _______,            _______,   KC_WDS,  KC_MAC,  _______,  IM_BATQ,  NK_TOGG,  _______,  _______,  _______,  _______,           _______,  RGB_VAI,
+        _______,            _______,   KC_WDS,  KC_MAC,  _______,  KC_BATQ,  NK_TOGG,  _______,  _______,  _______,  _______,           _______,  RGB_VAI,
         _______,  GU_TOGG,  _______,            _______,            _______,  _______,            _______,  _______,  _______,  _______, RGB_HUI,  RGB_VAD, RGB_HUD),
 
     [MAC_BASE1] = LAYOUT(  /* Base */
@@ -46,10 +46,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
     [MAC_FN1] = LAYOUT(  /* FN */
         KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,  _______,  _______, _______,
-        _______,  IM_BT1,   IM_BT2,   IM_BT3,   IM_2G4,   IM_USB,   _______,  _______,  _______,  _______,  _______,  RGB_SPD,  RGB_SPI, _______,  _______, _______,
+        _______,  KC_BT1,   KC_BT2,   KC_BT3,   KC_2G4,   KC_USB,   _______,  _______,  _______,  _______,  _______,  RGB_SPD,  RGB_SPI, _______,  _______, _______,
         KRGB_TOG, RGB_MOD,  SW_WASD,  _______,  RGB_SAI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______, LRGB_TOG, _______, _______,
         _______,  RGB_RMOD, _______,  _______,  RGB_SAD,  _______,  _______,  _______,  _______,  _______,  _______,  _______,           _______,
-        _______,            _______,   KC_WDS,  KC_MAC,   _______,  IM_BATQ,  NK_TOGG,  _______,  _______,  _______,  _______,           _______,  RGB_VAI,
+        _______,            _______,   KC_WDS,  KC_MAC,   _______,  KC_BATQ,  NK_TOGG,  _______,  _______,  _______,  _______,           _______,  RGB_VAI,
         _______,  _______,  _______,            _______,            _______,  _______,            _______,  _______,  _______,  _______, RGB_HUI,  RGB_VAD, RGB_HUD),
 
     [MAC_BASE2] = LAYOUT(  /* Base */
@@ -65,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
     [MAC_FN2] = LAYOUT(  /* FN */
         KC_ESC,   KC_BRID,  KC_BRIU,  KC_MCTL,  KC_LPAD,  LWIN(KC_DOWN),  KC_WSCH,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______, _______, _______,
-        _______,  IM_BT1,   IM_BT2,   IM_BT3,   IM_2G4,   IM_USB,   _______,  _______,  _______,  _______,  _______,  RGB_SPD,  RGB_SPI, _______,  _______, _______,
+        _______,  KC_BT1,   KC_BT2,   KC_BT3,   KC_2G4,   KC_USB,   _______,  _______,  _______,  _______,  _______,  RGB_SPD,  RGB_SPI, _______,  _______, _______,
         KRGB_TOG, RGB_MOD,  SW_WASD,  _______,  RGB_SAI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______, LRGB_TOG, _______, _______,
         _______,  RGB_RMOD, _______,  _______,  RGB_SAD,  _______,  _______,  _______,  _______,  _______,  _______,  _______,           _______,
-        _______,            _______,  KC_WDS,   KC_MAC,  _______,  IM_BATQ,  NK_TOGG,  _______,   _______,  _______,  _______,           _______,  RGB_VAI,
+        _______,            _______,  KC_WDS,   KC_MAC,  _______,  KC_BATQ,  NK_TOGG,  _______,   _______,  _______,  _______,           _______,  RGB_VAI,
         _______,  _______,  _______,            _______,            _______,  _______,            _______,  _______,  _______,  _______, RGB_HUI,  RGB_VAD, RGB_HUD)
 };

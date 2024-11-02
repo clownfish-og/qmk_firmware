@@ -13,9 +13,9 @@
 #define FORCE_NKRO
 #define USB_SUSPEND_WAKEUP_DELAY 1000
 
-#define RGB_MATRIX_TIMEOUT (5 * 60000) // 5 min
+// #define RGB_MATRIX_TIMEOUT (5 * 60000) // 5 min
 
-#define LPWR_TIMEOUT RGB_MATRIX_TIMEOUT // 无线休眠用时
+#define LPWR_TIMEOUT (5 * 60000) // 无线休眠用时
 #define WLS_KEYBOARD_REPORT_KEYS 5 // 无线模式默认按键无冲数量，最大是6
 
 // #define USB_POWER_EN_PIN A14 // 上拉控制
@@ -34,17 +34,17 @@
 #define UART_RX_PIN A10
 
 /* SPI Config for spi flash*/
-#define SPI_DRIVER SPIDQ
-#define SPI_SCK_PIN B3
-#define SPI_MOSI_PIN B5
-#define SPI_MISO_PIN B4
-#define SPI_MOSI_PAL_MODE 5
+#define SPI_DRIVER SPIDM2
+#define SPI_SCK_PIN C1
+#define SPI_MOSI_PIN C3
+#define SPI_MISO_PIN C2
 
 #define EXTERNAL_FLASH_SPI_SLAVE_SELECT_PIN C0
-#define WEAR_LEVELING_BACKING_SIZE (2 * 1024)
+#define WEAR_LEVELING_BACKING_SIZE (4 * 1024)
 #define WEAR_LEVELING_LOGICAL_SIZE (WEAR_LEVELING_BACKING_SIZE / 2)
 
-#define EECONFIG_KB_DATA_SIZE 1
+/* 存储数据比较多 */
+// #define EECONFIG_KB_DATA_SIZE 1
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -66,12 +66,16 @@
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 6
 
-
-
 /* RGB Matrix */
-#define RGB_DI_PIN B5
+#define WS2812_DI_PIN B5
 #define WS2812_SPI_DRIVER SPIDQ
-#define WS2812_SPI_DIVISOR 24
+#define WS2812_SPI_DIVISOR 32
+
+/* It is not mandatory to configure; adjust according to the datasheet of WS2812 LEDs. */
+#define WS2812_TIMING 1500
+#define WS2812_T1H 1200
+#define WS2812_T0H 400
+
 #define RGB_MATRIX_LED_COUNT (90)
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255
 #define RGB_MATRIX_SPD_STEP 70
