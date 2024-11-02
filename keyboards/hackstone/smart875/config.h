@@ -10,6 +10,13 @@
 #define PRODUCT_ID 0x6390
 #define DEVICE_VER 0x0001
 
+#    define MD_BT1_NAME PRODUCT " BT1"
+#    define MD_BT2_NAME PRODUCT " BT2"
+#    define MD_BT3_NAME PRODUCT " BT3"
+#    define MD_BT4_NAME PRODUCT " BT4"
+#    define MD_BT5_NAME PRODUCT " BT5"
+#    define MD_DONGLE_PRODUCT PRODUCT " 2.4G"
+
 #define FORCE_NKRO
 #define USB_SUSPEND_WAKEUP_DELAY 1000
 
@@ -44,7 +51,7 @@
 #define WEAR_LEVELING_LOGICAL_SIZE (WEAR_LEVELING_BACKING_SIZE / 2)
 
 /* 存储数据比较多 */
-// #define EECONFIG_KB_DATA_SIZE 1
+#define EECONFIG_KB_DATA_SIZE 4
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -70,6 +77,8 @@
 #define WS2812_DI_PIN B5
 #define WS2812_SPI_DRIVER SPIDQ
 #define WS2812_SPI_DIVISOR 32
+
+#define RGB_MATRIX_BAT_INDEX_MAP { 30, 29, 28, 27, 26, 25, 24, 23, 22, 21 }
 
 /* It is not mandatory to configure; adjust according to the datasheet of WS2812 LEDs. */
 #define WS2812_TIMING 1500
