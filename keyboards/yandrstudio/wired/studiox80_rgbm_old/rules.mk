@@ -17,5 +17,5 @@ QUANTUM_SRC += rgb_matrix_layer.c
 
 LTO_ENABLE = yes
 
-# CONSOLE_ENABLE = yes         # Console for debug
-# KEYBOARD_SHARED_EP = yes     # Free up some extra endpoints - needed if console+mouse+extra
+CONSOLE_ENABLE = yes         # Console for debug
+KEYBOARD_SHARED_EP = yes     # Free up some extra endpoints - needed if console+mouse+extra
