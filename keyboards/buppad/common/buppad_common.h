@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #pragma once
 
 #include <stdint.h>
@@ -111,8 +111,7 @@ enum custom_keycodes {
     WUB,
     ZEJIBO,
     ZELDABUP, //end bup emotes
-    BIBLETHUMP, //begin twitch emotes
-    BOP,
+    BOP, //begin twitch emotes
     BOPBOP,
     DINODANCE,
     GLITCHLIT,

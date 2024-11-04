@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         NOD,        GOOSE,      BOOMER,     WUB,        WOOK,
         HEADOUT,    RAINBOW,    SALUTE,     SWEATY,     HORN,
         FLUTE,      FIRE,       CHEERS,     KEYS,       KC_ENT
-    ), 
+    ),
     [4] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
         WAVE,       LIGHTER,    GLITCHLIT,  TWITCHLIT,  NOTLIKETHIS,

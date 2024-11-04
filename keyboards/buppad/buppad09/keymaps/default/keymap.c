@@ -19,33 +19,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [0] = LAYOUT(
-        ZEJIBO,      CATDANCE,    PATBANG,
-        BITS,     LT(1, GLUTES),  DYE,
+        BACKDOOR,    MOOSE,       PATBANG,
+        BITS,     LT(1, GLUTES),  FREAKOUT,
         BUP,         CAPGEN5,     KC_ENT
     ),
     [1] = LAYOUT(
-        TO(2),       SLAY,        FREAKOUT,
-        BACKDOOR,    _______,     DONUT,
-        MOOSE,       LOVE,        THANKS
+        TO(2),       SLAY,        DYE,
+        ZEJIBO,      _______,     DONUT,
+        CATDANCE,    LOVE,        THANKS
     ),
     [2] = LAYOUT(
-        TO(0),       KC_KP_8,    TO(5),
-        KC_KP_4,     KC_KP_5,    KC_KP_6,
-        KC_KP_1,     KC_KP_2,    KC_KP_3
+        TO(0),       TO(3),      TO(5),
+        _______,     _______,    _______,
+        _______,     _______,    _______
     ),
     [3] = LAYOUT(
-        TO(0),       KC_KP_8,    KC_KP_9,
-        KC_KP_4,     KC_KP_5,    KC_KP_6,
-        KC_KP_1,     KC_KP_2,    KC_KP_3
+        TO(0),       TO(4),      TO(5),
+        _______,     _______,    _______,
+        _______,     _______,    _______
     ),
     [4] = LAYOUT(
-        TO(0),       KC_KP_8,    KC_KP_9,
-        KC_KP_4,     KC_KP_5,    KC_KP_6,
-        KC_KP_1,     KC_KP_2,    KC_KP_3
+        TO(0),       _______,    TO(5),
+        _______,     _______,    _______,
+        _______,     _______,    _______
     ),
     [5] = LAYOUT(
-        TO(0),       RGB_VAI,    RGB_MOD,
+        TO(0),       KC_SHFT,    _______,
         RGB_HUI,     RGB_SAI,    RGB_SPI,
-        RGB_HUD,     KC_SHFT,    RGB_TOG
+        RGB_MOD,     RGB_VAI,    RGB_TOG
     ),
 };

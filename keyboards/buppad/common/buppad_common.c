@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #include "quantum.h"
 #include "buppad_common.h"
 
@@ -439,12 +439,7 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING("bupZELDABUP ");
             }
             return false; // end bup emotes
-        case BIBLETHUMP: // begin twitch emotes
-            if (record->event.pressed) {
-                SEND_STRING("BibleThump ");
-            }
-            return false;
-        case BOP:
+        case BOP: // begin twitch emotes
             if (record->event.pressed) {
                 SEND_STRING("BOP ");
             }
