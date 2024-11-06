@@ -243,7 +243,7 @@ A creative coder.
 | LK60            | 0xAA96    | 0xAA22                   | WB-3M,60%                        | &quest;           |
 | ICE80           | 0xAA96    | 0xAA23                   | WB-3M,80%                        | &quest;           |
 | sam40v2         | 0xAA96    | 0xAA24                   | NRF-2M,40%                       | &quest;           |
-
+| MEK70           | 0xAA96    | 0xAA5E                   | WB-3M,70%                        | &quest;           |
 
 ### Obsolete or Test keyboard for reference design only
 
