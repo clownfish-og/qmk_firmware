@@ -10,7 +10,6 @@
         "lto": true
     },
     "debounce": 2,
-    "development_board": "bluepill",
     "diode_direction": "COL2ROW",
     "mouse_key": {
         "enabled": false
