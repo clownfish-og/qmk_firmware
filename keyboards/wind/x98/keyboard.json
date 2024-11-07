@@ -1,13 +1,34 @@
 {
-    "keyboard_name": "x98",
     "manufacturer": "sunxkui Design Studio",
-    "url": "",
+    "keyboard_name": "x98",
     "maintainer": "sunxkui",
+    "bootloader": "uf2boot",
+    "bootmagic": {
+        "enabled": true
+    },
+    "build": {
+        "lto": true
+    },
+    "debounce": 2,
     "development_board": "bluepill",
+    "diode_direction": "COL2ROW",
+    "mouse_key": {
+        "enabled": false
+    },
+    "processor": "STM32F103",
+    "rgb_matrix": {
+        "driver": "ws2812",
+        "max_brightness": 255
+    },
+    "url": "",
     "usb": {
-        "vid": "0x2023",
+        "device_version": "0.0.1",
         "pid": "0x1213",
-        "device_version": "0.0.1"
+        "polling_interval": 1,
+        "vid": "0x2023"
+    },
+    "ws2812": {
+        "pin": "A6"
     },
     "layouts": {
         "LAYOUT": {
