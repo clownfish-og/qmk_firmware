@@ -3,9 +3,6 @@
     "keyboard_name": "x98",
     "maintainer": "sunxkui",
     "bootloader": "uf2boot",
-    "bootmagic": {
-        "enabled": true
-    },
     "build": {
         "lto": true
     },
