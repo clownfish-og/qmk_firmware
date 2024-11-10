@@ -6,6 +6,7 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
         TO(1), KC_1,    KC_2,    KC_3,    KC_MUTE
+    ),
     [1] = LAYOUT(
         TO(0), RGB_VAD, RGB_MOD, RGB_VAI, RGB_TOG
     )
