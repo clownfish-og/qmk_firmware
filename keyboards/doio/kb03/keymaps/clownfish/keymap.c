@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
-#include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE
 
@@ -40,7 +39,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     RGB rgb = hsv_to_rgb(hsv);
 
     for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_INDICATOR	
+        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_INDICATOR
             rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
         }
     }
@@ -56,31 +55,27 @@ enum custom_keycodes {
     CHROME
 };
 
-void simple_light_mode_cycle(void) {
-    switch(rgb_matrix_get_mode()) {
-        case RGB_MATRIX_CUSTOM_NO_UNDERGLOW:
-            rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
-            break;
-        case RGB_MATRIX_SOLID_COLOR:
-            rgb_matrix_mode(RGB_MATRIX_BREATHING);
-            break;
-        case RGB_MATRIX_BREATHING:
-            rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
-            break;
-        case RGB_MATRIX_CYCLE_UP_DOWN:
-            rgb_matrix_mode(RGB_MATRIX_CUSTOM_NO_UNDERGLOW);
-            break;
-        default:
-            rgb_matrix_mode(RGB_MATRIX_CUSTOM_NO_UNDERGLOW);
-            break;
-    }
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SIMPLGT:
             if (record->event.pressed) {
-                simple_light_mode_cycle();
+                switch(rgb_matrix_get_mode()) {
+                    case RGB_MATRIX_GRADIENT_UP_DOWN:
+                        rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                        break;
+                    case RGB_MATRIX_SOLID_COLOR:
+                        rgb_matrix_mode(RGB_MATRIX_BREATHING);
+                        break;
+                    case RGB_MATRIX_BREATHING:
+                        rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+                        break;
+                    case RGB_MATRIX_CYCLE_UP_DOWN:
+                        rgb_matrix_mode(RGB_MATRIX_GRADIENT_UP_DOWN);
+                        break;
+                    default:
+                        rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+                        break;
+                    }
             }
             return false;
         case PROJECT:
@@ -99,58 +94,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /*
-     *[0] ┌───┐   W(lighting)
-     *    │TO1│
-     * ┌──┴┬──┴┬───┐
-     * │HUE│LGT│SAT│
-     * ├───┼───┼───┤
-     * │VAD│SFT│VAI│
-     * └─┬─┴─┬─┴─┬─┘
-     *   │LMD│LMI│
-     *   └───┴───┘
-     *
-     *[1] ┌───┐   G(edits, mouse wheels)
-     *    │TO2│
-     * ┌──┴┬──┴┬───┐
-     * │CUT│CPY│PST│
-     * ├───┼───┼───┤
-     * │WHL│MS3│WHR│
-     * └─┬─┴─┬─┴─┬─┘
-     *   │WHD│WHU│
-     *   └───┴───┘
-     *
-     *[2] ┌───┐   B(macros, screen, vol)
-     *    │TO3│
-     * ┌──┴┬──┴┬───┐
-     * │ ^ │TOG│BOS│
-     * ├───┼───┼───┤
-     * │BRD│WHM│BRU│
-     * └─┬─┴─┬─┴─┬─┘
-     *   │VOD│VOU│
-     *   └───┴───┘
-     *
-     *[3] ┌───┐   Y(browser, media)
-     *    │TO0│
-     * ┌──┴┬──┴┬───┐
-     * │BAK│HOM│FWD│
-     * ├───┼───┼───┤
-     * │REW│PLY│FFD│
-     * └─┬─┴─┬─┴─┬─┘
-     *   │PRV│NXT│
-     *   └───┴───┘
-     */
     [0] = LAYOUT(
-        TO(1),  RGB_HUI,   SIMPLGT,  RGB_SAI,  KC_RSFT
+        TO(1),  RGB_HUI,   SIMPLGT,  RGB_SAI,   KC_RSFT
     ),
     [1] = LAYOUT(
-        TO(2),  C(KC_X),   C(KC_C),  C(KC_V),  KC_BTN3
+        TO(2),   KC_ENT,   C(KC_C), C(S(KC_V)), C(KC_Z)
     ),
     [2] = LAYOUT(
-        TO(3),   CHROME,   RGB_TOG,  G(KC_D),  PROJECT
+        TO(3),   CHROME,   RGB_TOG,  G(KC_D),   PROJECT
     ),
     [3] = LAYOUT(
-        TO(0),  KC_WBAK,   KC_WHOM,  KC_WFWD,  KC_MPLY
+        TO(0),  KC_WBAK,   KC_WHOM,  KC_WFWD,   KC_MPLY
     )
 };
 
