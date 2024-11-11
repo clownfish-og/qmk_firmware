@@ -74,6 +74,7 @@
             {"x": 10, "y": 0, "flags": 8}
         ],
         "max_brightness": 200,
+        "hue_step": 16,
         "sleep": true
     },
 
