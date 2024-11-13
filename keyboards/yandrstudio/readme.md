@@ -245,7 +245,7 @@ A creative coder.
 | sam40v2         | 0xAA96    | 0xAA24                   | NRF-2M,40%                       | &quest;           |
 | MEK70           | 0xAA96    | 0xAA5E                   | WB-3M,70%                        | &quest;           |
 | SOUL65          | 0xAA96    | 0xAA25                   | Hotswap, F103                    | &quest;           |
-| RS Pad          | 0xAA96    | 0xAA25                   | Hotswap, 51B                     | &quest;           |
+| RS Pad          | 0xAA96    | 0xAA24                   | Hotswap, 51B                     | &quest;           |
 
 
 
