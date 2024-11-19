@@ -133,11 +133,10 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         for (int i = 0; i < sizeof(keycode_strings) / sizeof(keycode_strings[0]); i++) {
             if (keycode == keycode_strings[i].keycode) {
-                if (keycode >= ACID && keycode <= 0x7FFF) {
+                if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_EMOTE_KEYCODE) {
                     if (host_keyboard_led_state().caps_lock) {
-                        register_code(KC_RSFT);
+                        tap_code(KC_CAPS);
                         send_string(keycode_strings[i].string);
-                        unregister_code(KC_RSFT);
                     } else {
                         send_string(keycode_strings[i].string);
                     }

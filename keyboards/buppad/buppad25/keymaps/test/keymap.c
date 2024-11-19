@@ -25,9 +25,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TEST:
             if (record->event.pressed) {
                 if (host_keyboard_led_state().caps_lock) {
-                    SEND_STRING(SS_LSFT("test"));
+                    SEND_STRING(SS_LSFT("TEST"));
                 } else {
-                    SEND_STRING(("test"));
+                    SEND_STRING(("TEST"));
                 }
             }
             return false;
