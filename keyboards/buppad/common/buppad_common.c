@@ -14,9 +14,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <ctype.h>
+#include <stdlib.h>
+
 #include "quantum.h"
 #include "buppad_common.h"
-#include "send_string.h"
 
 keycode_string_t keycode_strings[] = {
     {CAPGEN5, SS_LCTL("acvvvvv")},
@@ -129,14 +131,31 @@ keycode_string_t keycode_strings[] = {
     {VOTEYEA, "VoteYea "},
 };
 
+void invert_caps(char *str) {
+    while (*str) {
+        if (islower(*str)) {
+            *str = toupper(*str);
+        } else if (isupper(*str)) {
+            *str = tolower(*str);
+        }
+        str++;
+    }
+}
+
 bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         for (int i = 0; i < sizeof(keycode_strings) / sizeof(keycode_strings[0]); i++) {
             if (keycode == keycode_strings[i].keycode) {
                 if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_EMOTE_KEYCODE) {
                     if (host_keyboard_led_state().caps_lock) {
-                        tap_code(KC_CAPS);
-                        send_string(keycode_strings[i].string);
+                        size_t len = strlen(keycode_strings[i].string) + 1; // +1 for null terminator
+                        char *inverted_string = (char *)malloc(len);
+                        if (inverted_string != NULL) {
+                            strcpy(inverted_string, keycode_strings[i].string);
+                            invert_caps(inverted_string);
+                            send_string(inverted_string);
+                            free(inverted_string);
+                        }
                     } else {
                         send_string(keycode_strings[i].string);
                     }
