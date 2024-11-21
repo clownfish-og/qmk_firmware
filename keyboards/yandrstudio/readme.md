@@ -236,17 +236,19 @@ A creative coder.
 | sades60         | 0xAA96    | 0xAA3B                   | WB-3M,60%                        | &quest;           |
 | LK75            | 0xAA96    | 0xAA3C                   | WB-3M,75%                        | &quest;           |
 | PTG6095         | 0xAA96    | 0xAA3D(shadow of 0xAA0C) | WB-3M,60%                        | &quest;           |
-| RoseAlice       | 0xAA96    | 0xAA3E                   | WB-3M,Alcie                      | &quest;           |
+| RoseAlice       | 0xAA96    | 0xAA3E                   | WB-3M,Alcie                      | &check;           |
 | NK785           | 0xAA96    | 0xAA3F                   | WB-3M,75%                        | &check;           |
 | NOVA75          | 0xAA96    | 0xAA20                   | WB-3M,75%                        | &quest;           |
 | Star75          | 0xAA96    | 0xAA21                   | WB-3M,75%                        | &check;           |
 | LK60            | 0xAA96    | 0xAA22                   | WB-3M,60%                        | &quest;           |
 | ICE80           | 0xAA96    | 0xAA23                   | WB-3M,80%                        | &quest;           |
 | sam40v2         | 0xAA96    | 0xAA24                   | NRF-2M,40%                       | &quest;           |
-| MEK70           | 0xAA96    | 0xAA5E                   | WB-3M,70%                        | &quest;           |
+| MEK70           | 0xAA96    | 0xAA5E                   | WB-3M,70%                        | &check;           |
 | SOUL65          | 0xAA96    | 0xAA25                   | Hotswap, F103                    | &quest;           |
 | RS Pad          | 0xAA96    | 0xAA26                   | Hotswap, 51B                     | &quest;           |
 | Yu75Pro         | 0xAA96    | 0xAA27                   | WB-3M,70%                        | &quest;           |
+| Whale75         | 0xAA96    | 0xAA28                   | WB-3M,70%                        | &check;           |
+
 
 
 
