@@ -45,29 +45,46 @@ static inline void charge_capacitor(uint8_t row) {
     writePinHigh(row_pins[row]);
 }
 
-static inline void clear_row_pin(uint8_t row) {
-    // for (int row = 0; row < MATRIX_ROWS; row++) {
+static inline void clear_all_row_pins(void) {
+    for (int row = 0; row < MATRIX_ROWS; row++) {
         writePinLow(row_pins[row]);
-    // }
+    }
 }
 
 static inline void select_mux(uint8_t col) {
+    if (col <= 6) {
+        writePinHigh(APLEX_EN_PIN_0);
+    } else {
+        writePinHigh(APLEX_EN_PIN_1);
+    }
     uint8_t ch = col_channels[col];
     writePin(mux_sel_pins[0], ch & 1);
     writePin(mux_sel_pins[1], ch & 2);
     writePin(mux_sel_pins[2], ch & 4);
+    if (col <= 6) {
+        writePinLow(APLEX_EN_PIN_0);
+    } else {
+        writePinLow(APLEX_EN_PIN_1);
+    }
+}
+
+static inline void init_row(void) {
+    for (int idx = 0; idx < MATRIX_ROWS; idx++) {
+        setPinOutput(row_pins[idx]);
+        writePinLow(row_pins[idx]);
+    }
 }
 
 static uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
     uint16_t sw_value = 0;
-    
-    charge_capacitor(row);
-
-    sw_value = analogReadPin_my(ADC_READ_PIN);
-
     discharge_capacitor();
-    clear_row_pin(row);
+    select_mux(col);
+    clear_all_row_pins();
     wait_us(30); // 5*1nf*1k = 5us
+
+    charge_capacitor(row); // 5*100K*10pf = 5us
+    wait_us(10);
+    sw_value = analogReadPin_my(ADC_READ_PIN);
     return sw_value;
 }
 
@@ -96,23 +113,22 @@ static bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col,
 bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
     bool updated = false;
 
-    discharge_capacitor();
-    wait_us(200);
-    for (int col = 0; col < MATRIX_COLS; col++) {
-        select_mux(col);
-
-        if (col < 7) {
-            writePinLow(APLEX_EN_PIN_0);
-        } else {
-            writePinLow(APLEX_EN_PIN_1);
-        }
-
+    writePinHigh(APLEX_EN_PIN_1);
+    wait_us(10);
+    for (int col = 0; col <= 6; col++) {
         for (int row = 0; row < MATRIX_ROWS; row++) {
             ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
             updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
         }
-        writePinHigh(APLEX_EN_PIN_1);
-        writePinHigh(APLEX_EN_PIN_0);
+    }
+
+    writePinHigh(APLEX_EN_PIN_0);
+    wait_us(10);
+    for (int col = 7; col < MATRIX_COLS; col++) {
+        for (int row = 0; row < MATRIX_ROWS; row++) {
+            ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
+            updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
+        }
     }
     return updated;
 }
@@ -177,14 +193,15 @@ bool scan_enable = 0;
 
 void matrix_init_custom(void) {
 
+    set_ec_top_init_val();
+
     // initialize discharge pin as discharge mode
     setPinOutput(DISCHARGE_PIN);
     writePinLow(DISCHARGE_PIN);
 
-    for (int idx = 0; idx < MATRIX_ROWS; idx++) {
-        setPinOutput(row_pins[idx]);
-        writePinLow(row_pins[idx]);
-    }
+    // initialize key pins
+    // initialize drive lines
+    init_row();
 
     // initialize multiplexer select pin
     for (int idx = 0; idx < 3; idx++) {
@@ -208,12 +225,12 @@ void matrix_init_custom(void) {
 }
 
 uint8_t matrix_scan_custom(matrix_row_t current_matrix[]) {
-    // if (!scan_enable) {
-    //     if (timer_elapsed32(scan_timer) >= 500) {
-    //         set_ec_top_init_val();
-    //         scan_enable = true;
-    //     }
-    // }
+    if (!scan_enable) {
+        if (timer_elapsed32(scan_timer) >= 500) {
+            set_ec_top_init_val();
+            scan_enable = true;
+        }
+    }
     bool updated = ecsm_matrix_scan(current_matrix);
     // RAW matrix values on console
 #ifdef CONSOLE_ENABLE
@@ -223,6 +240,6 @@ uint8_t matrix_scan_custom(matrix_row_t current_matrix[]) {
         ecsm_print_matrix();
     }
 #endif
-    // return (uint8_t)updated;
-    return false;
+    return (uint8_t)updated;
+    // return false;
 }

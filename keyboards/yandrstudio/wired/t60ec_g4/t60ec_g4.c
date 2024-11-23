@@ -3,13 +3,10 @@
 
 #include "t60ec_g4.h"
 
-extern void set_ec_top_init_val(void);
-
 void keyboard_post_init_kb() {
     keyboard_post_init_user();
     debug_enable = true;
     // debug_matrix = true;
-    set_ec_top_init_val();
 }
 
 bool via_command_kb(uint8_t *data, uint8_t length) {
