@@ -22,9 +22,6 @@
 #include "quantum.h"
 
 keycode_string_t keycode_strings[] = {
-    {CAPGEN5, SS_LCTL("acvvvvv")},
-    {CAPGEN8, SS_LCTL("acvvvvvvvv")},
-    {CAPGEN10, SS_LCTL("acvvvvvvvvvv")},
     {ACID, "bupAcid "},
     {ASCEND, "bupAscend "},
     {AYO, "bupAyo "},
@@ -145,31 +142,48 @@ void invert_caps(char *str) {
 
 bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
-        for (int i = 0; i < sizeof(keycode_strings) / sizeof(keycode_strings[0]); i++) {
-            if (keycode == keycode_strings[i].keycode) {
-                if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_EMOTE_KEYCODE) {
-                    if (host_keyboard_led_state().caps_lock) {
-                        size_t len = strlen(keycode_strings[i].string) + 1; // +1 for null terminator
-                        char *inverted_string = (char *)malloc(len);
-                        if (inverted_string != NULL) {
-                            strcpy(inverted_string, keycode_strings[i].string);
-                            invert_caps(inverted_string);
-                            send_string(inverted_string);
-                            free(inverted_string);
-                        }
-                    } else {
-                        send_string(keycode_strings[i].string);
-                    }
-                } else {
-                    send_string(keycode_strings[i].string);
-                }
+        switch (keycode) {
+            case CAPGEN5:
+                SEND_STRING(SS_LCTL("acvvvvv"));
                 return false;
+            case CAPGEN8:
+                SEND_STRING(SS_LCTL("acvvvvvvvv"));
+                return false;
+            case CAPGEN10:
+                SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
+                return false;
+            case FIRST_EMOTE_KEYCODE ... LAST_EMOTE_KEYCODE: {
+                bool caps = host_keyboard_led_state().caps_lock;
+                size_t keycode_strings_count = sizeof(keycode_strings) / sizeof(keycode_strings[0]);
+                for (size_t i = 0; i < keycode_strings_count; i++) {
+                    if (keycode == keycode_strings[i].keycode) {
+                        const char *string_to_send = keycode_strings[i].string;
+                        if (caps) {
+                            size_t len = strlen(string_to_send) + 1; // +1 for null terminator
+                            char *inverted_string = (char *)malloc(len);
+                            if (inverted_string != NULL) {
+                                strcpy(inverted_string, string_to_send);
+                                invert_caps(inverted_string);
+                                send_string(inverted_string);
+                                free(inverted_string);
+                            } else {
+                                // Handle memory allocation failure
+                                return false;
+                            }
+                        } else {
+                            send_string(string_to_send);
+                        }
+                        return false;
+                    }
+                }
+                break;
             }
+            default:
+                break;
         }
     }
     return true;
 }
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
@@ -177,7 +191,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DISCO,      DIDDY,      CATDANCE,   SLAY,       BEARDDANCE,
         PATBANG,    FREAKOUT,   DRUMS,      FROG,       KEKW,
         BACKDOOR,   LOVE,       THANKS,     ZEJIBO,     BUG,
-        BITS,       MOOSE,      BUP,        CAPGEN5,    KC_ENT
+        BITS,       MOOSE,      BUP,        CAPGEN5,    QK_BOOT
     ),
     [1] = LAYOUT(
         TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
@@ -217,7 +231,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if(!process_record_bup(keycode, record)) {
+    if (!process_record_bup(keycode, record)) {
         return false;
     }
 
