@@ -21,122 +21,136 @@
 
 #include "quantum.h"
 
-keycode_string_t keycode_strings[] = {
-    {ACID, "bupAcid "},
-    {ASCEND, "bupAscend "},
-    {AYO, "bupAyo "},
-    {BACKDOOR, "bupBackDoor "},
-    {BALLOON, "bupBalloon "},
-    {BART, "bupBart "},
-    {BASSFACE, "bupBASSSFACE "},
-    {BEARDDANCE, "bupBEARDDANCE "},
-    {BIGBRAIN, "bupBigBrain "},
-    {BITS, "bupBITS "},
-    {BOB, "bupBOB "},
-    {BOOMER, "bupBOOMER "},
-    {BROC, "bupBroc "},
-    {BUG, "bupBug "},
-    {BUP, "bupBUP "},
-    {BUPS, "bupBUPS "},
-    {BUPWAD, "bupBUPWAD "},
-    {CALL, "bupCall "},
-    {CATDANCE, "bupCATDANCE "},
-    {CHEERS, "bupCHEERS "},
-    {CHEESE, "bupCheese "},
-    {CHEFKISS, "bupChefkiss "},
-    {CLOUDS, "bupClouds "},
-    {CROWN, "bupCrown "},
-    {DIDDY, "bupDiddy "},
-    {DISCO, "bupDisco "},
-    {DOIT, "bupDOIT "},
-    {DONUT, "bupDonut "},
-    {DRAGON, "bupDragon "},
-    {DRUMS, "bupDrums "},
-    {DUCKDANCE, "bupDUCKDANCE "},
-    {DUCKHEAD, "bupDuckhead "},
-    {DYE, "bupDye "},
-    {EE, "bupEE "},
-    {EYE, "bupEye "},
-    {FIRE, "bupFire "},
-    {FLUTE, "bupFLUTE "},
-    {FREAKOUT, "bupFreakout "},
-    {FROG, "bupFROG "},
-    {GLUTES, "bupGlutes "},
-    {GOOSE, "bupGoose "},
-    {GROGU, "bupGrogu "},
-    {HEADOUT, "bupHEADOUT "},
-    {HEART, "bupHeart "},
-    {HORN, "bupHORN "},
-    {ID, "bupID "},
-    {JAWNESSA, "bupJAWNESSA "},
-    {JELLY, "bupJelly "},
-    {KEKW, "bupKekw "},
-    {KEYS, "bupKEYS "},
-    {LIGHTER, "bupLighter "},
-    {LOVE, "bupLOVE "},
-    {MOOSE, "bupMOOSE "},
-    {NOD, "bupNod "},
-    {PATBANG, "bupPATBANG "},
-    {PLUG, "bupPlug "},
-    {RAINBOW, "bupRAINBOW "},
-    {RAVE, "bupRave "},
-    {REVERSE, "bupReverse "},
-    {RUMP, "bupRump "},
-    {SABER, "bupSABER "},
-    {SALUTE, "bupSalute "},
-    {SH, "bupSh "},
-    {SLAY, "bupSlay "},
-    {SMIRK, "bupSmirk "},
-    {SPOOKY, "bupSpooky "},
-    {SWEATY, "bupSweaty "},
-    {THANKS, "bupTHANKS "},
-    {THING, "bupThing "},
-    {TIEDYE, "bupTIEDYE "},
-    {TINFOIL, "bupTINFOIL "},
-    {UP, "bupUp "},
-    {UWU, "bupUWU "},
-    {WATER, "bupWater "},
-    {WAVE, "bupWAVE "},
-    {WINK, "bupWink "},
-    {WIZ, "bupWiz "},
-    {WOOK, "bupWOOK "},
-    {WUB, "bupWUB "},
-    {ZEJIBO, "bupZejibo "},
-    {ZELDABUP, "bupZELDABUP "},
-    {BOP, "BOP "},
-    {BOPBOP, "BopBop "},
-    {DINODANCE, "DinoDance "},
-    {GLITCHLIT, "GlitchLit "},
-    {GOATEMOTEY, "GoatEmotey "},
-    {GOLDPLZ, "GoldPLZ "},
-    {KAPPA, "Kappa "},
-    {KREYGASM, "Kreygasm "},
-    {MODLOVE, "ModLove "},
-    {NOTLIKETHIS, "NotLikeThis "},
-    {POWERUPL, "PowerUpL "},
-    {POWERUPR, "PowerUpR "},
-    {RIPEPPERONIS, "riPepperonis "},
-    {SABAPING, "SabaPing "},
-    {SINGSMIC, "SingsMic "},
-    {SINGSNOTE, "SingsNote "},
-    {STINKYCHEESE, "StinkyCheese "},
-    {TOMBRAID, "TombRaid "},
-    {TWITCHCONHYPE, "TwitchConHYPE "},
-    {TWITCHLIT, "TwitchLit "},
-    {TWITCHRAID, "twitchRaid "},
-    {UNITY, "TwitchUnity "},
-    {VOTENAY, "VoteNay "},
-    {VOTEYEA, "VoteYea "},
-    {TEST1, "Test1 "},
-    {TEST2, "Test2 "},
-    {TEST3, "Test3 "},
-    {TEST4, "Test4 "},
-    {TEST5, "Test5 "},
-    {TEST6, "Test6 "},
-    {TEST7, "Test7 "},
-    {TEST8, "Test8 "},
-    {TEST9, "Test9 "},
-    {TEST10, "Test10 "}
+keycode_string_compressed_t keycode_strings[] = {
+    {ACID, "Acid"},
+    {ASCEND, "Ascend"},
+    {AYO, "Ayo"},
+    {BACKDOOR, "BackDoor"},
+    {BALLOON, "Balloon"},
+    {BART, "Bart"},
+    {BASSFACE, "BASSSFACE"},
+    {BEARDDANCE, "BEARDDANCE"},
+    {BIGBRAIN, "BigBrain"},
+    {BITS, "BITS"},
+    {BOB, "BOB"},
+    {BOOMER, "BOOMER"},
+    {BROC, "Broc"},
+    {BUG, "Bug"},
+    {BUP, "BUP"},
+    {BUPS, "BUPS"},
+    {BUPWAD, "BUPWAD"},
+    {CALL, "Call"},
+    {CATDANCE, "CATDANCE"},
+    {CHEERS, "CHEERS"},
+    {CHEESE, "Cheese"},
+    {CHEFKISS, "Chefkiss"},
+    {CLOUDS, "Clouds"},
+    {CROWN, "Crown"},
+    {DIDDY, "Diddy"},
+    {DISCO, "Disco"},
+    {DOIT, "DOIT"},
+    {DONUT, "Donut"},
+    {DRAGON, "Dragon"},
+    {DRUMS, "Drums"},
+    {DUCKDANCE, "DUCKDANCE"},
+    {DUCKHEAD, "Duckhead"},
+    {DYE, "Dye"},
+    {EE, "EE"},
+    {EYE, "Eye"},
+    {FIRE, "Fire"},
+    {FLUTE, "FLUTE"},
+    {FREAKOUT, "Freakout"},
+    {FROG, "FROG"},
+    {GLUTES, "Glutes"},
+    {GOOSE, "Goose"},
+    {GROGU, "Grogu"},
+    {HEADOUT, "HEADOUT"},
+    {HEART, "Heart"},
+    {HORN, "HORN"},
+    {ID, "ID"},
+    {JAWNESSA, "JAWNESSA"},
+    {JELLY, "Jelly"},
+    {KEKW, "Kekw"},
+    {KEYS, "KEYS"},
+    {LIGHTER, "Lighter"},
+    {LOVE, "LOVE"},
+    {MOOSE, "MOOSE"},
+    {NOD, "Nod"},
+    {PATBANG, "PATBANG"},
+    {PLUG, "Plug"},
+    {RAINBOW, "RAINBOW"},
+    {RAVE, "Rave"},
+    {REVERSE, "Reverse"},
+    {RUMP, "Rump"},
+    {SABER, "SABER"},
+    {SALUTE, "Salute"},
+    {SH, "Sh"},
+    {SLAY, "Slay"},
+    {SMIRK, "Smirk"},
+    {SPOOKY, "Spooky"},
+    {SWEATY, "Sweaty"},
+    {THANKS, "THANKS"},
+    {THING, "Thing"},
+    {TIEDYE, "TIEDYE"},
+    {TINFOIL, "TINFOIL"},
+    {UP, "Up"},
+    {UWU, "UWU"},
+    {WATER, "Water"},
+    {WAVE, "WAVE"},
+    {WINK, "Wink"},
+    {WIZ, "Wiz"},
+    {WOOK, "WOOK"},
+    {WUB, "WUB"},
+    {ZEJIBO, "Zejibo"},
+    {ZELDABUP, "ZELDABUP"},
+    {BOP, "BOP"},
+    {BOPBOP, "BopBop"},
+    {DINODANCE, "DinoDance"},
+    {GLITCHLIT, "GlitchLit"},
+    {GOATEMOTEY, "GoatEmotey"},
+    {GOLDPLZ, "GoldPLZ"},
+    {KAPPA, "Kappa"},
+    {KREYGASM, "Kreygasm"},
+    {MODLOVE, "ModLove"},
+    {NOTLIKETHIS, "NotLikeThis"},
+    {POWERUPL, "PowerUpL"},
+    {POWERUPR, "PowerUpR"},
+    {RIPEPPERONIS, "riPepperonis"},
+    {SABAPING, "SabaPing"},
+    {SINGSMIC, "SingsMic"},
+    {SINGSNOTE, "SingsNote"},
+    {STINKYCHEESE, "StinkyCheese"},
+    {TOMBRAID, "TombRaid"},
+    {TWITCHCONHYPE, "TwitchConHYPE"},
+    {TWITCHLIT, "TwitchLit"},
+    {TWITCHRAID, "twitchRaid"},
+    {UNITY, "TwitchUnity"},
+    {VOTENAY, "VoteNay"},
+    {VOTEYEA, "VoteYea"},
+    {BDANCE, "Dance"},
+    {BMINGO, "Mingo"},
+    {BMONKEY, "Monkey"},
+    {BPUG, "Pug"},
+    {BUGH, "Ugh"},
+    {GBIRDGROOVE, "Birdgroove"},
+    {GCATDANCE, "Catdance2"},
+    {GFUNNYCATDANCE, "Funnycatdance"},
+    {GJAMMIN, "Jammin"},
+    {GKITTYDAB, "Kittydab"},
+    {GKITTYGROOVE, "Kittygroove"},
+    {GNUMBERONE, "Numberone"},
+    {GRAVEKITTY, "Ravekitty"},
+    {KCLAP, "Clap"},
+    {KGATO, "Gato"},
+    {KGGS, "GGs"},
+    {KGLUTES, "GLUTES"},
+    {KHI, "HI"},
+    {KHUG, "HUG"},
+    {KLEI, "Lei"},
+    {KLOVE, "Love"},
+    {KRDNC, "Rdnc"},
+    {KSMUG, "SMUG"},
+    {KWELP, "WELP"}
 };
 
 // This function inverts the capitalization of each character in the given string.
@@ -166,24 +180,30 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
             case FIRST_EMOTE_KEYCODE ... LAST_EMOTE_KEYCODE: {
                 bool caps = host_keyboard_led_state().caps_lock;
                 size_t keycode_strings_count = sizeof(keycode_strings) / sizeof(keycode_strings[0]);
+
+                char emote_buffer[MAX_EMOTE_LEN];
+
                 for (size_t i = 0; i < keycode_strings_count; i++) {
                     if (keycode == keycode_strings[i].keycode) {
-                        const char *string_to_send = keycode_strings[i].string;
-                        if (caps) {
-                            size_t len = strlen(string_to_send) + 1; // +1 for null terminator
-                            char *inverted_string = (char *)malloc(len);
-                            if (inverted_string != NULL) {
-                                strncpy(inverted_string, string_to_send, len - 1);
-                                inverted_string[len - 1] = '\0';
-                                invert_caps(inverted_string);
-                                send_string(inverted_string);
-                                free(inverted_string);
-                                // Handle memory allocation failure: returning false to prevent further processing
-                                return false;
-                            }
+
+                        if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_BUP_KEYCODE) {  // Most keycodes use the bup prefix
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BUP_PREFIX, keycode_strings[i].suffix);  // Construct full string with prefix
+                        }else if (keycode >= FIRST_BEX_KEYCODE && keycode <= LAST_BEX_KEYCODE) {   // Handle Bex keycodes
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BEX_PREFIX, keycode_strings[i].suffix);
+                        }else if (keycode >= FIRST_GKTY_KEYCODE && keycode <= LAST_GKTY_KEYCODE) {  // Handle GrooveKitty keycodes
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", GKTY_PREFIX, keycode_strings[i].suffix);
+                        }else if (keycode >= FIRST_KTLU_KEYCODE && keycode <= LAST_KTLU_KEYCODE) {  // Handle Ktulue keycodes
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", KTLU_PREFIX, keycode_strings[i].suffix);
                         } else {
-                            send_string(string_to_send);
+                            strlcpy(emote_buffer, keycode_strings[i].suffix, sizeof(emote_buffer));  // Non-prefixed keycodes
                         }
+                        if (caps) {
+                            invert_caps(emote_buffer);
+                        }
+
+                        // Send the emote and always append a space
+                        send_string(emote_buffer);
+                        send_string(" ");
                         return false;
                     }
                 }
@@ -195,6 +215,8 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
@@ -227,10 +249,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [4] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
-        WAVE,       LIGHTER,    GLITCHLIT,  TWITCHLIT,  NOTLIKETHIS,
-        TEST1,    TEST2,   TEST3,   TEST4,   TEST5,
-        TEST6,   TEST7,  TEST8,   TEST9, TEST10,
-        BOPBOP,     DINODANCE,  UNITY,      KAPPA,      QK_BOOT
+        BDANCE,       BMINGO,    BMONKEY,  BPUG,  BUGH,
+        GBIRDGROOVE,    GCATDANCE,   GFUNNYCATDANCE,   GJAMMIN,   GKITTYDAB,
+        KCLAP,   KGATO,  KGGS,   KRDNC, KWELP,
+        BOPBOP,     DINODANCE,  UNITY,      KAPPA,      KC_ENT
     ),
     [5] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
