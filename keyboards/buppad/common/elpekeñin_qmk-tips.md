@@ -1,4 +1,4 @@
-***ClownFish***  
+--***ClownFish***--  
 I am working on a project for a emote macropad and I am trying to override the caps lock if it is on as emotes are case-sensitive, but it seems like shift is being released in the middle of the string and not after it is sent. I have tried calling `caps_word_on()` and `SS_DOWN(X_LSFT) ... SS_UP(X_LSFT)` as well, with the same or worse result(caps word did not work at all but I think that's expected after reading more of the backend code). Using the macro `SEND_STRING(SS_LSFT(keycode_strings[i].string));`  will not compile as I have the keycodes stored as ints in an array to fit them all into the firmware and the function expects a string literal for an argument. But defining a keycode 
 ```c
  if (host_keyboard_led_state().caps_lock) {
@@ -47,7 +47,7 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
 }
 ```
 
-***elpekeñin***
+--***elpekeñin***--
 > `caps_word_on()`  
 
 yeah, never used the feature, but i would expect it to add/tweak the processing within a `process_record_*` function, which indeed doesn't get called when running `send_string`, making it useless for this case  
@@ -59,10 +59,9 @@ yeah, never used the feature, but i would expect it to add/tweak the processing 
 ---
 
 also , i have no idea what your `keycode_string_t` is a `typedef` for, but if it is just `struct{int,char*}` (as in ID, string) you are wasting space, because you might use the index into the array as an identifier already without storing an extra int for each entry...  
-
 and also, if you wanted to squeeze the most out of your space, your strings must be standalone variables with the "magical" `PROGMEM` qualifier, being then referred by an array  
   
-***ClownFish***  
+--***ClownFish***--  
 oh I think I'm exiting the SS_LSFT when there's a shifted keycode in the string  
 is there a way to get past that?  
 writing the code as it is in my fork with each keycode ~~worked~~ but it was 99% of max, this way is 83%  
@@ -74,7 +73,7 @@ and yes the typedef is just that
 } keycode_string_t;
 ```
 
-***elpekeñin***  
+--***elpekeñin***--  
 following the "you dont need an extra id" idea...
 
 a common pattern for "batches" of similar keycodes is to make sure they are defined correlative in your enum (lets say `enum { SOMETHING = QK_USER, SOME_STUFF, FOO, BAR, BAZ, ..., MORE_STUFF,};`), such that:  
@@ -112,24 +111,24 @@ if (START <= keycode && keycode <= END) {
 }
 ```
 
-***ClownFish***  
+--***ClownFish***--  
 tysm I will give this a try  
 
-***elpekeñin***  
+--***elpekeñin***--  
 that would still not fix your "shift inside shift" issue, but will hopefully help with the space 🙂  
 
-***ClownFish***  
+--***ClownFish***--  
 right  
 
-***elpekeñin***  
+--***elpekeñin***--  
 but i dont see a reason why you wouldn't be able to do smth like `SHIFT("foo") "bar" SHIFT("baz")`  
 implicit concatenation of string literals is your friend 😉  
 
-***ClownFish***  
+--***ClownFish***--  
 I could, was hoping for a shortcut but I guess this is the way  
 thank you for your help  
 
-***ClownFish***  
+--***ClownFish***--  
 I fixed the shift on shift thing, idk why I didnt think of it before but `ctype` has `toupper` and `tolower` functions
 ```c
 void invert_caps(char *str) {
