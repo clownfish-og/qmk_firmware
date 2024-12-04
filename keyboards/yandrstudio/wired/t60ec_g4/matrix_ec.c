@@ -96,14 +96,14 @@ static inline void select_mux(uint8_t col) {
 
 static uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
     uint16_t sw_value = 0;
-    
+
     charge_capacitor(row);
 
     sw_value = analogReadPin_my(ADC_READ_PIN);
 
     discharge_capacitor();
     clear_row_pin(row);
-    wait_us(20); // 5*1nf*1k = 5us
+    wait_us(15); // 5*1nf*1k = 5us
     return sw_value;
 }
 
@@ -152,7 +152,7 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
     bool updated = false;
 
     discharge_capacitor();
-    wait_us(200);
+    wait_us(100);
     for (int col = 0; col < MATRIX_COLS; col++) {
         select_mux(col);
 
