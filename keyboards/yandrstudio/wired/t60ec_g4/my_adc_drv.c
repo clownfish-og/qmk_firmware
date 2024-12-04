@@ -3,6 +3,7 @@
 
 #include "my_adc_drv.h"
 #include <hal.h>
+#include "util.h"
 
 int16_t analogReadPin_my(pin_t pin) {
     ADCConfig          adcCfg = {};
@@ -11,7 +12,7 @@ int16_t analogReadPin_my(pin_t pin) {
     ADCConversionGroup adcConversionGroup = {
         .circular     = FALSE,
         .num_channels = (uint16_t)(ADC_NUM_CHANNELS),
-        .cfgr         = ADC_RESOLUTION,
+        .cfgr         = ADC_CFGR_CONT | ADC_RESOLUTION,
     };
 
     palSetLineMode(pin, PAL_MODE_INPUT_ANALOG);
@@ -20,18 +21,34 @@ int16_t analogReadPin_my(pin_t pin) {
     // ADC PIN
     // #define MUX_OUT_PIN2MCU {B15, B12, A3, B14, B11}
     switch (pin) {
-        case A6:
+        case A6: {
             targetDriver = &ADCD2;
             adcConversionGroup.sqr[0]  = ADC_SQR1_SQ1_N(ADC_CHANNEL_IN3);
-            sampleBuffer[0]            = 0;
-            break;
+            for (uint8_t i = 0; i < ADC_BUFFER_DEPTH; i++) {
+                sampleBuffer[i] = 0;
+            }
+        } break;
         default:
             return 0;
     }
     adcStart(targetDriver, &adcCfg);
-    if (adcConvert(targetDriver, &adcConversionGroup, &sampleBuffer[0], ADC_BUFFER_DEPTH) != MSG_OK) {
+    if (adcConvert(targetDriver, &adcConversionGroup, sampleBuffer, ADC_BUFFER_DEPTH) != MSG_OK) {
         return 0;
     }
+    uint16_t sum_adc = 0;
+    uint16_t mx_ad = 0;
+    uint16_t mi_ad = 9999;
+    for (uint8_t i = 0; i < ADC_BUFFER_DEPTH; i++) {
+        sum_adc += sampleBuffer[i];
+        mx_ad = MAX(mx_ad, sampleBuffer[i]);
+        mi_ad = MIN(mi_ad, sampleBuffer[i]);
+    }
+    uint16_t avg_adc = 0;
+    if (ADC_BUFFER_DEPTH > 2) {
+        avg_adc = (sum_adc - mx_ad - mi_ad) / (ADC_BUFFER_DEPTH - 2);
+    } else {
+        avg_adc = sum_adc / ADC_BUFFER_DEPTH;
+    }
 
-    return *sampleBuffer;
+    return avg_adc;
 }

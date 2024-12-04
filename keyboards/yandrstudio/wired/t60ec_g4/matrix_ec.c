@@ -32,8 +32,44 @@ const uint32_t row_pins[]     = MATRIX_ROW_PINS;
 const uint8_t  col_channels[] = MATRIX_COL_CHANNELS;
 const uint32_t mux_sel_pins[] = MUX_SEL_PINS;
 
-static uint16_t      ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
-static uint16_t      ecsm_sw_top_value[MATRIX_ROWS][MATRIX_COLS];
+static bool auto_fine_f = false;
+
+static bool matrix_no_point[MATRIX_ROWS][MATRIX_COLS] = MS_MX_MASK;
+
+static uint16_t ecsm_sw_init_top_value[MATRIX_ROWS][MATRIX_COLS] = {
+    {400, 350, 350, 550, 400, 400, 700, 350, 450, 400, 750, 550, 700, 550},
+    {400, 400, 350, 450, 450, 350, 250, 550, 550, 250, 350, 550, 400, 550},
+    {350, 700, 400, 500, 450, 350, 450, 450, 350, 450, 350, 500, 0,   800},
+    {400, 0,   500, 500, 500, 450, 350, 350, 300, 400, 500, 350, 400, 400},
+    {0,   1900,1600,0,   0,   0,   1800,0,   0,   1600,1900,1800,0,   0}
+};
+
+
+static uint16_t ecsm_sw_top_value[MATRIX_ROWS][MATRIX_COLS] = {
+    {400, 350, 350, 550, 400, 400, 700, 350, 450, 400, 750, 550, 700, 550},
+    {400, 400, 350, 450, 450, 350, 250, 550, 550, 250, 350, 550, 400, 550},
+    {350, 700, 400, 500, 450, 350, 450, 450, 350, 450, 350, 500, 0,   800},
+    {400, 0,   500, 500, 500, 450, 350, 350, 300, 400, 500, 350, 400, 400},
+    {0,   1900,1600,0,   0,   0,   1800,0,   0,   1600,1900,1800,0,   0}
+};
+
+static uint16_t ecsm_sw_init_bottom_value[MATRIX_ROWS][MATRIX_COLS] = {
+    {2100, 1800, 2300, 2100, 2000, 2500, 2400, 2500, 2600, 2600, 2600, 2600},
+    {2100, 2200, 2000, 2200, 2500, 2200, 2100, 2500, 2400, 1500, 2500, 2400, 2500, 2800},
+    {1700, 2300, 2300, 2200, 2200, 1500, 2300, 2400, 2300, 2900, 2000, 2000, 0,   2700},
+    {2400, 0,   2400, 2500, 2600, 2300, 2200, 2300, 2200, 2000, 2000, 2400, 2200, 2400},
+    {0,   3800,3200,0,   0,   0,   3800,0,   0,   3600,3600,4000,0,   0}
+};
+
+static uint16_t ecsm_sw_bottom_value[MATRIX_ROWS][MATRIX_COLS] = {
+    {2100, 1800, 2300, 2100, 2000, 2500, 2400, 2500, 2600, 2600, 2600, 2600},
+    {2100, 2200, 2000, 2200, 2500, 2200, 2100, 2500, 2400, 1500, 2500, 2400, 2500, 2800},
+    {1700, 2300, 2300, 2200, 2200, 1500, 2300, 2400, 2300, 2900, 2000, 2000, 0,   2700},
+    {2400, 0,   2400, 2500, 2600, 2300, 2200, 2300, 2200, 2000, 2000, 2400, 2200, 2400},
+    {0,   3800,3200,0,   0,   0,   3800,0,   0,   3600,3600,4000,0,   0}
+};
+
+static uint16_t ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
 
 static inline void discharge_capacitor(void) {
     setPinOutput(DISCHARGE_PIN);
@@ -67,7 +103,7 @@ static uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
 
     discharge_capacitor();
     clear_row_pin(row);
-    wait_us(30); // 5*1nf*1k = 5us
+    wait_us(20); // 5*1nf*1k = 5us
     return sw_value;
 }
 
@@ -76,20 +112,39 @@ static bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col,
     bool current_state = (*current_row >> col) & 1;
 
     // press to release
-    // if (current_state && sw_value < config.low_threshold_matrix[row][col]) {
-    if (current_state && sw_value < ecsm_sw_top_value[row][col]+500) {
+
+    uint16_t up_th = 500;
+    uint16_t down_th = 1000;
+
+    if (ecsm_sw_bottom_value[row][col] > ecsm_sw_top_value[row][col] + 1200) {
+        up_th = (ecsm_sw_bottom_value[row][col] - ecsm_sw_top_value[row][col]) / 3;
+        down_th = up_th*2;
+    }
+
+    if (current_state && sw_value < ecsm_sw_top_value[row][col]+up_th) {
         *current_row &= ~(1 << col);
         return true;
     }
 
     // release to press
-    // if ((!current_state) && sw_value > config.high_threshold_matrix[row][col]) {
-    if ((!current_state) && sw_value > ecsm_sw_top_value[row][col]+650) {
+    if ((!current_state) && sw_value > ecsm_sw_top_value[row][col]+down_th) {
         *current_row |= (1 << col);
         return true;
     }
 
     return false;
+}
+
+void auto_fine_sw_th(uint8_t row, uint8_t col) {
+    // 是否是顶部值范围
+    if (ecsm_sw_value[row][col] < ecsm_sw_init_top_value[row][col]+500 && ecsm_sw_value[row][col] + 500 > ecsm_sw_init_top_value[row][col]) {
+        ecsm_sw_top_value[row][col] = MIN(ecsm_sw_top_value[row][col], ecsm_sw_value[row][col]);
+        return;
+    }
+    if (ecsm_sw_value[row][col] < ecsm_sw_init_bottom_value[row][col]+500 && ecsm_sw_value[row][col] + 500 > ecsm_sw_init_bottom_value[row][col]) {
+        ecsm_sw_bottom_value[row][col] = MAX(ecsm_sw_bottom_value[row][col], ecsm_sw_value[row][col]);
+        return;
+    }
 }
 
 // Scan key values and update matrix state
@@ -108,7 +163,11 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
         }
 
         for (int row = 0; row < MATRIX_ROWS; row++) {
+            if (matrix_no_point[row][col] == 0) continue;
             ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
+            if (auto_fine_f) {
+                auto_fine_sw_th(row, col);
+            }
             updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
         }
         writePinHigh(APLEX_EN_PIN_1);
@@ -118,31 +177,24 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
 }
 
 void set_ec_top_init_val(void) {
-    writePinHigh(APLEX_EN_PIN_1);
-    for (int col = 0; col <= 6; col++) {
-        for (int row = 0; row < MATRIX_ROWS; row++) {
-            ecsm_sw_top_value[row][col] = ecsm_readkey_raw(row, col);
-            uint8_t r_times = 0;
-            while ((ecsm_sw_top_value[row][col] < 0 || ecsm_sw_top_value[row][col] >= 1800) && (r_times <= 10)) {
-                ecsm_sw_top_value[row][col] = ecsm_readkey_raw(row, col);
-                // ecsm_sw_top_value[row][col] = 3000;
-                r_times++;
-            }
-            if (r_times>10) {
-                ecsm_sw_top_value[row][col] = 3000;
-            }
-        }
-    }
+    discharge_capacitor();
+    wait_us(200);
+    for (int col = 0; col < MATRIX_COLS; col++) {
+        select_mux(col);
 
-    writePinHigh(APLEX_EN_PIN_0);
-    for (int col = 7; col < MATRIX_COLS; col++) {
-        for (int row = 0; row < MATRIX_ROWS; row++) {
-            ecsm_sw_top_value[row][col] = ecsm_readkey_raw(row, col);
-            while (ecsm_sw_top_value[row][col] <= 0 || ecsm_sw_top_value[row][col] >= 1500) {
-                ecsm_sw_top_value[row][col] = ecsm_readkey_raw(row, col);
-                // ecsm_sw_top_value[row][col] = 3000;
-            }
+        if (col < 7) {
+            writePinLow(APLEX_EN_PIN_0);
+        } else {
+            writePinLow(APLEX_EN_PIN_1);
         }
+
+        for (int row = 0; row < MATRIX_ROWS; row++) {
+            if (matrix_no_point[row][col] == 0) continue;
+            ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
+            auto_fine_sw_th(row, col);
+        }
+        writePinHigh(APLEX_EN_PIN_1);
+        writePinHigh(APLEX_EN_PIN_0);
     }
 }
 
@@ -163,6 +215,18 @@ void ecsm_print_matrix(void) {
     for (int row = 0; row < MATRIX_ROWS; row++) {
         for (int col = 0; col < MATRIX_COLS; col++) {
             uprintf("%4d", ecsm_sw_top_value[row][col]);
+            if (col < MATRIX_COLS-1) {
+                print(",");
+            }
+        }
+        print("\n");
+    }
+
+    print("BOTTOM\n");
+
+    for (int row = 0; row < MATRIX_ROWS; row++) {
+        for (int col = 0; col < MATRIX_COLS; col++) {
+            uprintf("%4d", ecsm_sw_bottom_value[row][col]);
             if (col < MATRIX_COLS-1) {
                 print(",");
             }
@@ -198,23 +262,25 @@ void matrix_init_custom(void) {
     setPinOutput(APLEX_EN_PIN_1);
     writePinHigh(APLEX_EN_PIN_1);
 
-    for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
-        for (uint8_t j = 0; j < MATRIX_COLS; j++) {
-            ecsm_sw_top_value[i][j] = 1024;
-        }
-    }
     scan_timer = timer_read32();
     scan_enable = false;
 }
 
 uint8_t matrix_scan_custom(matrix_row_t current_matrix[]) {
-    // if (!scan_enable) {
-    //     if (timer_elapsed32(scan_timer) >= 500) {
-    //         set_ec_top_init_val();
-    //         scan_enable = true;
-    //     }
-    // }
+    if (!scan_enable) {
+        if (timer_elapsed32(scan_timer) >= 500) {
+            set_ec_top_init_val();
+            scan_enable = true;
+        }
+        return false;
+    }
+    if (timer_elapsed32(scan_timer) >= 500) {
+        scan_timer = timer_read32();
+        auto_fine_f = true;
+    }
     bool updated = ecsm_matrix_scan(current_matrix);
+    auto_fine_f = false;
+
     // RAW matrix values on console
 #ifdef CONSOLE_ENABLE
     static int cnt = 0;
@@ -223,6 +289,6 @@ uint8_t matrix_scan_custom(matrix_row_t current_matrix[]) {
         ecsm_print_matrix();
     }
 #endif
-    // return (uint8_t)updated;
-    return false;
+    return (uint8_t)updated;
+    // return false;
 }
