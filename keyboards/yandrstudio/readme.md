@@ -246,8 +246,11 @@ A creative coder.
 | MEK70           | 0xAA96    | 0xAA5E                   | WB-3M,70%                        | &check;           |
 | SOUL65          | 0xAA96    | 0xAA25                   | Hotswap, F103                    | &quest;           |
 | RS Pad          | 0xAA96    | 0xAA26                   | Hotswap, 51B                     | &quest;           |
-| Yu75Pro         | 0xAA96    | 0xAA27                   | WB-3M,70%                        | &quest;           |
+| Yu75Pro         | 0xAA96    | 0xAA27                   | WB-3M,70%                        | &check;           |
 | Whale75         | 0xAA96    | 0xAA28                   | WB-3M,70%                        | &check;           |
+| Tiger87         | 0xAA96    | 0xAA29 (0xAAEB)          | Hotswap, F103                    | &quest;           |
+| nova65          | 0xAA96    | 0xAA2A                   | WB-3M,70%                        | &quest;           |
+| hs68ec          | 0xAA96    | 0xAA2B                   | G431, EC                         | &quest;           |
 
 
 
