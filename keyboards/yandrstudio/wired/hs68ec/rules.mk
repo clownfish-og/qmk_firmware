@@ -13,8 +13,8 @@ QUANTUM_SRC += matrix_ec.c
 # QUANTUM_SRC += my_adc_drv_m.c
 QUANTUM_SRC += my_adc_drv.c
 
-KEYBOARD_SHARED_EP = yes
-CONSOLE_ENABLE = yes
+# KEYBOARD_SHARED_EP = yes
+# CONSOLE_ENABLE = yes
 # DEBUG_MATRIX_SCAN_RATE_ENABLE = yes
 
 ALLOW_WARNINGS = yes
