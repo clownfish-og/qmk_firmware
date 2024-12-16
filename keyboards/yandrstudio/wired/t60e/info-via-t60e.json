@@ -16,10 +16,10 @@
             ]
         },
         "labels": [
-            "Split Backspace (Solder&EC)",
+            "Split Backspace (Solder)",
             "ISO Enter (Solder)",
             "Split Left Shift (Solder)",
-            "HHKB Space (Solder&HotSwap&EC)"
+            "HHKB Space (Solder&HotSwap)"
         ],
         "keymap": [
             [
