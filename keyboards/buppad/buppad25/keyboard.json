@@ -80,7 +80,7 @@
             {"matrix": [3, 0], "x": 0, "y": 48, "flags": 4},
             {"matrix": [2, 0], "x": 0, "y": 32, "flags": 4},
             {"matrix": [1, 0], "x": 0, "y": 16, "flags": 4},
-            {"matrix": [0, 0], "x": 0, "y": 0, "flags": 8},
+            {"matrix": [0, 0], "x": 0, "y": 0, "flags": 4},
             {"matrix": [0, 1], "x": 16, "y": 0, "flags": 4},
             {"matrix": [0, 2], "x": 32, "y": 0, "flags": 4},
             {"matrix": [0, 3], "x": 48, "y": 0, "flags": 4},
