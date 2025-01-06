@@ -34,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [2] = LAYOUT(
         TO(0),      TO(1),      TO(5),      TO(3),      TO(4),
-        DUCKHEAD,   WIZ,        CHEFKISS,   CHILLGUY,    BIGBRAIN,
+        DUCKHEAD,   WIZ,        CHEFKISS,   CHILLGUY,   BIGBRAIN,
         CALL,       DOIT,       GROGU,      JAWNESSA,   BART,
         BUPS,       BROC,       BUPWAD,     SPOOKY,     ZELDABUP,
         AYO,        ID,         SH,         EE,         KC_ENT
