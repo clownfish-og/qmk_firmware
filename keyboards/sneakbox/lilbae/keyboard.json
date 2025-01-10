@@ -2,30 +2,33 @@
     "manufacturer": "Sneakbox",
     "keyboard_name": "Lil BAE",
     "maintainer": "mujimanic",
+    "processor": "atmega32u2",
     "bootloader": "atmel-dfu",
-    "bootmagic": {
-        "enabled": true
+    "diode_direction": "COL2ROW",
+    "usb": {
+        "vid": "0x5342",
+        "pid": "0x0012",
+        "device_version": "0.0.1"
+    },
+    "encoder": {
+        "rotary": [
+            {"pin_a": "D2", "pin_b": "D3"}
+        ]
+    },
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "encoder": true,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": false
     },
     "matrix_pins": {
         "cols": ["B7", "D6", "D5", "D4"],
         "rows": ["B4"]
     },
-    "diode_direction": "COL2ROW",
-    "encoder": {
-        "enabled": true,
-        "rotary": [
-            {"pin_a": "D2", "pin_b": "D3"}
-        ]
-    },
-    "height": 1,
-    "mouse_key": {
-        "enabled": true
-    },
-    "pid": "0x0012",
-    "processor": "atmega32u2",
     "url": "https://sneakbox.com",
-    "vid": "0x5342",
-    "width": 4,
     "layouts": {
         "LAYOUT": {
             "layout": [
