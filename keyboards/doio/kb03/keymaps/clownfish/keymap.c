@@ -5,6 +5,30 @@
 
 #ifdef RGB_MATRIX_ENABLE
 
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    if (!process_record_user(keycode, record)) { return false; }
+    switch (keycode) {
+        case UG_TOGG:
+            if (record->event.pressed) {
+                switch (rgb_matrix_get_flags()) {
+                    case LED_FLAG_ALL: {
+                        rgb_matrix_set_flags(LED_FLAG_NONE);
+                        rgb_matrix_set_color_all(0, 0, 0);
+                    } break;
+                    default: {
+                        rgb_matrix_set_flags(LED_FLAG_ALL);
+                    } break;
+                }
+            }
+            if (!rgb_matrix_is_enabled()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
+                rgb_matrix_enable();
+            }
+            return false;
+    }
+    return true;
+}
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     HSV hsv = {0, 255, 200};
 
@@ -62,18 +86,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 switch(rgb_matrix_get_mode()) {
                     case RGB_MATRIX_GRADIENT_UP_DOWN:
                         rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                        rgb_matrix_sethsv(180, 255, 200);
                         break;
                     case RGB_MATRIX_SOLID_COLOR:
                         rgb_matrix_mode(RGB_MATRIX_BREATHING);
+                        rgb_matrix_sethsv(180, 255, 200);
                         break;
                     case RGB_MATRIX_BREATHING:
-                        rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+                        rgb_matrix_mode(RGB_MATRIX_DUAL_BEACON);
+                        rgb_matrix_sethsv(127, 255, 200);
                         break;
-                    case RGB_MATRIX_CYCLE_UP_DOWN:
+                    case RGB_MATRIX_DUAL_BEACON:
                         rgb_matrix_mode(RGB_MATRIX_GRADIENT_UP_DOWN);
+                        rgb_matrix_sethsv(52, 255, 200);
                         break;
                     default:
-                        rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+                        rgb_matrix_mode(RGB_MATRIX_DUAL_BEACON);
+                        rgb_matrix_sethsv(127, 255, 200);
                         break;
                     }
             }
@@ -95,22 +124,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        TO(1),  RGB_HUI,   SIMPLGT,  RGB_SAI,   KC_RSFT
+        TO(1),   UG_HUEU,  SIMPLGT,  UG_SATU,   KC_RSFT
     ),
     [1] = LAYOUT(
         TO(2),   KC_ENT,   C(KC_C), C(S(KC_V)), C(KC_Z)
     ),
     [2] = LAYOUT(
-        TO(3),   CHROME,   RGB_TOG,  G(KC_D),   PROJECT
+        TO(3),   CHROME,   UG_TOGG,  G(KC_D),   PROJECT
     ),
     [3] = LAYOUT(
-        TO(0),  KC_WBAK,   KC_WHOM,  KC_WFWD,   KC_MPLY
+        TO(0),   KC_WBAK,  KC_WHOM,  KC_WFWD,   KC_MPLY
     )
 };
 
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI), ENCODER_CCW_CW(RGB_RMOD, RGB_MOD) },
+    [0] = { ENCODER_CCW_CW(UG_VALD, UG_VALU),  ENCODER_CCW_CW(UG_PREV, UG_NEXT) },
     [1] = { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),  ENCODER_CCW_CW(KC_WH_U, KC_WH_D) },
     [2] = { ENCODER_CCW_CW(KC_BRID, KC_BRIU),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [3] = { ENCODER_CCW_CW(KC_MRWD, KC_MFFD),  ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
