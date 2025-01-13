@@ -1,4 +1,5 @@
-// Copyright 2024 QMK
+// Copyright 2025 DOIO
+// Copyright 2025 ClownFish (@clownfish-og)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
