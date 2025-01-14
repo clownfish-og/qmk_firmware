@@ -1,6 +1,6 @@
-# doio/kb03
+# DOIO KB03-01
 
-![doio/kb03](https://i.imgur.com/bnlDpkY.png)
+![KB03-01](https://i.imgur.com/bnlDpkY.png)
 
 QMK for Megalodon DOIO Dual Layer Knob 3 Key macropad.
 

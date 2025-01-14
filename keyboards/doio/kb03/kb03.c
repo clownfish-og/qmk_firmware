@@ -20,7 +20,9 @@
 #ifdef RGB_MATRIX_ENABLE
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_user(keycode, record)) { return false; }
+    if (!process_record_user(keycode, record)) {
+        return false;
+    }
     switch (keycode) {
         case RM_TOGG:
             if (record->event.pressed) {
@@ -46,7 +48,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
     if (!rgb_matrix_indicators_advanced_user(led_min, led_max)) {
         return false;
-        }
+    }
 
     hsv_t hsv = {0, 255, 100};
     switch (get_highest_layer(layer_state)) {
@@ -65,8 +67,8 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         default:
             hsv = (hsv_t){HSV_YELLOW};
             break;
-    }
-    hsv.v = (rgb_matrix_get_val() >= 100) ? 100 : (rgb_matrix_get_val() <= 30) ? 30 : rgb_matrix_get_val();
+        }
+    hsv.v     = (rgb_matrix_get_val() * 70 / 200) + 30; //set indicator brightness range 30-100, vary based on RGB Matrix brightness
     rgb_t rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
     return false;
