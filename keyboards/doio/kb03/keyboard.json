@@ -86,8 +86,7 @@
         "vid": "0xD010"
     },
     "ws2812": {
-        "pin": "A10",
-        "driver": "pwm"
+        "pin": "A10"
     },
     "layouts": {
         "LAYOUT": {
