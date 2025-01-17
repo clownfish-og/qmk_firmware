@@ -2,9 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #ifdef RGB_MATRIX_ENABLE
-enum custom_keycodes {
-    RMP = SAFE_RANGE,
-};
+
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_user(keycode, record)) { return false; }
     switch (keycode) {
