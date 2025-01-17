@@ -2,36 +2,18 @@
     "manufacturer": "sunxkui Design Studio",
     "keyboard_name": "x98",
     "maintainer": "sunxkui",
-    "board": "STM32_F103_STM32DUINO",
     "bootloader": "uf2boot",
-    "bootmagic": {
-        "enabled": true
-    },
-    "build": {
-        "lto": true
-    },
-    "debounce": 2,
-    "development_board": "bluepill",
     "diode_direction": "COL2ROW",
     "features": {
-        "backlight": false,
-        "bluetooth": false,
-        "command": false,
-        "console": false,
+        "bootmagic": true,
         "extrakey": true,
-        "fauxclicky": false,
-        "midi": true,
+        "mousekey": true,
         "nkro": true,
-        "rgb_matrix": true,
-        "sleep_led": false,
-        "unicode": false
+        "rgb_matrix": true
     },
     "matrix_pins": {
         "cols": ["A3", "A2", "A1", "A0", "A4", "A5", "B11", "A7", "B0", "B12", "B13", "B14", "B4", "B5", "B6", "B7", "A8", "A9", "A10", "B3"],
         "rows": ["B15", "B10", "B9", "A15", "B1", "B8"]
-    },
-    "mouse_key": {
-        "enabled": false
     },
     "processor": "STM32F103",
     "rgb_matrix": {
@@ -147,7 +129,6 @@
     "url": "",
     "usb": {
         "device_version": "0.0.1",
-        "force_nkro": true,
         "pid": "0x1213",
         "vid": "0x2023"
     },
