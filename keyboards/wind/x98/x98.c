@@ -2,11 +2,13 @@
 
 #include QMK_KEYBOARD_H
 #ifdef RGB_MATRIX_ENABLE
-
+enum custom_keycodes {
+    RMP = SAFE_RANGE,
+};
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_user(keycode, record)) { return false; }
     switch (keycode) {
-        case RGB_TOG:
+        case UG_TOGG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {
@@ -21,6 +23,29 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             if (!rgb_matrix_is_enabled()) {
                 rgb_matrix_set_flags(LED_FLAG_ALL);
                 rgb_matrix_enable();
+            }
+            return false;
+        case RM_TOGG:
+            if (record->event.pressed) {
+                switch (rgb_matrix_get_flags()) {
+                    case LED_FLAG_ALL: {
+                        rgb_matrix_set_flags(LED_FLAG_NONE);
+                        rgb_matrix_set_color_all(0, 0, 0);
+                    } break;
+                    default: {
+                        rgb_matrix_set_flags(LED_FLAG_ALL);
+                    } break;
+                }
+            }
+            if (!rgb_matrix_is_enabled()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
+                rgb_matrix_enable();
+            }
+            return false;
+        case RMP:
+            if (record->event.pressed) {
+                if (rgb_matrix_is_enabled())
+                    rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
             }
             return false;
     }
