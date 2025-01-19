@@ -14,31 +14,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #include QMK_KEYBOARD_H
+#include "buppad_common.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [0] = LAYOUT(KC_KP_7, KC_KP_8, KC_KP_9,
-               KC_KP_4, LT(1, KC_KP_5), KC_KP_6,
-               KC_KP_1, KC_KP_2, KC_KP_3),
-
-  [1] = LAYOUT(RGB_RMOD, RGB_VAI, RGB_MOD,
-               RGB_HUI, KC_TRNS, RGB_SAI,
-               RGB_HUD, RGB_VAD, RGB_SAD),
-               
-  [2] = LAYOUT(KC_KP_7, KC_KP_8, KC_KP_9,
-               KC_KP_4, LT(1, KC_KP_5), KC_KP_6,
-               KC_KP_1, KC_KP_2, KC_KP_3),
-
-  [3] = LAYOUT(RGB_RMOD, RGB_VAI, RGB_MOD,
-               RGB_HUI, KC_TRNS, RGB_SAI,
-               RGB_HUD, RGB_VAD, RGB_SAD),
-
-  [4] = LAYOUT(KC_KP_7, KC_KP_8, KC_KP_9,
-               KC_KP_4, LT(1, KC_KP_5), KC_KP_6,
-               KC_KP_1, KC_KP_2, KC_KP_3),
-
-  [5] = LAYOUT(RGB_RMOD, RGB_VAI, RGB_MOD,
-               RGB_HUI, KC_TRNS, RGB_SAI,
-               RGB_HUD, RGB_VAD, RGB_SAD),                             
-
+    [0] = LAYOUT(
+        ZEJIBO,      CATDANCE,    PATBANG,
+        BITS,     LT(1, GLUTES),  DYE,
+        BUP,         CAPGEN5,     KC_ENT
+    ),
+    [1] = LAYOUT(
+        TO(2),       SLAY,        FREAKOUT,
+        BACKDOOR,    _______,     DONUT,
+        MOOSE,       LOVE,        THANKS
+    ),
+    [2] = LAYOUT(
+        TO(0),       KC_KP_8,    TO(5),
+        KC_KP_4,     KC_KP_5,    KC_KP_6,
+        KC_KP_1,     KC_KP_2,    KC_KP_3
+    ),
+    [3] = LAYOUT(
+        TO(0),       KC_KP_8,    KC_KP_9,
+        KC_KP_4,     KC_KP_5,    KC_KP_6,
+        KC_KP_1,     KC_KP_2,    KC_KP_3
+    ),
+    [4] = LAYOUT(
+        TO(0),       KC_KP_8,    KC_KP_9,
+        KC_KP_4,     KC_KP_5,    KC_KP_6,
+        KC_KP_1,     KC_KP_2,    KC_KP_3
+    ),
+    [5] = LAYOUT(
+        TO(0),       RGB_VAI,    RGB_MOD,
+        RGB_HUI,     RGB_SAI,    RGB_SPI,
+        RGB_HUD,     KC_SHFT,    RGB_TOG
+    ),
 };
