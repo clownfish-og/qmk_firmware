@@ -143,4 +143,7 @@ enum custom_keycodes {
     VOTEYEA //end twitch emotes
 };
 
+#define FIRST_EMOTE_KEYCODE ACID
+#define LAST_EMOTE_KEYCODE VOTEYEA
+
 bool process_record_bup(uint16_t keycode, keyrecord_t *record);
