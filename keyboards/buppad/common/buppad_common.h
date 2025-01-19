@@ -111,7 +111,8 @@ enum custom_keycodes {
     WUB,
     ZEJIBO,
     ZELDABUP, //end bup emotes
-    BOP, //begin twitch emotes
+    BIBLETHUMP, //begin twitch emotes
+    BOP,
     BOPBOP,
     DINODANCE,
     GLITCHLIT,
