@@ -16,6 +16,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE
 
@@ -48,7 +49,7 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         return false;
         }
 
-    HSV hsv = {0, 255, 200};
+    hsv_t hsv = {0, 255, 200};
 
 // Determine the active layer
     uint8_t active_layer = get_highest_layer(layer_state);
@@ -56,25 +57,25 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
 // Set HSV values based on the active layer
     switch (active_layer) {
         case 0:
-            hsv = (HSV){200, 255, 200}; // Layer 4: MAGENTA
+            hsv = (hsv_t){200, 255, 200}; // Layer 0: MAGENTA
             break;
         case 1:
-            hsv = (HSV){128, 255, 200}; // Layer 0: CYAN
+            hsv = (hsv_t){128, 255, 200}; // Layer 1: CYAN
             break;
         case 2:
-            hsv = (HSV){170, 255, 200}; // Layer 2: BLUE
+            hsv = (hsv_t){170, 255, 200}; // Layer 2: BLUE
             break;
         case 3:
-            hsv = (HSV){85, 255, 200}; // Layer 1: GREEN
+            hsv = (hsv_t){85, 255, 200}; // Layer 3: GREEN
             break;
         case 4:
-            hsv = (HSV){0, 0, 200}; // Layer 3: WHITE
+            hsv = (hsv_t){43, 255, 200}; // Layer 4: YELLOW
             break;
         case 5:
-            hsv = (HSV){0, 255, 200}; // Layer 5: RED
+            hsv = (hsv_t){0, 255, 200}; // Layer 5: RED
             break;
         default:
-            hsv = (HSV){43, 255, 200}; // err: YELLOW
+            hsv = (hsv_t){0, 0, 200}; // err: WHITE
             break;
     }
 // Ensure value (brightness) consistency within range
@@ -84,11 +85,35 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         hsv.v = rgb_matrix_get_val();
     }
 // Convert HSV to RGB
-    RGB rgb = hsv_to_rgb(hsv);
+    rgb_t rgb = hsv_to_rgb(hsv);
 // Set LEDs with 'indicator' flag
     for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_INDICATOR
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+        switch (active_layer) {
+            case 0:
+                rgb_matrix_set_color(20, rgb.r, rgb.g, rgb.b);
+                break;
+            case 1:
+                rgb_matrix_set_color(21, rgb.r, rgb.g, rgb.b);
+                break;
+            case 2:
+                rgb_matrix_set_color(22, rgb.r, rgb.g, rgb.b);
+                break;
+            case 3:
+                rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
+                break;
+            case 4:
+                rgb_matrix_set_color(24, rgb.r, rgb.g, rgb.b);
+                break;
+            case 5:
+                rgb_matrix_set_color(20, rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(21, rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(22, rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(24, rgb.r, rgb.g, rgb.b);
+                break;
+            default:
+                rgb_matrix_set_color_all(RGB_BLACK);
+                break;
         }
     }
     return false;
