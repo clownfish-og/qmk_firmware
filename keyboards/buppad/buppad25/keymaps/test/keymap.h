@@ -140,10 +140,20 @@ enum custom_keycodes {
     TWITCHRAID,
     UNITY,
     VOTENAY,
-    VOTEYEA //end twitch emotes
+    VOTEYEA, //end twitch emotes
+    TEST1,
+    TEST2,
+    TEST3,
+    TEST4,
+    TEST5,
+    TEST6,
+    TEST7,
+    TEST8,
+    TEST9,
+    TEST10
 };
 
 #define FIRST_EMOTE_KEYCODE ACID
-#define LAST_EMOTE_KEYCODE VOTEYEA
+#define LAST_EMOTE_KEYCODE TEST10
 
 bool process_record_bup(uint16_t keycode, keyrecord_t *record);

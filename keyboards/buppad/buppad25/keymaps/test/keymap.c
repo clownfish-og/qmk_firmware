@@ -127,8 +127,19 @@ keycode_string_t keycode_strings[] = {
     {UNITY, "TwitchUnity "},
     {VOTENAY, "VoteNay "},
     {VOTEYEA, "VoteYea "},
+    {TEST1, "Test1 "},
+    {TEST2, "Test2 "},
+    {TEST3, "Test3 "},
+    {TEST4, "Test4 "},
+    {TEST5, "Test5 "},
+    {TEST6, "Test6 "},
+    {TEST7, "Test7 "},
+    {TEST8, "Test8 "},
+    {TEST9, "Test9 "},
+    {TEST10, "Test10 "}
 };
 
+// This function inverts the capitalization of each character in the given string.
 void invert_caps(char *str) {
     while (*str) {
         if (islower(*str)) {
@@ -162,12 +173,12 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                             size_t len = strlen(string_to_send) + 1; // +1 for null terminator
                             char *inverted_string = (char *)malloc(len);
                             if (inverted_string != NULL) {
-                                strcpy(inverted_string, string_to_send);
+                                strncpy(inverted_string, string_to_send, len - 1);
+                                inverted_string[len - 1] = '\0';
                                 invert_caps(inverted_string);
                                 send_string(inverted_string);
                                 free(inverted_string);
-                            } else {
-                                // Handle memory allocation failure
+                                // Handle memory allocation failure: returning false to prevent further processing
                                 return false;
                             }
                         } else {
@@ -217,8 +228,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [4] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
         WAVE,       LIGHTER,    GLITCHLIT,  TWITCHLIT,  NOTLIKETHIS,
-        GOLDPLZ,    KREYGASM,   POWERUPL,   POWERUPR,   TWITCHCONHYPE,
-        SINGSMIC,   SINGSNOTE,  TOMBRAID,   TWITCHRAID, GOATEMOTEY,
+        TEST1,    TEST2,   TEST3,   TEST4,   TEST5,
+        TEST6,   TEST7,  TEST8,   TEST9, TEST10,
         BOPBOP,     DINODANCE,  UNITY,      KAPPA,      KC_ENT
     ),
     [5] = LAYOUT(
