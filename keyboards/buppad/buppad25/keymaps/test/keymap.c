@@ -15,20 +15,20 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "buppad_common.h"
 
 enum custom_keycodes {
-    TEST = SAFE_RANGE
+    TEST = QK_KB_0
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if(!process_record_bup(keycode, record)) {
-        return false;
-    }
     switch (keycode) {
         case TEST:
             if (record->event.pressed) {
-                SEND_STRING(SS_LSFT("test"));
+                if (host_keyboard_led_state().caps_lock) {
+                    SEND_STRING(SS_LSFT("test"));
+                } else {
+                    SEND_STRING(("test"));
+                }
             }
             return false;
     }
@@ -37,7 +37,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        TO(1),    CHEESE,   EYE,      GLUTES,   DUCKDANCE,
+        TO(1),    KC_Z,   KC_X,      KC_C,   KC_V,
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
