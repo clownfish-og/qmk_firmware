@@ -19,12 +19,18 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "action.h"
+#include "quantum.h"
 
 #ifdef VIA_ENABLE
 #    include "via.h"
 #endif
 
 #include "quantum_keycodes.h"
+
+typedef struct {
+    uint16_t keycode;
+    const char *string;
+} keycode_string_t;
 
 enum custom_keycodes {
     CAPGEN5 = QK_KB_0,
