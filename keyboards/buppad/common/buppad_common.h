@@ -27,17 +27,14 @@
 
 #include "quantum_keycodes.h"
 
-typedef struct {
-    uint16_t keycode;
-    const char *string;
-} keycode_string_t;
-
 enum custom_keycodes {
     CAPGEN5 = QK_KB_0,
     CAPGEN8,
     CAPGEN10,
-    ACID, //begin bup emotes
+    ABDUCKTION, //begin bup emotes
+    ACID,
     ASCEND,
+    ASHDUCKEM,
     AYO,
     BACKDOOR,
     BALLOON,
@@ -58,6 +55,8 @@ enum custom_keycodes {
     CHEERS,
     CHEESE,
     CHEFKISS,
+    CHICK,
+    CHILLGUY,
     CLOUDS,
     CROWN,
     DIDDY,
@@ -70,15 +69,19 @@ enum custom_keycodes {
     DUCKHEAD,
     DYE,
     EE,
+    EXCUSEME,
     EYE,
+    FANCYDUCK,
     FIRE,
     FLUTE,
     FREAKOUT,
     FROG,
     GLUTES,
+    GOLD,
     GOOSE,
     GROGU,
     HEADOUT,
+    HEADPHONES,
     HEART,
     HORN,
     ID,
@@ -88,25 +91,27 @@ enum custom_keycodes {
     KEYS,
     LIGHTER,
     LOVE,
+    MAPLE,
     MOOSE,
     NOD,
     PATBANG,
     PLUG,
     RAINBOW,
     RAVE,
-    REVERSE,
     RUMP,
     SABER,
     SALUTE,
     SH,
     SLAY,
     SMIRK,
+    SMUG,
     SPOOKY,
+    SUS,
     SWEATY,
     THANKS,
     THING,
     TIEDYE,
-    TINFOIL,
+    TUNE,
     UP,
     UWU,
     WATER,
@@ -140,10 +145,51 @@ enum custom_keycodes {
     TWITCHRAID,
     UNITY,
     VOTENAY,
-    VOTEYEA //end twitch emotes
+    VOTEYEA, //end twitch emotes
+    BDANCE, //begin fam emotes
+    BMINGO,
+    BMONKEY,
+    BPUG,
+    BUGH,
+    GBIRDGROOVE,
+    GCATDANCE,
+    GFUNNYCATDANCE,
+    GJAMMIN,
+    GKITTYDAB,
+    GKITTYGROOVE,
+    GNUMBERONE,
+    GRAVEKITTY,
+    KCLAP,
+    KGATO,
+    KGGS,
+    KGLUTES,
+    KHI,
+    KHUG,
+    KLEI,
+    KLOVE,
+    KRDNC,
+    KSMUG,
+    KWELP //end fam emotes
 };
 
-#define FIRST_EMOTE_KEYCODE ACID
-#define LAST_EMOTE_KEYCODE VOTEYEA
+#define FIRST_EMOTE_KEYCODE ABDUCKTION
+#define LAST_BUP_KEYCODE ZELDABUP
+#define FIRST_BEX_KEYCODE BDANCE
+#define LAST_BEX_KEYCODE BUGH
+#define FIRST_GKTY_KEYCODE GBIRDGROOVE
+#define LAST_GKTY_KEYCODE GRAVEKITTY
+#define FIRST_KTLU_KEYCODE KCLAP
+#define LAST_KTLU_KEYCODE KWELP
+#define LAST_EMOTE_KEYCODE KWELP
+#define BUP_PREFIX "bup"
+#define BEX_PREFIX "bexfro"
+#define GKTY_PREFIX "groove21"
+#define KTLU_PREFIX "ktulue"
+#define MAX_EMOTE_LEN 32
+
+typedef struct {
+    uint16_t keycode;
+    const char *suffix;
+} keycode_string_compressed_t;
 
 bool process_record_bup(uint16_t keycode, keyrecord_t *record);

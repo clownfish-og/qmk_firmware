@@ -27,14 +27,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [1] = LAYOUT(
         TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
-        THING,      DONUT,      DYE,        SMIRK,      REVERSE,
+        THING,      DONUT,      DYE,        SMIRK,      EXCUSEME,
         RUMP,       ACID,       CLOUDS,     WATER,      WINK,
         BALLOON,    HEART,      ASCEND,     JELLY,      PLUG,
         RAVE,       CROWN,      TIEDYE,     DRAGON,     KC_ENT
     ),
     [2] = LAYOUT(
         TO(0),      TO(1),      TO(5),      TO(3),      TO(4),
-        DUCKHEAD,   WIZ,        CHEFKISS,   TINFOIL,    BIGBRAIN,
+        DUCKHEAD,   WIZ,        CHEFKISS,   MAPLE,      BIGBRAIN,
         CALL,       DOIT,       GROGU,      JAWNESSA,   BART,
         BUPS,       BROC,       BUPWAD,     SPOOKY,     ZELDABUP,
         AYO,        ID,         SH,         EE,         KC_ENT
@@ -45,12 +45,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         NOD,        GOOSE,      BOOMER,     WUB,        WOOK,
         HEADOUT,    RAINBOW,    SALUTE,     SWEATY,     HORN,
         FLUTE,      FIRE,       CHEERS,     KEYS,       KC_ENT
-    ), 
+    ),
     [4] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
-        WAVE,       LIGHTER,    GLITCHLIT,  TWITCHLIT,  NOTLIKETHIS,
-        GOLDPLZ,    KREYGASM,   POWERUPL,   POWERUPR,   TWITCHCONHYPE,
-        SINGSMIC,   SINGSNOTE,  TOMBRAID,   TWITCHRAID, GOATEMOTEY,
+        BDANCE,     BMINGO,     BMONKEY,    BPUG,       BUGH,
+        GBIRDGROOVE,GCATDANCE,GFUNNYCATDANCE,GJAMMIN,   GKITTYDAB,
+        KCLAP,      KGATO,      KGGS,       KRDNC,      KWELP,
         BOPBOP,     DINODANCE,  UNITY,      KAPPA,      KC_ENT
     ),
     [5] = LAYOUT(
