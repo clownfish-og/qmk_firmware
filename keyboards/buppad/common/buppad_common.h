@@ -31,7 +31,7 @@ enum custom_keycodes {
     CAPGEN5 = QK_KB_0,
     CAPGEN8,
     CAPGEN10,
-    ABDUCKTION, //begin bup emotes
+    ABDUCKTION, //first emote
     ACID,
     ASCEND,
     ASHDUCKEM,
@@ -121,8 +121,8 @@ enum custom_keycodes {
     WOOK,
     WUB,
     ZEJIBO,
-    ZELDABUP, //end bup emotes
-    BOP, //begin twitch emotes
+    ZELDABUP, //last bup emote
+    BOP, //first twitch emote
     BOPBOP,
     DINODANCE,
     GLITCHLIT,
@@ -145,21 +145,21 @@ enum custom_keycodes {
     TWITCHRAID,
     UNITY,
     VOTENAY,
-    VOTEYEA, //end twitch emotes
-    BDANCE, //begin fam emotes
+    VOTEYEA, //last twitch emote
+    BDANCE, //first bex emote
     BMINGO,
     BMONKEY,
     BPUG,
-    BUGH,
-    GBIRDGROOVE,
+    BUGH, //last bex emote
+    GBIRDGROOVE, //first groovekitty emote
     GCATDANCE,
     GFUNNYCATDANCE,
     GJAMMIN,
     GKITTYDAB,
     GKITTYGROOVE,
     GNUMBERONE,
-    GRAVEKITTY,
-    KCLAP,
+    GRAVEKITTY, //last groovekitty emote
+    KCLAP, //first ktulue emote
     KGATO,
     KGGS,
     KGLUTES,
@@ -169,23 +169,23 @@ enum custom_keycodes {
     KLOVE,
     KRDNC,
     KSMUG,
-    KWELP //end fam emotes
+    KWELP //last ktulue emote = last emote
 };
 
+#define LAST_EMOTE_KEYCODE KWELP
 #define FIRST_EMOTE_KEYCODE ABDUCKTION
+#define MAX_EMOTE_LEN 32
 #define LAST_BUP_KEYCODE ZELDABUP
+#define BUP_PREFIX "bup"
 #define FIRST_BEX_KEYCODE BDANCE
 #define LAST_BEX_KEYCODE BUGH
+#define BEX_PREFIX "bexfro"
 #define FIRST_GKTY_KEYCODE GBIRDGROOVE
 #define LAST_GKTY_KEYCODE GRAVEKITTY
+#define GKTY_PREFIX "groove21"
 #define FIRST_KTLU_KEYCODE KCLAP
 #define LAST_KTLU_KEYCODE KWELP
-#define LAST_EMOTE_KEYCODE KWELP
-#define BUP_PREFIX "bup"
-#define BEX_PREFIX "bexfro"
-#define GKTY_PREFIX "groove21"
 #define KTLU_PREFIX "ktulue"
-#define MAX_EMOTE_LEN 32
 
 typedef struct {
     uint16_t keycode;
