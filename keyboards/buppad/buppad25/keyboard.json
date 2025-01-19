@@ -54,6 +54,7 @@
             "splash": true
         },
         "center_point": [32, 32],
+        "hue steps": 16,
         "default": {
             "animation": "cycle_spiral"
         },
