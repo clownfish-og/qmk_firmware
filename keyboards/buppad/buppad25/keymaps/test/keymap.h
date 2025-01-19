@@ -27,10 +27,7 @@
 
 #include "quantum_keycodes.h"
 
-typedef struct {
-    uint16_t keycode;
-    const char *string;
-} keycode_string_t;
+
 
 enum custom_keycodes {
     CAPGEN5 = QK_KB_0,
@@ -141,19 +138,50 @@ enum custom_keycodes {
     UNITY,
     VOTENAY,
     VOTEYEA, //end twitch emotes
-    TEST1,
-    TEST2,
-    TEST3,
-    TEST4,
-    TEST5,
-    TEST6,
-    TEST7,
-    TEST8,
-    TEST9,
-    TEST10
+    BDANCE, //begin fam emotes
+    BMINGO,
+    BMONKEY,
+    BPUG,
+    BUGH,
+    GBIRDGROOVE,
+    GCATDANCE,
+    GFUNNYCATDANCE,
+    GJAMMIN,
+    GKITTYDAB,
+    GKITTYGROOVE,
+    GNUMBERONE,
+    GRAVEKITTY,
+    KCLAP,
+    KGATO,
+    KGGS,
+    KGLUTES,
+    KHI,
+    KHUG,
+    KLEI,
+    KLOVE,
+    KRDNC,
+    KSMUG,
+    KWELP //end fam emotes
 };
 
 #define FIRST_EMOTE_KEYCODE ACID
-#define LAST_EMOTE_KEYCODE TEST10
+#define LAST_BUP_KEYCODE ZELDABUP
+#define FIRST_BEX_KEYCODE BDANCE
+#define LAST_BEX_KEYCODE BUGH
+#define FIRST_GKTY_KEYCODE GBIRDGROOVE
+#define LAST_GKTY_KEYCODE GRAVEKITTY
+#define FIRST_KTLU_KEYCODE KCLAP
+#define LAST_KTLU_KEYCODE KWELP
+#define LAST_EMOTE_KEYCODE KWELP
+#define BUP_PREFIX "bup"
+#define BEX_PREFIX "bexfro"
+#define GKTY_PREFIX "groove21"
+#define KTLU_PREFIX "ktulue"
+#define MAX_EMOTE_LEN 32
+
+typedef struct {
+    uint16_t keycode;
+    const char *suffix;
+} keycode_string_compressed_t;
 
 bool process_record_bup(uint16_t keycode, keyrecord_t *record);
