@@ -202,7 +202,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DISCO,      DIDDY,      CATDANCE,   SLAY,       BEARDDANCE,
         PATBANG,    FREAKOUT,   DRUMS,      FROG,       KEKW,
         BACKDOOR,   LOVE,       THANKS,     ZEJIBO,     BUG,
-        BITS,       MOOSE,      BUP,        CAPGEN5,    QK_BOOT
+        BITS,       MOOSE,      BUP,        CAPGEN5,    KC_ENT
     ),
     [1] = LAYOUT(
         TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
@@ -230,7 +230,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         WAVE,       LIGHTER,    GLITCHLIT,  TWITCHLIT,  NOTLIKETHIS,
         TEST1,    TEST2,   TEST3,   TEST4,   TEST5,
         TEST6,   TEST7,  TEST8,   TEST9, TEST10,
-        BOPBOP,     DINODANCE,  UNITY,      KAPPA,      KC_ENT
+        BOPBOP,     DINODANCE,  UNITY,      KAPPA,      QK_BOOT
     ),
     [5] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
