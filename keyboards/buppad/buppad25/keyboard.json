@@ -56,7 +56,8 @@
         "center_point": [32, 32],
         "hue steps": 16,
         "default": {
-            "animation": "cycle_spiral"
+            "animation": "cycle_spiral",
+            "val": 50
         },
         "driver": "ws2812",
         "layout": [

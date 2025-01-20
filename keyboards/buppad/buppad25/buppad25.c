@@ -78,12 +78,6 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
             hsv = (hsv_t){0, 0, 200}; // err: WHITE
             break;
     }
-// Ensure value (brightness) consistency within range
-    if (rgb_matrix_get_val() <= 100) {
-        hsv.v = 100;
-    } else {
-        hsv.v = rgb_matrix_get_val();
-    }
 // Convert HSV to RGB
     rgb_t rgb = hsv_to_rgb(hsv);
 // Set LEDs with 'indicator' flag
