@@ -177,7 +177,7 @@ enum custom_keycodes {
 
 typedef struct {
     uint16_t keycode;
-    const char *suffix;
-} keycode_string_compressed_t;
+    const char *string;
+} keycode_suffix_t;
 
 bool process_record_bup(uint16_t keycode, keyrecord_t *record);
