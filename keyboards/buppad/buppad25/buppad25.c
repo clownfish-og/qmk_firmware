@@ -23,7 +23,7 @@
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_user(keycode, record)) { return false; }
     switch (keycode) {
-        case RGB_TOG:
+        case UG_TOGG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {
@@ -49,7 +49,7 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         return false;
         }
 
-    hsv_t hsv = {0, 255, 200};
+    hsv_t hsv = {180, 255, 200};
 
 // Determine the active layer
     uint8_t active_layer = get_highest_layer(layer_state);

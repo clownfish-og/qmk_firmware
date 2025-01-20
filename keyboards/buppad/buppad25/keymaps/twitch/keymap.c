@@ -56,10 +56,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [5] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
-        RGB_MOD,    RGB_VAI,    RGB_HUI,    RGB_SAI,    RGB_SPI,
-        RGB_RMOD,   RGB_VAD,    RGB_HUD,    RGB_SAD,    RGB_SPD,
+        UG_NEXT,    UG_VALU,    UG_HUEU,    UG_SATU,    UG_SPDU,
+        UG_PREV,    UG_VALD,    UG_HUED,    UG_SATD,    UG_SPDD,
         KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,
-        RGB_M_P,    RGB_M_B,    RGB_M_R,    RGB_M_SW,   RGB_TOG
+        KC_NO,      KC_NO,      KC_NO,      KC_NO,      UG_TOGG
     ),
 };
 
