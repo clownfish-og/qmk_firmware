@@ -27,25 +27,21 @@
 
 #include "quantum_keycodes.h"
 
+
+
 enum custom_keycodes {
     CAPGEN5 = QK_KB_0,
     CAPGEN8,
     CAPGEN10,
-    ABDUCKTION, //first emote
-    ACID,
-    ASCEND,
-    ASHDUCKEM,
+    AMNESIA, //begin bup emotes
     AYO,
     BACKDOOR,
     BALLOON,
     BART,
-    BASSFACE,
     BEARDDANCE,
     BIGBRAIN,
     BITS,
-    BOB,
     BOOMER,
-    BROC,
     BUG,
     BUP,
     BUPS,
@@ -55,74 +51,79 @@ enum custom_keycodes {
     CHEERS,
     CHEESE,
     CHEFKISS,
-    CHICK,
-    CHILLGUY,
-    CLOUDS,
     CROWN,
     DIDDY,
     DISCO,
     DOIT,
     DONUT,
-    DRAGON,
     DRUMS,
     DUCKDANCE,
     DUCKHEAD,
     DYE,
     EE,
-    EXCUSEME,
-    EYE,
-    FANCYDUCK,
     FIRE,
     FLUTE,
     FREAKOUT,
     FROG,
-    GLUTES,
-    GOLD,
-    GOOSE,
     GROGU,
+    GROOVY,
     HEADOUT,
-    HEADPHONES,
-    HEART,
     HORN,
     ID,
-    JAWNESSA,
-    JELLY,
     KEKW,
     KEYS,
     LIGHTER,
     LOVE,
-    MAPLE,
+    LUIGIBUP,
     MOOSE,
-    NOD,
     PATBANG,
     PLUG,
-    RAINBOW,
-    RAVE,
-    RUMP,
-    SABER,
     SALUTE,
     SH,
     SLAY,
-    SMIRK,
-    SMUG,
-    SPOOKY,
-    SUS,
     SWEATY,
     THANKS,
-    THING,
-    TIEDYE,
-    TUNE,
-    UP,
-    UWU,
-    WATER,
-    WAVE,
-    WINK,
-    WIZ,
     WOOK,
     WUB,
     ZEJIBO,
-    ZELDABUP, //last bup emote
-    BOP, //first twitch emote
+    ZELDABUP,
+    BROC, //begin tier 2000 emotes
+    CLOUDS,
+    GOOSE,
+    HEART,
+    JAWNESSA,
+    RAVE,
+    SALT,
+    TINFOIL,
+    WATER,
+    WIZ,
+    BASSFACE, //begin tier 3000 emotes
+    BOB,
+    CHILLGUY,
+    DRAGON,
+    JELLY,
+    MAPLE,
+    RUMP,
+    SMIRK,
+    UWU,
+    WINK,
+    ABDUCKTION, //begin bitstier emotes
+    ASCEND,
+    ASHDUCKEM,
+    EXCUSEME,
+    FANCYDUCK,
+    GOLD,
+    HEADPHONES,
+    KTULUEHUG,
+    RAINBOW,
+    SMUG,
+    SUS,
+    NOD, //begin follower emotes
+    TIEDYE,
+    TUNE,
+    UP,
+    WAVE, //end bup emotes
+    BOP, //begin twitch emotes
     BOPBOP,
     DINODANCE,
     GLITCHLIT,
@@ -134,8 +135,6 @@ enum custom_keycodes {
     NOTLIKETHIS,
     POWERUPL,
     POWERUPR,
-    RIPEPPERONIS,
-    SABAPING,
     SINGSMIC,
     SINGSNOTE,
     STINKYCHEESE,
@@ -145,21 +144,13 @@ enum custom_keycodes {
     TWITCHRAID,
     UNITY,
     VOTENAY,
-    VOTEYEA, //last twitch emote
-    BDANCE, //first bex emote
+    VOTEYEA, //end twitch emotes
+    BDANCE, //begin fam emotes
     BMINGO,
     BMONKEY,
     BPUG,
-    BUGH, //last bex emote
-    GBIRDGROOVE, //first groovekitty emote
-    GCATDANCE,
-    GFUNNYCATDANCE,
-    GJAMMIN,
-    GKITTYDAB,
-    GKITTYGROOVE,
-    GNUMBERONE,
-    GRAVEKITTY, //last groovekitty emote
-    KCLAP, //first ktulue emote
+    BUGH,
+    KCLAP,
     KGATO,
     KGGS,
     KGLUTES,
@@ -168,24 +159,21 @@ enum custom_keycodes {
     KLEI,
     KLOVE,
     KRDNC,
-    KSMUG,
-    KWELP //last ktulue emote = last emote
+    KSMUG, //end fam emotes
 };
 
-#define LAST_EMOTE_KEYCODE KWELP
-#define FIRST_EMOTE_KEYCODE ABDUCKTION
-#define MAX_EMOTE_LEN 32
-#define LAST_BUP_KEYCODE ZELDABUP
-#define BUP_PREFIX "bup"
+
+#define FIRST_EMOTE_KEYCODE AMNESIA
+#define LAST_BUP_KEYCODE WAVE
 #define FIRST_BEX_KEYCODE BDANCE
 #define LAST_BEX_KEYCODE BUGH
-#define BEX_PREFIX "bexfro"
-#define FIRST_GKTY_KEYCODE GBIRDGROOVE
-#define LAST_GKTY_KEYCODE GRAVEKITTY
-#define GKTY_PREFIX "groove21"
 #define FIRST_KTLU_KEYCODE KCLAP
-#define LAST_KTLU_KEYCODE KWELP
+#define LAST_KTLU_KEYCODE KSMUG
+#define LAST_EMOTE_KEYCODE KSMUG
+#define BUP_PREFIX "bup"
+#define BEX_PREFIX "bexfro"
 #define KTLU_PREFIX "ktulue"
+#define MAX_EMOTE_LEN 32
 
 typedef struct {
     uint16_t keycode;
