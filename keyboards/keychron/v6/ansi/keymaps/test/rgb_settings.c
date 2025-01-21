@@ -1,15 +1,14 @@
+#include QMK_KEYBOARD_H
 #include "rgb_settings.h"
 #include "eeprom.h"
-#include "rgb_matrix.h"
-#include "raw_hid.h"
-#include "print.h"
+#include "via.h"
 
 user_config_t user_config; // Global configuration struct
 
 enum via_hue_value {
-    id_capslock_rgb = 1,
-    id_layer1_rgb   = 2,
-    id_layer2_rgb   = 3,
+    id_capslock_rgb   = 1,
+    id_numlock_rgb    = 2,
+    id_scrolllock_rgb = 3,
 };
 
 void via_custom_value_command_kb(uint8_t *data, uint8_t length) {
@@ -64,11 +63,11 @@ void  user_config_set_rgb(uint8_t *data) {
         case id_capslock_rgb:
             user_config.caps_lock_hs = temp_hsv;
             break;
-        case id_layer1_rgb:
-            user_config.layer1_hs = temp_hsv;
+        case id_numlock_rgb:
+            user_config.num_lock_hs = temp_hsv;
             break;
-        case id_layer2_rgb:
-            user_config.layer2_hs = temp_hsv;
+        case id_scrolllock_rgb:
+            user_config.scroll_lock_hs = temp_hsv;
             break;
         default:
             return; // Unknown value ID, do nothing
@@ -86,11 +85,11 @@ void user_config_get_rgb(uint8_t *data) {
         case id_capslock_rgb:
             temp_hsv = user_config.caps_lock_hs;
             break;
-        case id_layer1_rgb:
-            temp_hsv = user_config.layer1_hs;
+        case id_numlock_rgb:
+            temp_hsv = user_config.num_lock_hs;
             break;
-        case id_layer2_rgb:
-            temp_hsv = user_config.layer2_hs;
+        case id_scrolllock_rgb:
+            temp_hsv = user_config.scroll_lock_hs;
             break;
     }
 
