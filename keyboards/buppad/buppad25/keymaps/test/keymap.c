@@ -20,7 +20,8 @@
 #include <stdlib.h>
 
 #include "quantum.h"
-keycode_string_compressed_t keycode_strings[] = {
+
+keycode_suffix_t suffix[] = {
     {AMNESIA, "Amnesia"},
     {AYO, "Ayo"},
     {BACKDOOR, "BackDoor"},
@@ -176,21 +177,21 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case FIRST_EMOTE_KEYCODE ... LAST_EMOTE_KEYCODE: {
                 bool caps = host_keyboard_led_state().caps_lock;
-                size_t keycode_strings_count = sizeof(keycode_strings) / sizeof(keycode_strings[0]);
+                size_t string_count = sizeof(suffix) / sizeof(suffix[0]);
 
                 char emote_buffer[MAX_EMOTE_LEN];
 
-                for (size_t i = 0; i < keycode_strings_count; i++) {
-                    if (keycode == keycode_strings[i].keycode) {
+                for (size_t i = 0; i < string_count; i++) {
+                    if (keycode == suffix[i].keycode) {
 
                         if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_BUP_KEYCODE) {  // Most keycodes use the bup prefix
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BUP_PREFIX, keycode_strings[i].suffix);  // Construct full string with prefix
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BUP_PREFIX, suffix[i].string);  // Construct full string with prefix
                         }else if (keycode >= FIRST_BEX_KEYCODE && keycode <= LAST_BEX_KEYCODE) {   // Handle Bex keycodes
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BEX_PREFIX, keycode_strings[i].suffix);
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BEX_PREFIX, suffix[i].string);
                         }else if (keycode >= FIRST_KTLU_KEYCODE && keycode <= LAST_KTLU_KEYCODE) {  // Handle Ktulue keycodes
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", KTLU_PREFIX, keycode_strings[i].suffix);
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", KTLU_PREFIX, suffix[i].string);
                         } else {
-                            strlcpy(emote_buffer, keycode_strings[i].suffix, sizeof(emote_buffer));  // Non-prefixed keycodes
+                            strlcpy(emote_buffer, suffix[i].string, sizeof(emote_buffer));  // Non-prefixed keycodes
                         }
                         if (caps) {
                             invert_caps(emote_buffer);
