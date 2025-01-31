@@ -175,9 +175,4 @@ enum custom_keycodes {
 #define KTLU_PREFIX "ktulue"
 #define MAX_EMOTE_LEN 32
 
-typedef struct {
-    uint16_t keycode;
-    const char *string;
-} keycode_suffix_t;
-
 bool process_record_bup(uint16_t keycode, keyrecord_t *record);
