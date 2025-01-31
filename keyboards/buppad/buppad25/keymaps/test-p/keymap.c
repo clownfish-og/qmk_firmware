@@ -323,10 +323,6 @@ PGM_P const suffix[] PROGMEM = {
     ksmug,
 };
 
-const char bup_p[] = BUP_PREFIX;
-const char bex_p[] = BEX_PREFIX;
-const char ktlu_p[] = KTLU_PREFIX;
-
 // This function inverts the capitalization of each character in the given string.
 void invert_caps(char *str) {
     while (*str) {
@@ -355,17 +351,17 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 bool caps = host_keyboard_led_state().caps_lock;
                 char emote_buffer[MAX_EMOTE_LEN];
                 uint8_t i = keycode - FIRST_EMOTE_KEYCODE;
-                char suffix_buffer[strlen_P(suffix[i])];
-                strlcpy_P(suffix_buffer, suffix[i], sizeof(suffix_buffer));
+                char suffix_buffer[MAX_EMOTE_LEN];
+                strlcpy_P(suffix_buffer, suffix[i] , sizeof(suffix_buffer));
 
                         if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_BUP_KEYCODE) {  // Most keycodes use the bup prefix
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", bup_p, suffix_buffer);  // Construct full string with prefix
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BUP_PREFIX, suffix_buffer);  // Construct full string with prefix
                         }else if (keycode >= FIRST_BEX_KEYCODE && keycode <= LAST_BEX_KEYCODE) {   // Handle Bex keycodes
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", bex_p, suffix_buffer);
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BEX_PREFIX, suffix_buffer);
                         }else if (keycode >= FIRST_KTLU_KEYCODE && keycode <= LAST_KTLU_KEYCODE) {  // Handle Ktulue keycodes
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", ktlu_p, suffix_buffer);
+                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", KTLU_PREFIX, suffix_buffer);
                         } else {
-                            strlcpy_P(emote_buffer, suffix[i], sizeof(emote_buffer));  // Non-prefixed keycodes
+                            strlcpy_P(emote_buffer, suffix_buffer, sizeof(emote_buffer));  // Non-prefixed keycodes
                         }
                         if (caps) {
                             invert_caps(emote_buffer);
