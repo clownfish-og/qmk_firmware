@@ -238,23 +238,25 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
             case FIRST_EMOTE ... LAST_EMOTE: {
                 bool caps = host_keyboard_led_state().caps_lock;
                 uint8_t i = keycode - first_emote;
+                uprintf("i: %d\n", i);
                 char emote_buffer[40];
+                uprintf("Size of emote_buffer: %d\n", sizeof(emote_buffer));
                 emote_buffer[0] = '\0';
 
-                if (keycode >= start_bup && keycode <= end_bup) {  // Most keycodes use the bup prefix
-                    strlcpy(emote_buffer, bup_p, sizeof(emote_buffer));  // load prefix to buffer
+                if (start_bup <= keycode && keycode <= end_bup) {  // Most keycodes use the bup prefix
+                    strcpy(emote_buffer, bup_p);  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
-                } else if (keycode >= start_bex && keycode <= end_bex) {   // Handle Bex keycodes
-                    strlcpy(emote_buffer, bex_p, sizeof(emote_buffer));  // load prefix to buffer
+                } else if (start_bex <= keycode && keycode <= end_bex) {   // Handle Bex keycodes
+                    strcpy(emote_buffer, bex_p);  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
-                } else if (keycode >= start_ktlu && keycode <= end_ktlu) {  // Handle Ktulue keycodes
-                    strlcpy(emote_buffer, ktlu_p, sizeof(emote_buffer));  // load prefix to buffer
+                } else if (start_ktlu <= keycode && keycode <= end_ktlu) {  // Handle Ktulue keycodes
+                    strcpy(emote_buffer, ktlu_p);  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
                 } else {
-                    strlcpy(emote_buffer, suffix[i], sizeof(emote_buffer));  // Non-prefixed keycodes
+                    strcpy(emote_buffer, suffix[i]);  // Non-prefixed keycodes
                 }
 
                 // Debug output
@@ -265,7 +267,7 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 }
 
                 // Append a space and send the emote
-                strlcat(emote_buffer, " ", sizeof(emote_buffer));
+                strcat(emote_buffer, " ");
                 send_string(emote_buffer);
                 return false;
             }
