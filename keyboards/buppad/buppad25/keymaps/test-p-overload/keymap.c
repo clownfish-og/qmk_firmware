@@ -618,15 +618,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-#ifdef MAGIC_ENABLE
-#undef MAGIC_ENABLE
-#endif
 #ifndef MAGIC_ENABLE
 uint8_t mod_config(uint8_t mod) {
     return mod;
 }
-#endif
-#ifndef MAGIC_ENABLE
 uint16_t keycode_config(uint16_t keycode) {
     return keycode;
 }

@@ -204,8 +204,6 @@ const int start_bex = BDANCE;
 const int end_bex = BUGH;
 const int start_ktlu = KCLAP;
 const int end_ktlu = KSMUG;
-const int first_emote = FIRST_EMOTE;
-const int last_emote = LAST_EMOTE;
 
 const char bup_p[] = "bup";
 const char bex_p[] = "bexfro";
@@ -223,6 +221,19 @@ void invert_caps(char *str) {
     }
 }
 
+// Helper function to concatenate prefix and suffix
+void build_emote(char *emote_buffer, const char *prefix, const char *suffix_buffer, size_t buffer_size) {
+    bool caps = host_keyboard_led_state().caps_lock;
+    strncpy(emote_buffer, prefix, buffer_size);
+uprintf("Prefix: %s\n", emote_buffer);  // Debug output
+    strncat(emote_buffer, suffix_buffer, buffer_size - strlen(emote_buffer) - 1);
+uprintf("Emote: %s, Caps state: %d, ", emote_buffer, caps);  // Debug output
+    strncat(emote_buffer, " ", buffer_size - strlen(emote_buffer) - strlen(suffix_buffer) - 1);
+        if (caps) {
+            invert_caps(emote_buffer);
+        }
+}
+
 bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
@@ -237,47 +248,33 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case FIRST_EMOTE ... LAST_EMOTE: {
                 bool caps = host_keyboard_led_state().caps_lock;
-                uint8_t i = keycode - first_emote;
-                uprintf("i: %d\n", i);
-                char emote_buffer[40];
-                uprintf("Size of emote_buffer: %d\n", sizeof(emote_buffer));
+                uint8_t i = keycode - FIRST_EMOTE;
+                char suffix_buffer[24];
+                char emote_buffer[36];
+                suffix_buffer[0] = '\0';
                 emote_buffer[0] = '\0';
+                strncpy(suffix_buffer, suffix[i], sizeof(suffix_buffer) - 1);
+uprintf("Suffix array index i: %d, Suffix: %s, ", i, suffix_buffer);  // Debug output
 
-                if (start_bup <= keycode && keycode <= end_bup) {  // Most keycodes use the bup prefix
-                    strncpy(emote_buffer, bup_p, sizeof(emote_buffer));  // load prefix to buffer
-                    uprintf("Prefix: %s, ", emote_buffer);
-                    strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
-                } else if (start_bex <= keycode && keycode <= end_bex) {   // Handle Bex keycodes
-                    strncpy(emote_buffer, bex_p, sizeof(emote_buffer));  // load prefix to buffer
-                    uprintf("Prefix: %s, ", emote_buffer);
-                    strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
-                } else if (start_ktlu <= keycode && keycode <= end_ktlu) {  // Handle Ktulue keycodes
-                    strncpy(emote_buffer, ktlu_p, sizeof(emote_buffer));  // load prefix to buffer
-                    uprintf("Prefix: %s, ", emote_buffer);
-                    strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
+                if (start_bup <= keycode && keycode <= end_bup) {
+                    build_emote(emote_buffer, bup_p, suffix_buffer, sizeof(emote_buffer));
+                } else if (start_bex <= keycode && keycode <= end_bex) {
+                    build_emote(emote_buffer, bex_p, suffix_buffer, sizeof(emote_buffer));
+                } else if (start_ktlu <= keycode && keycode <= end_ktlu) {
+                    build_emote(emote_buffer, ktlu_p, suffix_buffer, sizeof(emote_buffer));
                 } else {
-                    strncpy(emote_buffer, suffix[i], sizeof(emote_buffer));  // Non-prefixed keycodes
+                    strncpy(emote_buffer, suffix_buffer, sizeof(emote_buffer));
                 }
+uprintf("Keycode: %u, Output: %s\n", keycode, emote_buffer);  // Debug output
 
-                // Debug output
-                uprintf("Keycode: %u, Suffix: %s, Emote: %s\n", keycode, suffix[i], emote_buffer);
-
-                if (caps) {
-                    invert_caps(emote_buffer);
-                }
-
-                // Append a space and send the emote
-                strcat(emote_buffer, " ");
                 send_string(emote_buffer);
-                uprintf("Keycode: %u, Caps: %d, Output: %s\n", keycode, caps, emote_buffer);
                 return false;
             }
-            default:
-                break;
         }
     }
     return true;
 }
+
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
