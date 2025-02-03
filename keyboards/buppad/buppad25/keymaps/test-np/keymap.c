@@ -269,7 +269,7 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 // Append a space and send the emote
                 strcat(emote_buffer, " ");
                 send_string(emote_buffer);
-                uprintf("Keycode: %u, Output: %s\n", keycode, emote_buffer);
+                uprintf("Keycode: %u, Caps: %d, Output: %s\n", keycode, caps, emote_buffer);
                 return false;
             }
             default:
