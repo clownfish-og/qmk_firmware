@@ -58,7 +58,7 @@
         "default": {
             "animation": "cycle_spiral",
             "val": 50,
-            "hue": 180
+            "hue": 160
         },
         "driver": "ws2812",
         "layout": [
