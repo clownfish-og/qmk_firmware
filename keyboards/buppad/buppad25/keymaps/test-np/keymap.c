@@ -244,19 +244,19 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 emote_buffer[0] = '\0';
 
                 if (start_bup <= keycode && keycode <= end_bup) {  // Most keycodes use the bup prefix
-                    strcpy(emote_buffer, bup_p);  // load prefix to buffer
+                    strncpy(emote_buffer, bup_p, sizeof(emote_buffer));  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
                 } else if (start_bex <= keycode && keycode <= end_bex) {   // Handle Bex keycodes
-                    strcpy(emote_buffer, bex_p);  // load prefix to buffer
+                    strncpy(emote_buffer, bex_p, sizeof(emote_buffer));  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
                 } else if (start_ktlu <= keycode && keycode <= end_ktlu) {  // Handle Ktulue keycodes
-                    strcpy(emote_buffer, ktlu_p);  // load prefix to buffer
+                    strncpy(emote_buffer, ktlu_p, sizeof(emote_buffer));  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix[i]);                     // append suffix to buffer
                 } else {
-                    strcpy(emote_buffer, suffix[i]);  // Non-prefixed keycodes
+                    strncpy(emote_buffer, suffix[i], sizeof(emote_buffer));  // Non-prefixed keycodes
                 }
 
                 // Debug output
@@ -269,6 +269,7 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 // Append a space and send the emote
                 strcat(emote_buffer, " ");
                 send_string(emote_buffer);
+                uprintf("Keycode: %u, Output: %s\n", keycode, emote_buffer);
                 return false;
             }
             default:
@@ -286,3 +287,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
+#ifdef MAGIC_ENABLE
+#undef MAGIC_ENABLE
+#endif
+#ifndef MAGIC_ENABLE
+uint8_t mod_config(uint8_t mod) {
+    return mod;
+}
+#endif
+#ifndef MAGIC_ENABLE
+uint16_t keycode_config(uint16_t keycode) {
+    return keycode;
+}
+#endif
