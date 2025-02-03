@@ -366,30 +366,30 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 bool caps = host_keyboard_led_state().caps_lock;
                 uint8_t i = keycode - first_emote;
                 uprintf("i: %d\n", i);
-                char suffix_buffer[30];
-                char emote_buffer[40];
+                char suffix_buffer[24];
+                char emote_buffer[36];
                 uprintf("Size of suffix_buffer: %d\n", sizeof(suffix_buffer));
                 uprintf("Size of emote_buffer: %d\n", sizeof(emote_buffer));
                 suffix_buffer[0] = '\0';
                 emote_buffer[0] = '\0';
-                strcpy_P(suffix_buffer, (suffix[i]));
+                strncpy_P(suffix_buffer, (PGM_P)pgm_read_ptr(&(suffix[i])), sizeof(suffix_buffer) - 1);
                 uprintf("Suffix buffer: %s\n", suffix_buffer);
 
 
                 if (start_bup <= keycode && keycode <= end_bup) {  // Most keycodes use the bup prefix
-                    strcpy(emote_buffer, bup_p);  // load prefix to buffer
+                    strncpy(emote_buffer, bup_p, sizeof(emote_buffer));  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix_buffer);                     // append suffix to buffer
-                } else if (keycode >= start_bex && keycode <= end_bex) {   // Handle Bex keycodes
-                    strcpy(emote_buffer, bex_p);  // load prefix to buffer
+                } else if (start_bex <= keycode && keycode <= end_bex){   // Handle Bex keycodes
+                    strncpy(emote_buffer, bex_p, sizeof(emote_buffer));  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix_buffer);                     // append suffix to buffer
-                } else if (keycode >= start_ktlu && keycode <= end_ktlu) {  // Handle Ktulue keycodes
-                    strcpy(emote_buffer, ktlu_p);  // load prefix to buffer
+                } else if (start_ktlu <= keycode && keycode <= end_ktlu) {  // Handle Ktulue keycodes
+                    strncpy(emote_buffer, ktlu_p, sizeof(emote_buffer));  // load prefix to buffer
                     uprintf("Prefix: %s, ", emote_buffer);
                     strcat(emote_buffer, suffix_buffer);                     // append suffix to buffer
                 } else {
-                    strcpy(emote_buffer, suffix_buffer);  // Non-prefixed keycodes
+                    strncpy(emote_buffer, suffix_buffer, sizeof(emote_buffer));  // Non-prefixed keycodes
                 }
 
                 // Debug output
@@ -402,6 +402,7 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 // Append a space and send the emote
                 strcat(emote_buffer, " ");
                 send_string(emote_buffer);
+                uprintf("Keycode: %u, Caps: %d, Output: %s\n", keycode, caps, emote_buffer);
                 return false;
             }
             default:
@@ -411,7 +412,6 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_bup(keycode, record)) {
         return false;
@@ -419,3 +419,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
+
+#ifdef MAGIC_ENABLE
+#undef MAGIC_ENABLE
+#endif
+#ifndef MAGIC_ENABLE
+uint8_t mod_config(uint8_t mod) {
+    return mod;
+}
+#endif
+#ifndef MAGIC_ENABLE
+uint16_t keycode_config(uint16_t keycode) {
+    return keycode;
+}
+#endif
