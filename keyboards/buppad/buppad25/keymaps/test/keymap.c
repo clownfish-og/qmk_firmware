@@ -15,11 +15,55 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "keymap.h"
 #include <ctype.h>
-#include <stdlib.h>
+#include "keymap.h"
 
-#include "quantum.h"
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [0] = LAYOUT(
+        TO(1),      CHEESE,     AMNESIA,    GROOVY,     DUCKDANCE,
+        DISCO,      DIDDY,      CATDANCE,   SLAY,       BEARDDANCE,
+        PATBANG,    FREAKOUT,   DRUMS,      FROG,       KEKW,
+        BACKDOOR,   LOVE,       THANKS,     ZEJIBO,     BUG,
+        BITS,       MOOSE,      BUP,        CAPGEN5,    KC_ENT
+    ),
+    [1] = LAYOUT(
+        TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
+        WATER,      DONUT,      DYE,        SMIRK,      EXCUSEME,
+        RUMP,       TINFOIL,    CLOUDS,     SALT,       WINK,
+        BALLOON,    HEART,      ASCEND,     JELLY,      PLUG,
+        RAVE,       CROWN,      TIEDYE,     DRAGON,     SUS
+    ),
+    [2] = LAYOUT(
+        TO(0),      TO(1),      TO(5),      TO(3),      TO(4),
+        DUCKHEAD,   WIZ,        CHEFKISS,   MAPLE,      BIGBRAIN,
+        CALL,       DOIT,       GROGU,      JAWNESSA,   BART,
+        BUPS,       BROC,       BUPWAD,     LUIGIBUP,   ZELDABUP,
+        AYO,        TUNE,       SH,         EE,         ID
+    ),
+    [3] = LAYOUT(
+        TO(0),      TO(1),      TO(2),      TO(5),      TO(4),
+        BASSSFACE,   BOB,        LIGHTER,    UWU,        UP,
+        NOD,        GOOSE,      BOOMER,     WUB,        WOOK,
+        HEADOUT,    RAINBOW,    SALUTE,     SWEATY,     HORN,
+        FLUTE,      FIRE,       CHEERS,     KEYS,       CHILLGUY
+    ),
+    [4] = LAYOUT(
+        TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
+        BDANCE,     BMINGO,     BMONKEY,    BPUG,       BUGH,
+        KGLUTES,    KHI,        KHUG,       KLEI,       KLOVE,
+        KCLAP,      KGATO,      KGGS,       KRDNC,      KSMUG,
+        BOPBOP,     DINODANCE,  UNITY,      KAPPA,      TOMBRAID
+    ),
+    [5] = LAYOUT(
+        TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
+        RGB_MOD,    RGB_VAI,    RGB_HUI,    RGB_SAI,    RGB_SPI,
+        RGB_RMOD,   RGB_VAD,    RGB_HUD,    RGB_SAD,    RGB_SPD,
+        KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,
+        RGB_M_P,    RGB_M_B,    RGB_M_R,    RGB_M_SW,   RGB_TOG
+    ),
+};
+
 
 
     const char *suffix[] = {
@@ -152,6 +196,21 @@
     "SMUG"
 };
 
+#define FIRST_EMOTE AMNESIA
+#define LAST_EMOTE KSMUG
+const int start_bup = AMNESIA;
+const int end_bup = WAVE;
+const int start_bex = BDANCE;
+const int end_bex = BUGH;
+const int start_ktlu = KCLAP;
+const int end_ktlu = KSMUG;
+const int first_emote = FIRST_EMOTE;
+const int last_emote = LAST_EMOTE;
+
+const char bup_p[] = "bup";
+const char bex_p[] = "bexfro";
+const char ktlu_p[] = "ktulue";
+
 // This function inverts the capitalization of each character in the given string.
 void invert_caps(char *str) {
     while (*str) {
@@ -176,26 +235,32 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
             case CAPGEN10:
                 SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
                 return false;
-            case FIRST_EMOTE_KEYCODE ... LAST_EMOTE_KEYCODE: {
+            case FIRST_EMOTE ... LAST_EMOTE: {
                 bool caps = host_keyboard_led_state().caps_lock;
-                uint8_t i = keycode - FIRST_EMOTE_KEYCODE;
-                char emote_buffer[MAX_EMOTE_LEN];
-                    if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_BUP_KEYCODE) {  // Most keycodes use the bup prefix
-                        snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BUP_PREFIX, suffix[i]);  // Construct full string with prefix
-                    }else if (keycode >= FIRST_BEX_KEYCODE && keycode <= LAST_BEX_KEYCODE) {   // Handle Bex keycodes
-                        snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BEX_PREFIX, suffix[i]);
-                    }else if (keycode >= FIRST_KTLU_KEYCODE && keycode <= LAST_KTLU_KEYCODE) {  // Handle Ktulue keycodes
-                        snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", KTLU_PREFIX, suffix[i]);
-                    } else {
-                        strlcpy(emote_buffer, suffix[i], sizeof(emote_buffer));  // Non-prefixed keycodes
-                    }
-                    if (caps) {
-                        invert_caps(emote_buffer);
-                    }
+                uint8_t i = keycode - first_emote;
+                char emote_buffer[40];
+                emote_buffer[0] = '\0';
 
-                    // Send the emote and always append a space
-                    send_string(emote_buffer);
-                    send_string(" ");
+                if (start_bup <= keycode && keycode <= end_bup) {           // Most keycodes use the bup prefix
+                    strcpy(emote_buffer, bup_p);                            // load prefix to buffer
+                    strcat(emote_buffer, suffix[i]);                        // append suffix to buffer
+                } else if (start_bex <= keycode && keycode <= end_bex) {    // Handle Bex keycodes
+                    strcpy(emote_buffer, bex_p);                            // load prefix to buffer
+                    strcat(emote_buffer, suffix[i]);                        // append suffix to buffer
+                } else if (start_ktlu <= keycode && keycode <= end_ktlu) {  // Handle Ktulue keycodes
+                    strcpy(emote_buffer, ktlu_p);                           // load prefix to buffer
+                    strcat(emote_buffer, suffix[i]);                        // append suffix to buffer
+                } else {
+                    strcpy(emote_buffer, suffix[i]);                        // Non-prefixed keycodes
+                }
+
+                if (caps) {
+                    invert_caps(emote_buffer);
+                }
+
+                // Append a space and send the emote
+                strcat(emote_buffer, " ");
+                send_string(emote_buffer);
                 return false;
             }
             default:
@@ -205,50 +270,6 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(
-        TO(1),      CHEESE,     AMNESIA,    GROOVY,     DUCKDANCE,
-        DISCO,      DIDDY,      CATDANCE,   SLAY,       BEARDDANCE,
-        PATBANG,    FREAKOUT,   DRUMS,      FROG,       KEKW,
-        BACKDOOR,   LOVE,       THANKS,     ZEJIBO,     BUG,
-        BITS,       MOOSE,      BUP,        CAPGEN5,    KC_ENT
-    ),
-    [1] = LAYOUT(
-        TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
-        WATER,      DONUT,      DYE,        SMIRK,      EXCUSEME,
-        RUMP,       TINFOIL,    CLOUDS,     SALT,       WINK,
-        BALLOON,    HEART,      ASCEND,     JELLY,      PLUG,
-        RAVE,       CROWN,      TIEDYE,     DRAGON,     SUS
-    ),
-    [2] = LAYOUT(
-        TO(0),      TO(1),      TO(5),      TO(3),      TO(4),
-        DUCKHEAD,   WIZ,        CHEFKISS,   MAPLE,      BIGBRAIN,
-        CALL,       DOIT,       GROGU,      JAWNESSA,   BART,
-        BUPS,       BROC,       BUPWAD,     LUIGIBUP,   ZELDABUP,
-        AYO,        TUNE,       SH,         EE,         ID
-    ),
-    [3] = LAYOUT(
-        TO(0),      TO(1),      TO(2),      TO(5),      TO(4),
-        BASSFACE,   BOB,        LIGHTER,    UWU,        UP,
-        NOD,        GOOSE,      BOOMER,     WUB,        WOOK,
-        HEADOUT,    RAINBOW,    SALUTE,     SWEATY,     HORN,
-        FLUTE,      FIRE,       CHEERS,     KEYS,       CHILLGUY
-    ),
-    [4] = LAYOUT(
-        TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
-        BDANCE,     BMINGO,     BMONKEY,    BPUG,       BUGH,
-        KGLUTES,    KHI,        KHUG,       KLEI,       KLOVE,
-        KCLAP,      KGATO,      KGGS,       KRDNC,      KSMUG,
-        BOPBOP,     DINODANCE,  UNITY,      KAPPA,      TOMBRAID
-    ),
-    [5] = LAYOUT(
-        TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
-        RGB_MOD,    RGB_VAI,    RGB_HUI,    RGB_SAI,    RGB_SPI,
-        RGB_RMOD,   RGB_VAD,    RGB_HUD,    RGB_SAD,    RGB_SPD,
-        KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,
-        RGB_M_P,    RGB_M_B,    RGB_M_R,    RGB_M_SW,   RGB_TOG
-    ),
-};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_bup(keycode, record)) {

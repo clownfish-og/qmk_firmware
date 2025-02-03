@@ -97,7 +97,7 @@ enum custom_keycodes {
     TINFOIL,
     WATER,
     WIZ,
-    BASSFACE, //begin tier 3000 emotes
+    BASSSFACE, //begin tier 3000 emotes
     BOB,
     CHILLGUY,
     DRAGON,
@@ -161,18 +161,5 @@ enum custom_keycodes {
     KRDNC,
     KSMUG, //end fam emotes
 };
-
-
-#define FIRST_EMOTE_KEYCODE AMNESIA
-#define LAST_BUP_KEYCODE WAVE
-#define FIRST_BEX_KEYCODE BDANCE
-#define LAST_BEX_KEYCODE BUGH
-#define FIRST_KTLU_KEYCODE KCLAP
-#define LAST_KTLU_KEYCODE KSMUG
-#define LAST_EMOTE_KEYCODE KSMUG
-#define BUP_PREFIX "bup"
-#define BEX_PREFIX "bexfro"
-#define KTLU_PREFIX "ktulue"
-#define MAX_EMOTE_LEN 32
 
 bool process_record_bup(uint16_t keycode, keyrecord_t *record);
