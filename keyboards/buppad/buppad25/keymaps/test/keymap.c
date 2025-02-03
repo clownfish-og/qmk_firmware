@@ -241,15 +241,15 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
                 char emote_buffer[40];
                 emote_buffer[0] = '\0';
 
-                if (start_bup <= keycode && keycode <= end_bup) {           // Most keycodes use the bup prefix
+                if (start_bup <= keycode && keycode <= end_bup) {           // Handle bup keycodes
                     strcpy(emote_buffer, bup_p);                            // load prefix to buffer
                     strcat(emote_buffer, suffix[i]);                        // append suffix to buffer
                 } else if (start_bex <= keycode && keycode <= end_bex) {    // Handle Bex keycodes
-                    strcpy(emote_buffer, bex_p);                            // load prefix to buffer
-                    strcat(emote_buffer, suffix[i]);                        // append suffix to buffer
+                    strcpy(emote_buffer, bex_p);
+                    strcat(emote_buffer, suffix[i]);
                 } else if (start_ktlu <= keycode && keycode <= end_ktlu) {  // Handle Ktulue keycodes
-                    strcpy(emote_buffer, ktlu_p);                           // load prefix to buffer
-                    strcat(emote_buffer, suffix[i]);                        // append suffix to buffer
+                    strcpy(emote_buffer, ktlu_p);
+                    strcat(emote_buffer, suffix[i]);
                 } else {
                     strcpy(emote_buffer, suffix[i]);                        // Non-prefixed keycodes
                 }
