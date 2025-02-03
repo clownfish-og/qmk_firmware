@@ -15,19 +15,7 @@
  */
 
 #pragma once
-
-#include <stdint.h>
-#include <stdbool.h>
-#include "action.h"
-#include "quantum.h"
-
-#ifdef VIA_ENABLE
-#    include "via.h"
-#endif
-
-#include "quantum_keycodes.h"
-
-
+#include "keycodes.h"
 
 enum custom_keycodes {
     CAPGEN5 = QK_KB_0,
