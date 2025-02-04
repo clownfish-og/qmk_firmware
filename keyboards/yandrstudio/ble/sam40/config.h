@@ -15,37 +15,6 @@
  */
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xAA96
-#define PRODUCT_ID      0xAA84
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    "SAM_Y&R"
-#define PRODUCT         "sam40"
-
-/* key matrix size */
-#define MATRIX_ROWS 4
-#define MATRIX_COLS 13
-
-//                        0    1    2    3    4   5    6    7    8    9    10   11,  12
-#define MATRIX_COL_PINS { A3,  A4,  A5,  A6,  A7, B12, B13, B14, B15, A8,  B8,  B3,  C13 }
-#define MATRIX_ROW_PINS { B7,  B6,  B5,  B4 }
-
-/* COL2ROW or ROW2COL */
-#define DIODE_DIRECTION COL2ROW
-
-// enable the nkro when using the VIA.
-#define FORCE_NKRO
-
-
-// fix VIA RGB_light
-#define VIA_HAS_BROKEN_KEYCODES
-
-
-/* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 5
-
-#define TAP_CODE_DELAY 15
-
 #define DISABLE_MAGIC_BOOTLOADER
 #define DISABLE_EEPROM_CLEAR
 
