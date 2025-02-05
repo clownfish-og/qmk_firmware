@@ -30,12 +30,28 @@
     },
     "url": "https://sneakbox.com",
     "layouts": {
-        "LAYOUT": {
+        "LAYOUT_split_ansi": {
             "layout": [
-                {"matrix": [0, 0], "x": 1, "y": 1},
-                {"matrix": [0, 1], "x": 1.625, "y": 1},
-                {"matrix": [0, 2], "x": 0, "y": 1},
-                {"matrix": [0, 3], "x": 0.75, "y": 0}
+                {"label": "\\", "matrix": [0, 0], "x": 0.75, "y": 0, "w": 1.5},
+                {"label": "Esc", "matrix": [0, 3], "x": 0, "y": 1},
+                {"label": "GUI", "matrix": [0, 1], "x": 1, "y": 1, "w": 1.25}
+            ]
+        },
+        "LAYOUT_ansi": {
+            "layout": [
+                {"label": "\\", "matrix": [0, 0], "x": 0.75, "y": 0, "w": 1.5},
+                {"label": "Enter", "matrix": [0, 2], "x": 0, "y": 1, "w": 2.25}
+            ]
+        },
+        "LAYOUT_iso": {
+            "layout": [
+                {"label": "Enter", "matrix": [0, 0], "x": 1, "y": 0, "w": 1.25, "h": 2},
+                {"label": "\\", "matrix": [0, 3], "x": 0, "y": 1}
+            ]
+        },
+        "LAYOUT_bae": {
+            "layout": [
+                {"label": "Enter", "matrix": [0, 2], "x": 0.75, "y": 0, "w": 1.5, "h": 2}
             ]
         }
     }
