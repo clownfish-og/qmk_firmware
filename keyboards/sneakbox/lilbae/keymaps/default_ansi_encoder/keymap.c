@@ -26,9 +26,16 @@ enum layer_names {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_all(
               KC_BSLS,
-    LT(_FN, KC_ESC), KC_LGUI),
+    KC_MUTE,  LT(_FN, KC_LGUI)),
 
     [_FN] = LAYOUT_all(
               KC_TRNS,
     KC_TRNS,  KC_TRNS),
 };
+
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    [_BASE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [_FN] = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
+};
+#endif
