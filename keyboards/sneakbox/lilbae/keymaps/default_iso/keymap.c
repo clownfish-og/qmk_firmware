@@ -24,11 +24,11 @@ enum layer_names {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_BASE] = LAYOUT_all(
-              KC_BSLS,
-    LT(_FN, KC_ESC), KC_LGUI),
+    [_BASE] = LAYOUT_iso(
+              KC_ENT,
+    LT(_FN, KC_NUBS)),
 
-    [_FN] = LAYOUT_all(
+    [_FN] = LAYOUT_iso(
               KC_TRNS,
-    KC_TRNS,  KC_TRNS),
+    KC_TRNS),
 };
