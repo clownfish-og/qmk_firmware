@@ -19,64 +19,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Defines names for use in layer keycodes and the keymap
 enum layer_names {
-    MB,
-    MP,
+    AP,
     AB,
-    AP
+    MN
 };
 enum custom_keycodes {
-    MORNBR = SAFE_RANGE,
-    AFTNBR,
-    MORNPR,
-    AFTNPR
+    AFTERNOON_PROJECT = SAFE_RANGE,
+    AFTERNOON_BRIGHTNESS,
+    MORNING
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [MB] = LAYOUT_bae(
-        MORNBR),
+    [AP] = LAYOUT_bae(AFTERNOON_PROJECT),
 
-    [MP] = LAYOUT_bae(
-        MORNPR),
+    [AB] = LAYOUT_bae(AFTERNOON_BRIGHTNESS),
 
-    [AP] = LAYOUT_bae(
-        AFTNPR),
-
-    [AB] = LAYOUT_bae(
-        AFTNBR),
+    [MN] = LAYOUT_bae(MORNING),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case MORNBR:
+        case AFTERNOON_PROJECT:
             if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("a") SS_DELAY(400) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(100) SS_TAP(X_END) SS_DELAY(200) SS_TAP(X_ESC));
-            } else {
-                layer_move(MP);
-                set_single_persistent_default_layer(MP);
-            }
-            break;
-        case MORNPR:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("p") SS_DELAY(400) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(200) SS_TAP(X_ESC) );
-            } else {
-                layer_move(AP);
-                set_single_persistent_default_layer(AP);
-            }
-            break;
-        case AFTNPR:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("p") SS_DELAY(400) SS_TAP(X_PGUP) SS_DELAY(100) SS_TAP(X_ESC) );
+                SEND_STRING(SS_LGUI("p") SS_DELAY(300) SS_TAP(X_PGUP) SS_DELAY(100) SS_TAP(X_ESC) );
             } else {
                 layer_move(AB);
                 set_single_persistent_default_layer(AB);
             }
             break;
-        case AFTNBR:
+        case AFTERNOON_BRIGHTNESS:
             if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("a") SS_DELAY(400) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(100) SS_TAP(X_HOME) SS_DELAY(200) SS_TAP(X_ESC));
+                SEND_STRING(SS_LGUI("a") SS_DELAY(200) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(50) SS_TAP(X_HOME) SS_DELAY(100) SS_TAP(X_ESC));
             } else {
-                layer_move(MB);
-                set_single_persistent_default_layer(MB);
+                layer_move(MN);
+                set_single_persistent_default_layer(MN);
+            }
+            break;
+        case MORNING:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LGUI("a") SS_DELAY(200) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(50) SS_TAP(X_END) SS_DELAY(100) SS_TAP(X_ESC));
+                SEND_STRING(SS_LGUI("p") SS_DELAY(300) SS_TAP(X_DOWN) SS_DELAY(50) SS_TAP(X_DOWN) SS_DELAY(50) SS_TAP(X_ENT) SS_DELAY(100) SS_TAP(X_ESC) );
+            } else {
+                layer_move(AP);
+                set_single_persistent_default_layer(AP);
             }
             break;
     }
