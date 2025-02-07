@@ -57,10 +57,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [5] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
-        RGB_MOD,    RGB_VAI,    RGB_HUI,    RGB_SAI,    RGB_SPI,
-        RGB_RMOD,   RGB_VAD,    RGB_HUD,    RGB_SAD,    RGB_SPD,
+        UG_NEXT,    UG_VALU,    UG_HUEU,    UG_SATU,    UG_SPDU,
+        UG_PREV,    UG_VALD,    UG_HUED,    UG_SATD,    UG_SPDD,
         KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,
-        RGB_M_P,    RGB_M_B,    RGB_M_R,    RGB_M_SW,   RGB_TOG
+        TT(6),      RMAM,       RMPL,       RMSW,       UG_TOGG
+    ),
+    [6] = LAYOUT(
+        KC_ESC,     KC_NUM,     KC_PSLS,    KC_PAST,    KC_BSPC,
+        TO(0),      KC_P7,      KC_P8,      KC_P9,      KC_PMNS,
+        TG(5),      KC_P4,      KC_P5,      KC_P6,      KC_PPLS,
+        TG(6),      KC_P1,      KC_P2,      KC_P3,      KC_PENT,
+        _______,    KC_P0,      KC_P0,      KC_PDOT,    KC_PENT
     ),
 };
 
@@ -196,8 +203,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     "SMUG"
 };
 
-#define FIRST_EMOTE AMNESIA
-#define LAST_EMOTE KSMUG
 const int start_bup = AMNESIA;
 const int end_bup = WAVE;
 const int start_bex = BDANCE;
@@ -234,20 +239,10 @@ uprintf("Emote: %s, Caps state: %d, ", emote_buffer, caps);  // Debug output
         }
 }
 
-bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case CAPGEN5:
-                SEND_STRING(SS_LCTL("acvvvvv"));
-                return false;
-            case CAPGEN8:
-                SEND_STRING(SS_LCTL("acvvvvvvvv"));
-                return false;
-            case CAPGEN10:
-                SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
-                return false;
             case FIRST_EMOTE ... LAST_EMOTE: {
-                bool caps = host_keyboard_led_state().caps_lock;
                 uint8_t i = keycode - FIRST_EMOTE;
                 char suffix_buffer[24];
                 char emote_buffer[36];
@@ -275,24 +270,10 @@ uprintf("Keycode: %u, Output: %s\n", keycode, emote_buffer);  // Debug output
     return true;
 }
 
-
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_bup(keycode, record)) {
-        return false;
-    }
-
-    return true;
-}
-#ifdef MAGIC_ENABLE
-#undef MAGIC_ENABLE
-#endif
 #ifndef MAGIC_ENABLE
 uint8_t mod_config(uint8_t mod) {
     return mod;
 }
-#endif
-#ifndef MAGIC_ENABLE
 uint16_t keycode_config(uint16_t keycode) {
     return keycode;
 }

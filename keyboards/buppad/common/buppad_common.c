@@ -165,15 +165,6 @@ void invert_caps(char *str) {
 bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case CAPGEN5:
-                SEND_STRING(SS_LCTL("acvvvvv"));
-                return false;
-            case CAPGEN8:
-                SEND_STRING(SS_LCTL("acvvvvvvvv"));
-                return false;
-            case CAPGEN10:
-                SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
-                return false;
             case FIRST_EMOTE_KEYCODE ... LAST_EMOTE_KEYCODE: {
                 bool caps = host_keyboard_led_state().caps_lock;
                 size_t string_count = sizeof(suffix) / sizeof(suffix[0]);

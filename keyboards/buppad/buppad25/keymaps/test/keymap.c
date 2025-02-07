@@ -196,8 +196,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     "SMUG"
 };
 
-#define FIRST_EMOTE AMNESIA
-#define LAST_EMOTE KSMUG
 const int start_bup = AMNESIA;
 const int end_bup = WAVE;
 const int start_bex = BDANCE;
@@ -234,20 +232,10 @@ uprintf("Emote: %s, Caps state: %d, ", emote_buffer, caps);  // Debug output
         }
 }
 
-bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case CAPGEN5:
-                SEND_STRING(SS_LCTL("acvvvvv"));
-                return false;
-            case CAPGEN8:
-                SEND_STRING(SS_LCTL("acvvvvvvvv"));
-                return false;
-            case CAPGEN10:
-                SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
-                return false;
             case FIRST_EMOTE ... LAST_EMOTE: {
-                bool caps = host_keyboard_led_state().caps_lock;
                 uint8_t i = keycode - FIRST_EMOTE;
                 char suffix_buffer[24];
                 char emote_buffer[36];
@@ -275,24 +263,10 @@ uprintf("Keycode: %u, Output: %s\n", keycode, emote_buffer);  // Debug output
     return true;
 }
 
-
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_bup(keycode, record)) {
-        return false;
-    }
-
-    return true;
-}
-#ifdef MAGIC_ENABLE
-#undef MAGIC_ENABLE
-#endif
 #ifndef MAGIC_ENABLE
 uint8_t mod_config(uint8_t mod) {
     return mod;
 }
-#endif
-#ifndef MAGIC_ENABLE
 uint16_t keycode_config(uint16_t keycode) {
     return keycode;
 }

@@ -16,8 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include <ctype.h>
-#include <avr/pgmspace.h>
-#include <quantum.h>
+#include "buppad25.h"
 #ifndef MAGIC_ENABLE
 uint8_t mod_config(uint8_t mod) {
     return mod;
@@ -26,14 +25,8 @@ uint16_t keycode_config(uint16_t keycode) {
     return keycode;
 }
 #endif
-
-enum custom_keycodes {
-    CAPGEN5 = QK_KB_0,
-    CAPGEN8,
-    CAPGEN10
-};
 enum emotes {
-    AMNESIA = QK_KB_3, //begin bup emotes
+    AMNESIA = FIRST_EMOTE, //begin bup emotes
     AYO,
     BACKDOOR,
     BALLOON,
@@ -720,7 +713,6 @@ PGM_P const suffix[] PROGMEM = {
     test100
 };
 
-#define FIRST_EMOTE AMNESIA
 #define LAST_EMOTE T100
 const int start_bup = AMNESIA;
 const int end_bup = WAVE;
@@ -767,15 +759,6 @@ uprintf("Emote: %s, Caps state: %d, ", emote_buffer, caps);  // Debug output
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case CAPGEN5:
-                SEND_STRING(SS_LCTL("acvvvvv"));
-                return false;
-            case CAPGEN8:
-                SEND_STRING(SS_LCTL("acvvvvvvvv"));
-                return false;
-            case CAPGEN10:
-                SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
-                return false;
             case FIRST_EMOTE ... LAST_EMOTE: {
                 uint8_t i = keycode - FIRST_EMOTE;
                 char suffix_buffer[24];

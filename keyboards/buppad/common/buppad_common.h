@@ -30,10 +30,7 @@
 
 
 enum custom_keycodes {
-    CAPGEN5 = QK_KB_0,
-    CAPGEN8,
-    CAPGEN10,
-    AMNESIA, //begin bup emotes
+    AMNESIA = QK_KB_6, //begin bup emotes
     AYO,
     BACKDOOR,
     BALLOON,

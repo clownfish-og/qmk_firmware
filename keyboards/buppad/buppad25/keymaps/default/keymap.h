@@ -15,25 +15,10 @@
  */
 
 #pragma once
-
-#include <stdint.h>
-#include <stdbool.h>
-#include "action.h"
-#include "quantum.h"
-
-#ifdef VIA_ENABLE
-#    include "via.h"
-#endif
-
-#include "quantum_keycodes.h"
-
-
+#include "buppad25.h"
 
 enum custom_keycodes {
-    CAPGEN5 = QK_KB_0,
-    CAPGEN8,
-    CAPGEN10,
-    AMNESIA, //begin bup emotes
+    AMNESIA = FIRST_EMOTE, //begin bup emotes
     AYO,
     BACKDOOR,
     BALLOON,
@@ -162,4 +147,4 @@ enum custom_keycodes {
     KSMUG, //end fam emotes
 };
 
-bool process_record_bup(uint16_t keycode, keyrecord_t *record);
+#define LAST_EMOTE KSMUG

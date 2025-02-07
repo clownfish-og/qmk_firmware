@@ -19,11 +19,10 @@
 #include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE
-
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_user(keycode, record)) { return false; }
     switch (keycode) {
-        case UG_TOGG:
+        case QK_UNDERGLOW_TOGGLE:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {
@@ -40,6 +39,36 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_enable();
             }
             return false;
+        case RMPL:
+            if (record->event.pressed) {
+                if (rgb_matrix_is_enabled()) rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+            }
+            return false;
+        case RMAM:
+            if (record->event.pressed) {
+                if (rgb_matrix_is_enabled()) rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+            }
+            return false;
+        case RMSW:
+            if (record->event.pressed) {
+                if (rgb_matrix_is_enabled()) rgb_matrix_mode(RGB_MATRIX_CYCLE_SPIRAL);
+            }
+            return false;
+        case CAPGEN5:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("acvvvvv"));
+                return false;
+            }
+        case CAPGEN8:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("acvvvvvvvv"));
+                return false;
+            }
+        case CAPGEN10:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
+                return false;
+            }
     }
     return true;
 }

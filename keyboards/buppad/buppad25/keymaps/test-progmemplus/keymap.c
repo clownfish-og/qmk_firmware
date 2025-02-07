@@ -522,8 +522,6 @@ PGM_P const suffix[] PROGMEM = {
     test100
 };
 
-#define FIRST_EMOTE AMNESIA
-#define LAST_EMOTE T100
 const int start_bup = AMNESIA;
 const int end_bup = WAVE;
 const int start_bex = BDANCE;
@@ -566,18 +564,9 @@ uprintf("Emote: %s, Caps state: %d, ", emote_buffer, caps);  // Debug output
         }
 }
 
-bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
-            case CAPGEN5:
-                SEND_STRING(SS_LCTL("acvvvvv"));
-                return false;
-            case CAPGEN8:
-                SEND_STRING(SS_LCTL("acvvvvvvvv"));
-                return false;
-            case CAPGEN10:
-                SEND_STRING(SS_LCTL("acvvvvvvvvvv"));
-                return false;
             case FIRST_EMOTE ... LAST_EMOTE: {
                 uint8_t i = keycode - FIRST_EMOTE;
                 char suffix_buffer[24];
@@ -607,14 +596,6 @@ uprintf("Keycode: %u, Output: %s\n", keycode, emote_buffer);  // Debug output
             }
         }
     }
-    return true;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_bup(keycode, record)) {
-        return false;
-    }
-
     return true;
 }
 
