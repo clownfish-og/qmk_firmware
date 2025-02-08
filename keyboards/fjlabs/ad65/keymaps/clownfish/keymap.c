@@ -16,7 +16,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 enum custom_keycodes {
     CHROME = QK_KB_0,
-    CAPGEN
+    CAPGEN,
+    VENV,
+    CLANGD
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -29,6 +31,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CAPGEN:
             if (record->event.pressed) {
                 SEND_STRING(SS_LCTL("acvvvvv"));
+            }
+            return false;
+        case VENV:
+            if (record->event.pressed) {
+                SEND_STRING("source .venv/bin/activate\n");
+            }
+            return false;
+        case CLANGD:
+            if (record->event.pressed) {
+                SEND_STRING("qmk compile -kb  -km  --compiledb" SS_TAP(X_HOME) SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_UP(X_LCTL) SS_TAP(X_RIGHT));
             }
             return false;
         default:
@@ -51,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_GESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, CHROME,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_PSCR, KC_SCRL, KC_PAUS, _______, _______, KC_PGUP,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          CAPGEN,    KC_PGDN,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_VOLU, KC_MUTE,
+        _______,          _______, _______, CLANGD,  VENV,    _______, _______, _______, _______, _______, _______, _______, KC_VOLU, KC_MUTE,
         _______, _______, _______,                                     _______,                   _______, _______, KC_MPRV, KC_VOLD, KC_MNXT
     ),
 
