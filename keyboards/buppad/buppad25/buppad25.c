@@ -117,6 +117,11 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
             hsv = (hsv_t){0, 0, 0}; // err: BLACK
             break;
     }
+
+    if (!rgb_matrix_get_flags()) {  // if rgb is off
+        rgb_matrix_set_color_all(RGB_BLACK);
+    }
+
     // Convert HSV to RGB
     rgb_t rgb  = hsv_to_rgb(hsv);
     rgb_t rgb2 = hsv_to_rgb(hsv2);
