@@ -12,12 +12,12 @@
     },
     "features": {
         "bootmagic": true,
-        "command": false,
-        "console": false,
         "extrakey": true,
         "mousekey": true,
         "nkro": true,
-        "rgb_matrix": true
+        "rgb_matrix": true,
+        "space_cadet": false,
+        "magic": false
     },
     "matrix_pins": {
         "cols": ["F5", "C7", "B7", "B2", "B4"],
