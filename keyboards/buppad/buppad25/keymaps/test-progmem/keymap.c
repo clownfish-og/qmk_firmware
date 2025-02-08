@@ -71,96 +71,96 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-const char amnesia[] PROGMEM = "Amnesia";
-const char ayo[] PROGMEM = "Ayo";
-const char backdoor[] PROGMEM = "BackDoor";
-const char balloon[] PROGMEM = "Balloon";
-const char bart[] PROGMEM = "Bart";
-const char bearddance[] PROGMEM = "BEARDDANCE";
-const char bigbrain[] PROGMEM = "BigBrain";
-const char bits[] PROGMEM = "BITS";
-const char boomer[] PROGMEM = "BOOMER";
-const char bug[] PROGMEM = "Bug";
-const char bup[] PROGMEM = "BUP";
-const char bups[] PROGMEM = "BUPS";
-const char bupwad[] PROGMEM = "BUPWAD";
-const char call[] PROGMEM = "Call";
-const char catdance[] PROGMEM = "CATDANCE";
-const char cheers[] PROGMEM = "CHEERS";
-const char cheese[] PROGMEM = "Cheese";
-const char chefkiss[] PROGMEM = "Chefkiss";
-const char crown[] PROGMEM = "Crown";
-const char diddy[] PROGMEM = "Diddy";
-const char disco[] PROGMEM = "Disco";
-const char doit[] PROGMEM = "DOIT";
-const char donut[] PROGMEM = "Donut";
-const char drums[] PROGMEM = "Drums";
-const char duckdance[] PROGMEM = "DUCKDANCE";
-const char duckhead[] PROGMEM = "Duckhead";
-const char dye[] PROGMEM = "Dye";
-const char ee[] PROGMEM = "EE";
-const char fire[] PROGMEM = "Fire";
-const char flute[] PROGMEM = "FLUTE";
-const char freakout[] PROGMEM = "Freakout";
-const char frog[] PROGMEM = "FROG";
-const char grogu[] PROGMEM = "Grogu";
-const char groovy[] PROGMEM = "Groovy";
-const char headout[] PROGMEM = "HEADOUT";
-const char horn[] PROGMEM = "HORN";
-const char id[] PROGMEM = "ID";
-const char kekw[] PROGMEM = "Kekw";
-const char keys[] PROGMEM = "KEYS";
-const char lighter[] PROGMEM = "Lighter";
-const char love[] PROGMEM = "LOVE";
-const char luigibup[] PROGMEM = "LUIGIBUP";
-const char moose[] PROGMEM = "MOOSE";
-const char patbang[] PROGMEM = "PATBANG";
-const char plug[] PROGMEM = "Plug";
-const char salute[] PROGMEM = "Salute";
-const char sh[] PROGMEM = "Sh";
-const char slay[] PROGMEM = "Slay";
-const char sweaty[] PROGMEM = "Sweaty";
-const char thanks[] PROGMEM = "THANKS";
-const char wook[] PROGMEM = "WOOK";
-const char wub[] PROGMEM = "WUB";
-const char zejibo[] PROGMEM = "Zejibo";
-const char zeldabup[] PROGMEM = "ZELDABUP";
-const char broc[] PROGMEM = "Broc";
-const char clouds[] PROGMEM = "Clouds";
-const char goose[] PROGMEM = "Goose";
-const char heart[] PROGMEM = "Heart";
-const char jawnessa[] PROGMEM = "JAWNESSA";
-const char rave[] PROGMEM = "Rave";
-const char salt[] PROGMEM = "Salt";
-const char tinfoil[] PROGMEM = "TINFOIL";
-const char water[] PROGMEM = "Water";
-const char wiz[] PROGMEM = "Wiz";
-const char basssface[] PROGMEM = "BASSSFACE";
-const char bob[] PROGMEM = "BOB";
-const char chillguy[] PROGMEM = "Chillguy";
-const char dragon[] PROGMEM = "Dragon";
-const char jelly[] PROGMEM = "Jelly";
-const char maple[] PROGMEM = "Maple";
-const char rump[] PROGMEM = "Rump";
-const char smirk[] PROGMEM = "Smirk";
-const char uwu[] PROGMEM = "UWU";
-const char wink[] PROGMEM = "Wink";
-const char abducktion[] PROGMEM = "AbDUCKtion";
-const char ascend[] PROGMEM = "Ascend";
-const char ashduckem[] PROGMEM = "ASHDUCKEM";
-const char excuseme[] PROGMEM = "EXCUSEME";
-const char fancyduck[] PROGMEM = "FANCYDUCK";
-const char gold[] PROGMEM = "Gold";
-const char headphones[] PROGMEM = "HEADPHONES";
-const char ktuluehug[] PROGMEM = "KTULUEHUG";
-const char rainbow[] PROGMEM = "RAINBOW";
-const char smug[] PROGMEM = "Smug";
-const char sus[] PROGMEM = "Sus";
-const char nod[] PROGMEM = "Nod";
-const char tiedye[] PROGMEM = "TIEDYE";
-const char tune[] PROGMEM = "TUNE";
-const char up[] PROGMEM = "Up";
-const char wave[] PROGMEM = "WAVE";
+const char amnesia[] PROGMEM = "bupAmnesia";
+const char ayo[] PROGMEM = "bupAyo";
+const char backdoor[] PROGMEM = "bupBackDoor";
+const char balloon[] PROGMEM = "bupBalloon";
+const char bart[] PROGMEM = "bupBart";
+const char bearddance[] PROGMEM = "bupBEARDDANCE";
+const char bigbrain[] PROGMEM = "bupBigBrain";
+const char bits[] PROGMEM = "bupBITS";
+const char boomer[] PROGMEM = "bupBOOMER";
+const char bug[] PROGMEM = "bupBug";
+const char bup[] PROGMEM = "bupBUP";
+const char bups[] PROGMEM = "bupBUPS";
+const char bupwad[] PROGMEM = "bupBUPWAD";
+const char call[] PROGMEM = "bupCall";
+const char catdance[] PROGMEM = "bupCATDANCE";
+const char cheers[] PROGMEM = "bupCHEERS";
+const char cheese[] PROGMEM = "bupCheese";
+const char chefkiss[] PROGMEM = "bupChefkiss";
+const char crown[] PROGMEM = "bupCrown";
+const char diddy[] PROGMEM = "bupDiddy";
+const char disco[] PROGMEM = "bupDisco";
+const char doit[] PROGMEM = "bupDOIT";
+const char donut[] PROGMEM = "bupDonut";
+const char drums[] PROGMEM = "bupDrums";
+const char duckdance[] PROGMEM = "bupDUCKDANCE";
+const char duckhead[] PROGMEM = "bupDuckhead";
+const char dye[] PROGMEM = "bupDye";
+const char ee[] PROGMEM = "bupEE";
+const char fire[] PROGMEM = "bupFire";
+const char flute[] PROGMEM = "bupFLUTE";
+const char freakout[] PROGMEM = "bupFreakout";
+const char frog[] PROGMEM = "bupFROG";
+const char grogu[] PROGMEM = "bupGrogu";
+const char groovy[] PROGMEM = "bupGroovy";
+const char headout[] PROGMEM = "bupHEADOUT";
+const char horn[] PROGMEM = "bupHORN";
+const char id[] PROGMEM = "bupID";
+const char kekw[] PROGMEM = "bupKekw";
+const char keys[] PROGMEM = "bupKEYS";
+const char lighter[] PROGMEM = "bupLighter";
+const char love[] PROGMEM = "bupLOVE";
+const char luigibup[] PROGMEM = "bupLUIGIBUP";
+const char moose[] PROGMEM = "bupMOOSE";
+const char patbang[] PROGMEM = "bupPATBANG";
+const char plug[] PROGMEM = "bupPlug";
+const char salute[] PROGMEM = "bupSalute";
+const char sh[] PROGMEM = "bupSh";
+const char slay[] PROGMEM = "bupSlay";
+const char sweaty[] PROGMEM = "bupSweaty";
+const char thanks[] PROGMEM = "bupTHANKS";
+const char wook[] PROGMEM = "bupWOOK";
+const char wub[] PROGMEM = "bupWUB";
+const char zejibo[] PROGMEM = "bupZejibo";
+const char zeldabup[] PROGMEM = "bupZELDABUP";
+const char broc[] PROGMEM = "bupBroc";
+const char clouds[] PROGMEM = "bupClouds";
+const char goose[] PROGMEM = "bupGoose";
+const char heart[] PROGMEM = "bupHeart";
+const char jawnessa[] PROGMEM = "bupJAWNESSA";
+const char rave[] PROGMEM = "bupRave";
+const char salt[] PROGMEM = "bupSalt";
+const char tinfoil[] PROGMEM = "bupTINFOIL";
+const char water[] PROGMEM = "bupWater";
+const char wiz[] PROGMEM = "bupWiz";
+const char basssface[] PROGMEM = "bupBASSSFACE";
+const char bob[] PROGMEM = "bupBOB";
+const char chillguy[] PROGMEM = "bupChillguy";
+const char dragon[] PROGMEM = "bupDragon";
+const char jelly[] PROGMEM = "bupJelly";
+const char maple[] PROGMEM = "bupMaple";
+const char rump[] PROGMEM = "bupRump";
+const char smirk[] PROGMEM = "bupSmirk";
+const char uwu[] PROGMEM = "bupUWU";
+const char wink[] PROGMEM = "bupWink";
+const char abducktion[] PROGMEM = "bupAbDUCKtion";
+const char ascend[] PROGMEM = "bupAscend";
+const char ashduckem[] PROGMEM = "bupASHDUCKEM";
+const char excuseme[] PROGMEM = "bupEXCUSEME";
+const char fancyduck[] PROGMEM = "bupFANCYDUCK";
+const char gold[] PROGMEM = "bupGold";
+const char headphones[] PROGMEM = "bupHEADPHONES";
+const char ktuluehug[] PROGMEM = "bupKTULUEHUG";
+const char rainbow[] PROGMEM = "bupRAINBOW";
+const char smug[] PROGMEM = "bupSmug";
+const char sus[] PROGMEM = "bupSus";
+const char nod[] PROGMEM = "bupNod";
+const char tiedye[] PROGMEM = "bupTIEDYE";
+const char tune[] PROGMEM = "bupTUNE";
+const char up[] PROGMEM = "bupUp";
+const char wave[] PROGMEM = "bupWAVE";
 const char bop[] PROGMEM = "BOP";
 const char bopbop[] PROGMEM = "BopBop";
 const char dinodance[] PROGMEM = "DinoDance";
@@ -183,21 +183,21 @@ const char twitchraid[] PROGMEM = "twitchRaid";
 const char unity[] PROGMEM = "TwitchUnity";
 const char votenay[] PROGMEM = "VoteNay";
 const char voteyea[] PROGMEM = "VoteYea";
-const char bdance[] PROGMEM = "Dance";
-const char bmingo[] PROGMEM = "Mingo";
-const char bmonkey[] PROGMEM = "Monkey";
-const char bpug[] PROGMEM = "Pug";
-const char bugh[] PROGMEM = "Ugh";
-const char kclap[] PROGMEM = "Clap";
-const char kgato[] PROGMEM = "Gato";
-const char kggs[] PROGMEM = "GGs";
-const char kglutes[] PROGMEM = "GLUTES";
-const char khi[] PROGMEM = "HI";
-const char khug[] PROGMEM = "HUG";
-const char klei[] PROGMEM = "Lei";
-const char klove[] PROGMEM = "Love";
-const char krdnc[] PROGMEM = "Rdnc";
-const char ksmug[] PROGMEM = "SMUG";
+const char bdance[] PROGMEM = "bexfroDance";
+const char bmingo[] PROGMEM = "bexfroMingo";
+const char bmonkey[] PROGMEM = "bexfroMonkey";
+const char bpug[] PROGMEM = "bexfroPug";
+const char bugh[] PROGMEM = "bexfroUgh";
+const char kclap[] PROGMEM = "ktulueClap";
+const char kgato[] PROGMEM = "ktulueGato";
+const char kggs[] PROGMEM = "ktulueGGs";
+const char kglutes[] PROGMEM = "ktulueGLUTES";
+const char khi[] PROGMEM = "ktulueHI";
+const char khug[] PROGMEM = "ktulueHUG";
+const char klei[] PROGMEM = "ktulueLei";
+const char klove[] PROGMEM = "ktulueLove";
+const char krdnc[] PROGMEM = "ktulueRdnc";
+const char ksmug[] PROGMEM = "ktulueSMUG";
 
 PGM_P const suffix[] PROGMEM = {
     amnesia,
@@ -329,18 +329,8 @@ PGM_P const suffix[] PROGMEM = {
     ksmug
 };
 
-const int start_bup = AMNESIA;
-const int end_bup = WAVE;
-const int start_bex = BDANCE;
-const int end_bex = BUGH;
-const int start_ktlu = KCLAP;
-const int end_ktlu = KSMUG;
 const int first_emote = FIRST_EMOTE;
 const int last_emote = LAST_EMOTE;
-
-const char bup_p[] = "bup";
-const char bex_p[] = "bexfro";
-const char ktlu_p[] = "ktulue";
 
 // This function inverts the capitalization of each character in the given string.
 void invert_caps(char *str) {
@@ -354,42 +344,19 @@ void invert_caps(char *str) {
     }
 }
 
-// Helper function to concatenate prefix and suffix
-void build_emote(char *emote_buffer, const char *prefix, const char *suffix_buffer, size_t buffer_size) {
-    bool caps = host_keyboard_led_state().caps_lock;
-    strncpy(emote_buffer, prefix, buffer_size);
-uprintf("Prefix: %s\n", emote_buffer);  // Debug output
-    strncat(emote_buffer, suffix_buffer, buffer_size - strlen(emote_buffer) - 1);
-uprintf("Emote: %s, Caps state: %d, ", emote_buffer, caps);  // Debug output
-    strncat(emote_buffer, " ", buffer_size - strlen(emote_buffer) - strlen(suffix_buffer) - 1);
-        if (caps) {
-            invert_caps(emote_buffer);
-        }
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
             case FIRST_EMOTE ... LAST_EMOTE: {
                 uint8_t i = keycode - FIRST_EMOTE;
-                char suffix_buffer[24];
+                bool caps = host_keyboard_led_state().caps_lock;
                 char emote_buffer[36];
-                suffix_buffer[0] = '\0';
                 emote_buffer[0] = '\0';
-                strncpy_P(suffix_buffer, (PGM_P)pgm_read_ptr(&(suffix[i])), sizeof(suffix_buffer) - 1);
-uprintf("Suffix array index i: %d, Suffix: %s, ", i, suffix_buffer);  // Debug output
-
-                if (start_bup <= keycode && keycode <= end_bup) {
-                    build_emote(emote_buffer, bup_p, suffix_buffer, sizeof(emote_buffer));
-                } else if (start_bex <= keycode && keycode <= end_bex) {
-                    build_emote(emote_buffer, bex_p, suffix_buffer, sizeof(emote_buffer));
-                } else if (start_ktlu <= keycode && keycode <= end_ktlu) {
-                    build_emote(emote_buffer, ktlu_p, suffix_buffer, sizeof(emote_buffer));
-                } else {
-                    strncpy(emote_buffer, suffix_buffer, sizeof(emote_buffer));
+                strncpy_P(emote_buffer, (PGM_P)pgm_read_ptr(&(suffix[i])), sizeof(emote_buffer) - 2);
+                strcat(emote_buffer, " ");
+                if (caps) {
+                    invert_caps(emote_buffer);
                 }
-uprintf("Keycode: %u, Output: %s\n", keycode, emote_buffer);  // Debug output
-
                 send_string(emote_buffer);
                 return false;
             }
