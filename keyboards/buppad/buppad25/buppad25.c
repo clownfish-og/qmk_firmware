@@ -20,7 +20,9 @@
 
 #ifdef RGB_MATRIX_ENABLE
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_user(keycode, record)) { return false; }
+    if (!process_record_user(keycode, record)) {
+        return false;
+    }
     switch (keycode) {
         case QK_UNDERGLOW_TOGGLE:
             if (record->event.pressed) {
@@ -76,16 +78,16 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
     if (!rgb_matrix_indicators_advanced_user(led_min, led_max)) {
         return false;
-        }
+    }
 
-    hsv_t hsv = {0, 255, 200};
+    hsv_t hsv  = {0, 255, 200};
     hsv_t hsv2 = {170, 255, 150};
     hsv_t hsv3 = {200, 255, 150};
 
-// Determine the active layer
+    // Determine the active layer
     uint8_t active_layer = get_highest_layer(layer_state);
 
-// Set HSV values based on the active layer
+    // Set HSV values based on the active layer
     switch (active_layer) {
         case 0:
             hsv = (hsv_t){200, 255, 200}; // Layer 0: MAGENTA
@@ -115,11 +117,11 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
             hsv = (hsv_t){0, 0, 0}; // err: BLACK
             break;
     }
-// Convert HSV to RGB
-    rgb_t rgb = hsv_to_rgb(hsv);
+    // Convert HSV to RGB
+    rgb_t rgb  = hsv_to_rgb(hsv);
     rgb_t rgb2 = hsv_to_rgb(hsv2);
     rgb_t rgb3 = hsv_to_rgb(hsv3);
-// Set indicator LEDs
+    // Set indicator LEDs
     for (uint8_t i = led_min; i < led_max; i++) {
         switch (active_layer) {
             case 0:
@@ -158,7 +160,7 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
                 rgb_matrix_set_color(22, rgb.r, rgb.g, rgb.b);
                 rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
                 rgb_matrix_set_color(24, rgb.r, rgb.g, rgb.b);
-            break;
+                break;
             default:
                 rgb_matrix_set_color_all(RGB_BLACK);
                 break;
