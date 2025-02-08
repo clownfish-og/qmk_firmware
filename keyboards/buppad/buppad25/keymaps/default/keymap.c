@@ -63,15 +63,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TT(6),      RMAM,       RMPL,       RMSW,       UG_TOGG
     ),
     [6] = LAYOUT(
-        KC_ESC,     KC_NUM,     KC_PSLS,    KC_PAST,    KC_BSPC,
-        TO(0),      KC_P7,      KC_P8,      KC_P9,      KC_PMNS,
-        TG(5),      KC_P4,      KC_P5,      KC_P6,      KC_PPLS,
-        TG(6),      KC_P1,      KC_P2,      KC_P3,      KC_PENT,
+        TO(0),      KC_NUM,     KC_PSLS,    KC_PAST,    KC_BSPC,
+        KC_HOME,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,
+        KC_END,     KC_P4,      KC_P5,      KC_P6,      KC_PPLS,
+        _______,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,
         _______,    KC_P0,      KC_P0,      KC_PDOT,    KC_PENT
     ),
 };
-
-
 
     const char *suffix[] = {
     "Amnesia",

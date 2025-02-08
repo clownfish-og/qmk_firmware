@@ -57,13 +57,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [5] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
-        RGB_MOD,    RGB_VAI,    RGB_HUI,    RGB_SAI,    RGB_SPI,
-        RGB_RMOD,   RGB_VAD,    RGB_HUD,    RGB_SAD,    RGB_SPD,
+        UG_NEXT,    UG_VALU,    UG_HUEU,    UG_SATU,    UG_SPDU,
+        UG_PREV,    UG_VALD,    UG_HUED,    UG_SATD,    UG_SPDD,
         KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,
-        RGB_M_P,    RGB_M_B,    RGB_M_R,    RGB_M_SW,   RGB_TOG
+        TT(6),      RMAM,       RMPL,       RMSW,       UG_TOGG
+    ),
+    [6] = LAYOUT(
+        TO(0),      KC_NUM,     KC_PSLS,    KC_PAST,    KC_BSPC,
+        KC_HOME,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,
+        KC_END,     KC_P4,      KC_P5,      KC_P6,      KC_PPLS,
+        _______,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,
+        _______,    KC_P0,      KC_P0,      KC_PDOT,    KC_PENT
     ),
 };
-
 
 const char amnesia[] PROGMEM = "Amnesia";
 const char ayo[] PROGMEM = "Ayo";

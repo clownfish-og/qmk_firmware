@@ -78,7 +78,9 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         return false;
         }
 
-    hsv_t hsv = {180, 255, 200};
+    hsv_t hsv = {0, 255, 200};
+    hsv_t hsv2 = {170, 255, 150};
+    hsv_t hsv3 = {200, 255, 150};
 
 // Determine the active layer
     uint8_t active_layer = get_highest_layer(layer_state);
@@ -103,13 +105,21 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         case 5:
             hsv = (hsv_t){0, 255, 200}; // Layer 5: RED
             break;
+        case 6:
+            hsv = (hsv_t){0, 0, 150}; // Layer 5: WHITE
+            break;
+        case 7:
+            hsv = (hsv_t){0, 0, 200}; // Layer 5: WHITE
+            break;
         default:
-            hsv = (hsv_t){0, 0, 200}; // err: WHITE
+            hsv = (hsv_t){0, 0, 0}; // err: BLACK
             break;
     }
 // Convert HSV to RGB
     rgb_t rgb = hsv_to_rgb(hsv);
-// Set LEDs with 'indicator' flag
+    rgb_t rgb2 = hsv_to_rgb(hsv2);
+    rgb_t rgb3 = hsv_to_rgb(hsv3);
+// Set indicator LEDs
     for (uint8_t i = led_min; i < led_max; i++) {
         switch (active_layer) {
             case 0:
@@ -134,6 +144,21 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
                 rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
                 rgb_matrix_set_color(24, rgb.r, rgb.g, rgb.b);
                 break;
+            case 6:
+                rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(20, rgb3.r, rgb3.g, rgb3.b);
+                rgb_matrix_set_color(16, rgb2.r, rgb2.g, rgb2.b);
+                rgb_matrix_set_color(17, rgb2.r, rgb2.g, rgb2.b);
+                rgb_matrix_set_color(18, rgb2.r, rgb2.g, rgb2.b);
+                rgb_matrix_set_color(19, rgb2.r, rgb2.g, rgb2.b);
+                break;
+            case 7:
+                rgb_matrix_set_color(20, rgb3.r, rgb3.g, rgb3.b);
+                rgb_matrix_set_color(21, rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(22, rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(23, rgb.r, rgb.g, rgb.b);
+                rgb_matrix_set_color(24, rgb.r, rgb.g, rgb.b);
+            break;
             default:
                 rgb_matrix_set_color_all(RGB_BLACK);
                 break;
