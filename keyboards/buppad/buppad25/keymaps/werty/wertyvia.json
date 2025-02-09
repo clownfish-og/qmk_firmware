@@ -1,0 +1,178 @@
+{
+    "name": "BUPpad25",
+    "vendorId": "0xF1F1",
+    "productId": "0x0025",
+    "keycodes": ["qmk_lighting"],
+    "customKeycodes": [
+        {"name": "RMPL", "title": "Set RGB to solid_color", "shortName": "PLAIN"},
+        {"name": "RMAM", "title": "Set RGB to alphas_mods", "shortName": "BOX"},
+        {"name": "RMSW", "title": "Set RGB to cycle_spiral", "shortName": "SWIRL"},
+        {"name": "CAPGEN5", "title": "copy all and paste x5", "shortName": "CPG5"},
+        {"name": "CAPGEN8", "title": "copy all and paste x8", "shortName": "CPG8"},
+        {"name": "CAPGEN10", "title": "copy all and paste x10", "shortName": "CPG10"},
+        {"name": "APPROVE", "title": "wertyo2Approve", "shortName": "APRVE"},
+        {"name": "AYO", "title": "wertyo2Ayo", "shortName": "AYO"},
+        {"name": "BONGO", "title": "wertyo2Bongo", "shortName": "BONGO"},
+        {"name": "CHEF", "title": "wertyo2ChefsKiss", "shortName": "CHEF"},
+        {"name": "CLOWNFISH", "title": "wertyo2Clownfish", "shortName": "CLNFS"},
+        {"name": "COOL", "title": "wertyo2Cool", "shortName": "COOL"},
+        {"name": "DOIT", "title": "wertyo2DOIT", "shortName": "DOIT"},
+        {"name": "DANCE", "title": "wertyo2Dance", "shortName": "DANCE"},
+        {"name": "EXCITE", "title": "wertyo2Excite", "shortName": "EXCIT"},
+        {"name": "GIFT", "title": "wertyo2Gift", "shortName": "GIFT"},
+        {"name": "GLUTES", "title": "wertyo2Glutes", "shortName": "GLUTE"},
+        {"name": "HEARTBEAT", "title": "wertyo2Heartbeat", "shortName": "HRTBT"},
+        {"name": "HIYA", "title": "wertyo2Hiya", "shortName": "HIYA"},
+        {"name": "HORN", "title": "wertyo2Horn", "shortName": "HORN"},
+        {"name": "HUG", "title": "wertyo2Hug", "shortName": "HUG"},
+        {"name": "HYPE", "title": "wertyo2Hype", "shortName": "HYPE"},
+        {"name": "JAMMIN", "title": "wertyo2Jammin", "shortName": "JAMIN"},
+        {"name": "WIGGLE", "title": "wertyo2Wiggle", "shortName": "WIGGL"},
+        {"name": "FIRESAUCE", "title": "wertyo2FireSauce", "shortName": "FRSCE"},
+        {"name": "GRIN", "title": "wertyo2Grin", "shortName": "GRIN"},
+        {"name": "HEART", "title": "wertyo2Heart", "shortName": "HEART"},
+        {"name": "TUNE", "title": "wertyo2Tune", "shortName": "TUNE"},
+        {"name": "WAVE", "title": "wertyo2Wave", "shortName": "WAVE"},
+        {"name": "BOP", "title": "BOP", "shortName": "BOP"},
+        {"name": "BOPBOP", "title": "BopBop", "shortName": "BOPBP"},
+        {"name": "DINODANCE", "title": "DinoDance", "shortName": "DINOD"},
+        {"name": "GLITCHLIT", "title": "GlitchLit", "shortName": "GLLIT"},
+        {"name": "GOATEMOTEY", "title": "GoatEmotey", "shortName": "GOATY"},
+        {"name": "GOLDPLZ", "title": "GoldPLZ", "shortName": "GOLDP"},
+        {"name": "KAPPA", "title": "Kappa", "shortName": "KAPPA"},
+        {"name": "KREYGASM", "title": "Kreygasm", "shortName": "KREYG"},
+        {"name": "MODLOVE", "title": "ModLove", "shortName": "MODLV"},
+        {"name": "NOTLIKETHIS", "title": "NotLikeThis", "shortName": "NLT"},
+        {"name": "POWERUPL", "title": "PowerUpL", "shortName": "PWRUL"},
+        {"name": "POWERUPR", "title": "PowerUpR", "shortName": "PWRUR"},
+        {"name": "SINGSMIC", "title": "SingsMic", "shortName": "SMIC"},
+        {"name": "SINGSNOTE", "title": "SingsNote", "shortName": "SNOTE"},
+        {"name": "STINKYCHEESE", "title": "StinkyCheese", "shortName": "SCHSE"},
+        {"name": "TOMBRAID", "title": "TombRaid", "shortName": "TOMBR"},
+        {"name": "TWITCHCONHYPE", "title": "TwitchConHYPE", "shortName": "TCONH"},
+        {"name": "TWITCHLIT", "title": "TwitchLit", "shortName": "TLIT"},
+        {"name": "TWITCHRAID", "title": "twitchRaid", "shortName": "TRAID"},
+        {"name": "UNITY", "title": "TwitchUnity", "shortName": "UNITY"},
+        {"name": "MAINSC", "title": "!main", "shortName": "MAIN"},
+        {"name": "WELCOME", "title": "!welcome", "shortName": "WELCM"},
+        {"name": "BRB", "title": "!break", "shortName": "BRB"},
+        {"name": "SMALL", "title": "!small", "shortName": "SMALL"},
+        {"name": "VINYL", "title": "!vinyl", "shortName": "VINYL"},
+        {"name": "NEW", "title": "!newvisual", "shortName": "NEW"},
+        {"name": "SLOTHS", "title": "!sloths", "shortName": "SLOTH"},
+        {"name": "GYPSY", "title": "!gypsy", "shortName": "GYPSY"},
+        {"name": "NINJA", "title": "!ninja", "shortName": "NINJA"},
+        {"name": "STRAT", "title": "!stratus", "shortName": "STRAT"},
+        {"name": "_JAMMIN", "title": "!jammin", "shortName": "VJAMN"},
+        {"name": "_GLUTES", "title": "!glutes", "shortName": "VGLUT"},
+        {"name": "_WIGGLE", "title": "!wiggle", "shortName": "VWIGL"},
+        {"name": "_CLNFSH", "title": "!clownfish", "shortName": "VCLNF"},
+        {"name": "_BONGO", "title": "!bongo", "shortName": "VBNGO"}
+    ],
+    "menus": [
+      {
+        "label": "Lighting",
+        "content": [
+          {
+            "label": "Backlight",
+            "content": [
+              {
+                "label": "Brightness",
+                "type": "range",
+                "options": [0, 200],
+                "content": ["id_qmk_rgb_matrix_brightness", 3, 1]
+              },
+              {
+                "label": "Effect",
+                "type": "dropdown",
+                "content": ["id_qmk_rgb_matrix_effect", 3, 2],
+                "options": [
+                  "All Off",
+                  "Solid Color",
+                  "Alphas Mods",
+                  "Gradient Up/Down",
+                  "Gradient Left/Right",
+                  "Breathing",
+                  "Band Sat.",
+                  "Band Val.",
+                  "Pinwheel Sat.",
+                  "Pinwheel Val.",
+                  "Spiral Sat.",
+                  "Spiral Val.",
+                  "Cycle All",
+                  "Cycle Left/Right",
+                  "Cycle Up/Down",
+                  "Cycle Out/In",
+                  "Cycle Pinwheel",
+                  "Cycle Spiral",
+                  "Rainbow Beacon",
+                  "Reactive Simple",
+                  "Solid Reactive",
+                  "Reactive Simple Wide",
+                  "Reactive Simple Cross",
+                  "Reactive Simple Nexus",
+                  "Rainbow Splash",
+                  "Solid Splash"
+                ]
+              },
+              {
+                "showIf": "{id_qmk_rgb_matrix_effect} != 0",
+                "label": "Effect Speed",
+                "type": "range",
+                "options": [0, 255],
+                "content": ["id_qmk_rgb_matrix_effect_speed", 3, 3]
+              },
+              {
+                "showIf": "{id_qmk_rgb_matrix_effect} != 0 && {id_qmk_rgb_matrix_effect} != 24 && {id_qmk_rgb_matrix_effect} != 28 && {id_qmk_rgb_matrix_effect} != 29 && {id_qmk_rgb_matrix_effect} != 32",
+                "label": "Color",
+                "type": "color",
+                "content": ["id_qmk_rgb_matrix_color", 3, 4]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "matrix": {"rows": 5, "cols": 5},
+    "layouts": {
+        "keymap": [
+            [
+                "0,0",
+                "0,1",
+                "0,2",
+                "0,3",
+                "0,4"
+            ],
+            [
+                "1,0",
+                "1,1",
+                "1,2",
+                "1,3",
+                "1,4"
+            ],
+            [
+                "2,0",
+                "2,1",
+                "2,2",
+                "2,3",
+                "2,4"
+
+            ],
+            [
+                "3,0",
+                "3,1",
+                "3,2",
+                "3,3",
+                "3,4"
+
+            ],
+            [
+                "4,0",
+                "4,1",
+                "4,2",
+                "4,3",
+                "4,4"
+            ]
+        ]
+    }
+}
