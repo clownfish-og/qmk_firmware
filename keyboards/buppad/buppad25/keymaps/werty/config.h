@@ -19,4 +19,13 @@
 //disable options to reduce firmware size
 #define NO_ACTION_ONESHOT
 #define LAYER_STATE_8BIT
-#define TAPPING_TOGGLE 2
+
+#ifdef RGB_MATRIX_ENABLE
+
+#ifdef RGB_MATRIX_DEFAULT_MODE
+#undef RGB_MATRIX_DEFAULT_MODE
+#endif  //RGB_MATRIX_DEFAULT_MODE
+
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_ALPHAS_MODS
+
+#endif  // RGB_MATRIX_ENABLE

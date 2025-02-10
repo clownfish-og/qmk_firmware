@@ -57,8 +57,9 @@
         "hue steps": 16,
         "default": {
             "animation": "cycle_spiral",
-            "val": 50,
-            "hue": 160
+            "val": 100,
+            "hue": 85,
+            "speed": 80
         },
         "driver": "ws2812",
         "layout": [

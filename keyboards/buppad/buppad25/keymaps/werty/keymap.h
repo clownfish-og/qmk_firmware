@@ -18,30 +18,7 @@
  #include "buppad25.h"
 
  enum custom_keycodes {
-    APPROVE = FIRST_EMOTE,
-    AYO,
-    BONGO,
-    CHEF,
-    CLOWNFISH,
-    COOL,
-    DOIT,
-    DANCE,
-    EXCITE,
-    GIFT,
-    GLUTES,
-    HEARTBEAT,
-    HIYA,
-    HORN,
-    HUG,
-    HYPE,
-    JAMMIN,
-    WIGGLE,
-    FIRESAUCE,
-    GRIN,
-    HEART,
-    TUNE,
-    WAVE,
-    BOP,            // Start Twitch Global Emotes
+    BOP = FIRST_EMOTE, // Start Twitch Global Emotes
     BOPBOP,         // Twitch Global Emote
     DINODANCE,      // Twitch Global Emote
     GLITCHLIT,      // Twitch Global Emote
@@ -61,7 +38,30 @@
     TWITCHLIT,      // Twitch Global Emote
     TWITCHRAID,     // Twitch Global Emote
     UNITY,          // End Twitch Global Emotes
-    MAINSC,
+    APPROVE,
+    AYO,
+    BONGO,
+    CHEF,
+    CLOWNFISH,
+    COOL,
+    DOIT,
+    DANCE,
+    EXCITE,
+    GIFT,
+    GLUTES,
+    HEARTBEAT,
+    HIYA,
+    HORN,
+    HUG,
+    HYPE,
+    JAMMIN,
+    WIGGLE,
+    FIRES,
+    GRIN,
+    HEART,
+    TUNE,
+    WAVE,  // LAST_EMOTE
+    MAINSC,  // FIRST_CMD
     WELCOME,
     BRB,
     SMALL,
@@ -75,7 +75,9 @@
     _GLUTES,
     _WIGGLE,
     _CLNFSH,
-    _BONGO
+    _BONGO  // LAST_CMD
  };
 
-    #define LAST_EMOTE _BONGO
+#define LAST_EMOTE WAVE
+#define FIRST_CMD MAINSC
+#define LAST_CMD _BONGO
