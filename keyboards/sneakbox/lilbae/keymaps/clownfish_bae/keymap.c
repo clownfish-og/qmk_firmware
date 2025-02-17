@@ -49,7 +49,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case AFTERNOON_BRIGHTNESS:
             if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("a") SS_DELAY(200) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(50) SS_TAP(X_HOME) SS_DELAY(100) SS_TAP(X_ESC));
+                SEND_STRING(SS_LGUI("a") SS_DELAY(300) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(100) SS_TAP(X_HOME) SS_DELAY(100) SS_TAP(X_ESC));
             } else {
                 layer_move(MN);
                 set_single_persistent_default_layer(MN);
@@ -57,7 +57,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case MORNING:
             if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("a") SS_DELAY(200) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(50) SS_TAP(X_END) SS_DELAY(100) SS_TAP(X_ESC));
+                SEND_STRING(SS_LGUI("a") SS_DELAY(300) SS_DOWN(X_RSFT) SS_TAP(X_TAB) SS_UP(X_RSFT) SS_DELAY(100) SS_TAP(X_END) SS_DELAY(100) SS_TAP(X_ESC));
                 SEND_STRING(SS_LGUI("p") SS_DELAY(300) SS_TAP(X_DOWN) SS_DELAY(50) SS_TAP(X_DOWN) SS_DELAY(50) SS_TAP(X_ENT) SS_DELAY(100) SS_TAP(X_ESC) );
             } else {
                 layer_move(AP);
