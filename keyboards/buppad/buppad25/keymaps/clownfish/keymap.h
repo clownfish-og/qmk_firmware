@@ -145,20 +145,27 @@
     KLOVE,      // ktlu
     KRDNC,      // ktlu
     KSMUG,      // end_ktlu
-    WBONGO,
-    WCLNFSH,
-    WEXCITE,
-    WGLUTES,
-    WHRTBT,
-    WHIYA,
-    WGRIN,
-    KYCFOG,
-    KYPOLR,
-    KYSMNK,
-    KYYES,
-    KYLGHT,
-    KYHART,
-
+    WBONGO,     // start_werty
+    WCLNFSH,    // werty
+    WEXCITE,    // werty
+    WGLUTES,    // werty
+    WHRTBT,     // werty
+    WHIYA,      // werty
+    WGRIN,      // werty
+    KYCFOG,     // werty
+    KYPOLR,     // end_werty
+    KYSMNK,     // start_koby
+    KYYES,      // koby
+    KYLGHT,     // koby
+    KYHART,     // end_koby
+    GPCFSW,     // start_gopro
+    GPLFG,      // gopro
+    GPMNKY,     // gopro
+    GPTUNE,     // gopro
+    GPGLCH,     // end_gopro
+    TTHIS,      // martino
+    MKLOVE,     // mrkitty
+    ETGOLD      // etown
  };
 
- #define LAST_EMOTE KSMUG
+ #define LAST_EMOTE ETGOLD
