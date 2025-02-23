@@ -1,0 +1,34 @@
+// Copyright 2024 QMK
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+#pragma once
+
+#define TRANSIENT_EEPROM_SIZE  64
+
+#define ENCODER_DEFAULT_POS 0X03
+
+/* OLED */
+#ifdef OLED_ENABLE
+/* Mapping I2C2 for OLED */
+#define I2C1_SCL_PIN B10
+#define I2C1_SDA_PIN B11
+#define I2C_DRIVER I2CD2
+
+#define OLED_BRIGHTNESS 128
+#define OLED_IC OLED_IC_SSD1306
+#define OLED_DISPLAY_ADDRESS  0X3C
+#define OLED_TIMEOUT 0
+#define OLED_DISPLAY_128X32
+#define OLED_UPDATE_INTERVAL 200
+#endif
+
+/* WS2812 RGB */
+#ifdef RGB_MATRIX_ENABLE
+#define RGBLED_NUM 17
+#define RGB_MATRIX_KEYPRESSES
+#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+#define RGB_DISABLE_TIMEOUT 0
+#define RGB_DISABLE_AFTER_TIMEOUT 0
+#endif
+
+
