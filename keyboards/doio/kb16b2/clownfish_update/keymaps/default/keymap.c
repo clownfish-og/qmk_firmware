@@ -692,10 +692,10 @@ bool oled_task_user(void) {
                 break;
         }
 
-        //显示电池图标
+        // display battery icon
         if(change_flag == 0){
 
-            //未充电时显示电池电量
+            // display battery level when not charging
             if(test_num <= 100 && test_num > 75){
                 memcpy(dis_buffer+384,bat_100_75,128);
             }else if(test_num <= 75 && test_num > 50){
@@ -710,7 +710,7 @@ bool oled_task_user(void) {
 
         }else if (change_flag == 1){
 
-                 //充电时显示电池动画
+                 // display battery animation while charging
                 switch(bat_show_flag){
 
                     case 0:
@@ -745,7 +745,7 @@ bool oled_task_user(void) {
 
         }
 
-        //显示电池电量
+        //  display battery power
         // if(test_num < 100){
         //     memcpy(dis_buffer+476,PROGMEM num_test[(test_num/10)],6);
         //     memcpy(dis_buffer+476+6,PROGMEM num_test[(test_num%10)],6);
