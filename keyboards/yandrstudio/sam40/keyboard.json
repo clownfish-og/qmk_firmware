@@ -28,6 +28,9 @@
         "pid": "0xAA84",
         "vid": "0xAA96"
     },
+    "dynamic_keymap": {
+        "layer_count": 6
+    },
     "layouts": {
         "LAYOUT": {
             "layout": [
