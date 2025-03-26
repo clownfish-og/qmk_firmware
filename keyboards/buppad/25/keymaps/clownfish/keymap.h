@@ -61,11 +61,12 @@
     LOVE,       // Tier 1
     LUIGIBUP,   // Tier 1
     MOOSE,      // Tier 1
+    BUPO,       // Tier 1
     PATBANG,    // Tier 1
-    PLUG,       // Tier 1
     SALUTE,     // Tier 1
     SH,         // Tier 1
     SLAY,       // Tier 1
+    SPIN,       // Tier 1
     SWEATY,     // Tier 1
     THANKS,     // Tier 1
     WOOK,       // Tier 1

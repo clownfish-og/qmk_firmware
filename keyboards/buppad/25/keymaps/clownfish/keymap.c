@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
         WATER,      DONUT,      DYE,        SMIRK,      EXCUSEME,
         RUMP,       TINFOIL,    CLOUDS,     SALT,       WINK,
-        BALLOON,    HEART,      ASCEND,     JELLY,      PLUG,
+        BALLOON,    HEART,      ASCEND,     JELLY,      BUPO,
         RAVE,       CROWN,      TIEDYE,     SUS,        DRAGON
     ),
     [2] = LAYOUT(
@@ -81,7 +81,7 @@ const char bigbrain[] PROGMEM = "bupBigBrain";
 const char bits[] PROGMEM = "bupBITS";
 const char boomer[] PROGMEM = "bupBOOMER";
 const char bug[] PROGMEM = "bupBug";
-const char bup[] PROGMEM = "bupBUP";
+const char bup[] PROGMEM = "bupBup";
 const char bups[] PROGMEM = "bupBUPS";
 const char bupwad[] PROGMEM = "bupBUPWAD";
 const char call[] PROGMEM = "bupCall";
@@ -114,11 +114,12 @@ const char lighter[] PROGMEM = "bupLighter";
 const char love[] PROGMEM = "bupLOVE";
 const char luigibup[] PROGMEM = "bupLUIGIBUP";
 const char moose[] PROGMEM = "bupMOOSE";
+const char bupo[] PROGMEM = "bupO";
 const char patbang[] PROGMEM = "bupPATBANG";
-const char plug[] PROGMEM = "bupPlug";
 const char salute[] PROGMEM = "bupSalute";
 const char sh[] PROGMEM = "bupSh";
 const char slay[] PROGMEM = "bupSlay";
+const char spin[] PROGMEM = "bupSpin";
 const char sweaty[] PROGMEM = "bupSweaty";
 const char thanks[] PROGMEM = "bupTHANKS";
 const char wook[] PROGMEM = "bupWOOK";
@@ -220,7 +221,7 @@ const char tthis[] PROGMEM = "tinosThis";
 const char mklove[] PROGMEM = "mrkitt10ALLLOVE";
 const char etgold[] PROGMEM = "etownGold";
 
-PGM_P const suffix[] PROGMEM = {
+PGM_P const emotes[] PROGMEM = {  // pointers to the strings above, in the same order as the custom_keycodes enum
     amnesia,
     ayo,
     backdoor,
@@ -264,11 +265,12 @@ PGM_P const suffix[] PROGMEM = {
     love,
     luigibup,
     moose,
+    bupo,
     patbang,
-    plug,
     salute,
     sh,
     slay,
+    spin,
     sweaty,
     thanks,
     wook,
@@ -390,12 +392,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
             case FIRST_EMOTE ... LAST_EMOTE: {
-                uint8_t i = keycode - FIRST_EMOTE;
-                bool caps = host_keyboard_led_state().caps_lock;
+                uint8_t i = keycode - FIRST_EMOTE;  // Convert the keycode to an index into the emotes array
+                bool caps = host_keyboard_led_state().caps_lock;  //track caps lock state
                 char emote_buffer[36];
-                emote_buffer[0] = '\0';
-                strncpy_P(emote_buffer, (PGM_P)pgm_read_ptr(&(suffix[i])), sizeof(emote_buffer) - 2);
-                strcat(emote_buffer, " ");
+                emote_buffer[0] = '\0';  // Ensure we start with an empty string
+                strncpy_P(emote_buffer, (PGM_P)pgm_read_ptr(&(emotes[i])), sizeof(emote_buffer) - 2);  // -2 to leave room for the space and null terminator
+                strcat(emote_buffer, " ");  // Always add a space after the emote
                 if (caps) {
                     invert_caps(emote_buffer);
                 }
