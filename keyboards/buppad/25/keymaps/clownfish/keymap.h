@@ -54,6 +54,7 @@
     GROOVY,     // Tier 1
     HEADOUT,    // Tier 1
     HORN,       // Tier 1
+    HOUSE,      // Tier 1
     ID,         // Tier 1
     KEKW,       // Tier 1
     KEYS,       // Tier 1
@@ -69,6 +70,7 @@
     SPIN,       // Tier 1
     SWEATY,     // Tier 1
     THANKS,     // Tier 1
+    THING,      // Tier 1
     WOOK,       // Tier 1
     WUB,        // Tier 1
     ZEJIBO,     // Tier 1

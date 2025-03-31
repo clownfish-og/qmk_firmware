@@ -107,6 +107,7 @@ const char grogu[] PROGMEM = "bupGrogu";
 const char groovy[] PROGMEM = "bupGroovy";
 const char headout[] PROGMEM = "bupHEADOUT";
 const char horn[] PROGMEM = "bupHORN";
+const char house[] PROGMEM = "bupHouse";
 const char id[] PROGMEM = "bupID";
 const char kekw[] PROGMEM = "bupKekw";
 const char keys[] PROGMEM = "bupKEYS";
@@ -122,6 +123,7 @@ const char slay[] PROGMEM = "bupSlay";
 const char spin[] PROGMEM = "bupSpin";
 const char sweaty[] PROGMEM = "bupSweaty";
 const char thanks[] PROGMEM = "bupTHANKS";
+const char thing[] PROGMEM = "bupThing";
 const char wook[] PROGMEM = "bupWOOK";
 const char wub[] PROGMEM = "bupWUB";
 const char zejibo[] PROGMEM = "bupZejibo";
@@ -258,6 +260,7 @@ PGM_P const emotes[] PROGMEM = {  // pointers to the strings above, in the same 
     groovy,
     headout,
     horn,
+    house,
     id,
     kekw,
     keys,
@@ -273,6 +276,7 @@ PGM_P const emotes[] PROGMEM = {  // pointers to the strings above, in the same 
     spin,
     sweaty,
     thanks,
+    thing,
     wook,
     wub,
     zejibo,
