@@ -11,7 +11,7 @@ https://www.aliexpress.us/item/3256803335473804.html
 
 Make example for this keyboard (after setting up your build environment and placing buppad folder in qmk_firmware/keyboards):
 
-    make buppad/buppad25:default
+    make buppad/25:default
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 

@@ -15,7 +15,7 @@
  */
 
  #pragma once
- #include "buppad25.h"
+ #include "25.h"
 
  enum custom_keycodes {
     BOP = FIRST_EMOTE, // Start Twitch Global Emotes
