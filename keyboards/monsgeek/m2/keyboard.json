@@ -161,8 +161,8 @@
         ],
         "max_brightness": 200,
         "val_steps": 20,
-        "sleep": true,
-        
+        "sleep": true
+
     },
     "usb": {
         "device_version": "1.0.4",
