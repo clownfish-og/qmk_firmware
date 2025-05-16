@@ -4,22 +4,31 @@
     "maintainer": "WIND STUDIO",
     "bootloader": "uf2boot",
     "build": {
-        "debounce_type": "sym_eager_pk"
+        "debounce_type": "sym_eager_pk",
+        "lto": true
     },
     "debounce": 15,
-    "development_board": "bluepill",
+    "processor": "STM32F103",
     "diode_direction": "COL2ROW",
     "eeprom": {
         "driver": "wear_leveling",
         "wear_leveling": {
-            "driver": "embedded_flash"
+            "driver": "embedded_flash",
+            "backing_size": 4096
+        }
+    },
+    "qmk": {
+        "locking": {
+            "enabled": true,
+            "resync": true
         }
     },
     "features": {
         "bootmagic": true,
         "extrakey": true,
         "mousekey": true,
-        "nkro": true
+        "nkro": true,
+        "rgb_matrix": true
     },
     "indicators": {
         "on_state": 0,
@@ -30,21 +39,54 @@
         "rows": ["B15", "B11", "B9", "A15", "B1", "B8", "B3"]
     },
     "rgb_matrix": {
-        "default": {
-            "val": 134
+        "animations": {
+            "alphas_mods": true,
+            "gradient_up_down": true,
+            "gradient_left_right": true,
+            "band_val": true,
+            "band_pinwheel_val": true,
+            "band_spiral_val": true,
+            "cycle_all": true,
+            "cycle_left_right": true,
+            "cycle_up_down": true,
+            "rainbow_moving_chevron": true,
+            "cycle_out_in": true,
+            "cycle_out_in_dual": true,
+            "cycle_pinwheel": true,
+            "cycle_spiral": true,
+            "dual_beacon": true,
+            "rainbow_beacon": true,
+            "rainbow_pinwheels": true,
+            "raindrops": true,
+            "jellybean_raindrops": true,
+            "hue_pendulum": true,
+            "hue_wave": true,
+            "typing_heatmap": true,
+            "pixel_rain": true,
+            "pixel_flow": true,
+            "pixel_fractal": true
         },
-        "driver": "ws2812"
+        "driver": "ws2812",
+        "layout": [
+        { "flags": 1, "matrix": [0, 0], "x": 0, "y": 0 },
+        { "flags": 4, "matrix": [0, 1], "x": 14, "y": 0 },
+        { "flags": 4, "matrix": [0, 2], "x": 28, "y": 0 }
+        ],
+        "sleep": true,
+        "default": {
+            "val": 134,
+            "animation": "cycle_left_right"
+        }
     },
     "url": "",
     "usb": {
         "device_version": "0.0.1",
-        "force_nkro": true,
         "pid": "0x2024",
-        "polling_interval": 1,
         "vid": "0x0523"
     },
     "ws2812": {
-        "pin": "A6"
+        "pin": "A6",
+        "driver": "pwm"
     },
     "layouts": {
         "LAYOUT": {
