@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later */
+
 #include "wired.h"
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
