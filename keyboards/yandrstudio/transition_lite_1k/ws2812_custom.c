@@ -361,5 +361,5 @@ void ws2812_rgblight_setleds(rgb_led_t* ledarray, uint16_t leds) {
 }
 
 const rgblight_driver_t rgblight_driver = {
-    .setleds = ws2812_rgblight_setleds,
+    .flush = ws2812_flush,
 };
