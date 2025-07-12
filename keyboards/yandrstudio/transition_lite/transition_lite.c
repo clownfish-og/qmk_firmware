@@ -5,20 +5,15 @@
 
 #ifdef RGB_MATRIX_ENABLE
 
-extern rgb_led_t rgb_matrix_ws2812_array[RGB_MATRIX_LED_COUNT];
-
-bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
-    if (!rgb_matrix_indicators_advanced_user(led_min, led_max)) {
-        return false;
+uint8_t rgb_matrix_map_row_column_to_led_kb(uint8_t row, uint8_t column, uint8_t *led_i) {
+    if ( row == 5 && column == 7) {
+        led_i[0] = 83;
+        led_i[1] = 84;
+        led_i[2] = 86;
+        led_i[3] = 87;
+        return 4;
     }
-    /* Synchronize all led colors under the space key */
-    for (uint8_t i = 83; i <= 87; i++) {
-        rgb_matrix_ws2812_array[i].r = rgb_matrix_ws2812_array[85].r;
-        rgb_matrix_ws2812_array[i].g = rgb_matrix_ws2812_array[85].g;
-        rgb_matrix_ws2812_array[i].b = rgb_matrix_ws2812_array[85].b;
-    }
-
-    return true;
+    return 0;
 }
 
 #endif
