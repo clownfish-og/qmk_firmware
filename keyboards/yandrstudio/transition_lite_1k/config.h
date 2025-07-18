@@ -17,17 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-// "vid": "0x534B" /** SK */
-// "pid": "0x5431" /** T1 */
-
-
-/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
-#define LOCKING_SUPPORT_ENABLE
-/* Locking resynchronize hack */
-#define LOCKING_RESYNC_ENABLE
-
-#define EEPROM_SIZE 4096
-
 #if 0
 // valid config.
 // /** A1 TIM2_CH2 */
@@ -47,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define WS2812_DMA_CHANNEL          2                   /** STM32_DMAx_STREAMy 对应y*/
 #endif
 
-// A1 TIM2_CH2
+// /* RGBLIGHT CONFIGS ----- A2 TIM2_CH3 */
 #define WS2812_RGBLIGHT_DI_PIN              A2
 // #define WS2812_RGBLIGHT_PWM_COMPLEMENTARY_OUTPUT                /** TIMx_CHyN   需要带N结尾*/
 #define WS2812_RGBLIGHT_PWM_DRIVER           PWMD2               /** TIMx        对应x*/
@@ -78,21 +67,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #   define RBG_INDEX_CAPS                  62  /** Caps 指示灯索引 **/
 #   define RBG_INDEX_SCROLL                14  /** Scorll 指示灯索引 **/
 #   define RBG_INDEX_FN                    80  /** FN   指示灯索引 **/
-// #   define RBG_INDEX_FN2                   80  /** FN2  指示灯索引 **/
 #endif
 
-/*
- * Feature disable options
- *  These options are also useful to firmware size reduction.
- */
-
- /* disable debug print */
- //#define NO_DEBUG
-
- /* disable print */
- //#define NO_PRINT
-
- /* disable action features */
- //#define NO_ACTION_LAYER
- //#define NO_ACTION_TAPPING
- //#define NO_ACTION_ONESHOT
