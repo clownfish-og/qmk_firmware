@@ -17,25 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#if 0
-// valid config.
-// /** A1 TIM2_CH2 */
-// #define WS2812_PWM_COMPLEMENTARY_OUTPUT                /** TIMx_CHyN   需要带N结尾*/
-#define WS2812_PWM_DRIVER           PWMD2               /** TIMx        对应x*/
-#define WS2812_PWM_CHANNEL          2                   /** TIMx_CHy    对应y */
-#define WS2812_PWM_PAL_MODE         2
-#define WS2812_DMA_STREAM           STM32_DMA1_STREAM2  /** TIMx_UP     对应x的UP，DMA数据表*/
-#define WS2812_DMA_CHANNEL          2                   /** STM32_DMAx_STREAMy 对应y*/
-
-// /** A2 TIM2_CH3 */
-// #define WS2812_PWM_COMPLEMENTARY_OUTPUT                /** TIMx_CHyN   需要带N结尾*/
-#define WS2812_PWM_DRIVER           PWMD2               /** TIMx        对应x*/
-#define WS2812_PWM_CHANNEL          3                   /** TIMx_CHy    对应y */
-#define WS2812_PWM_PAL_MODE         2
-#define WS2812_DMA_STREAM           STM32_DMA1_STREAM2  /** TIMx_UP     对应x的UP，DMA数据表*/
-#define WS2812_DMA_CHANNEL          2                   /** STM32_DMAx_STREAMy 对应y*/
-#endif
-
 // /* RGBLIGHT CONFIGS ----- A2 TIM2_CH3 */
 #define WS2812_RGBLIGHT_DI_PIN              A2
 // #define WS2812_RGBLIGHT_PWM_COMPLEMENTARY_OUTPUT                /** TIMx_CHyN   需要带N结尾*/
@@ -62,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define WS2812_DMA_CHANNEL          5                   /** STM32_DMAx_STREAMy 对应y*/
 
 #   define RGB_MATRIX_KEYPRESSES
-#   define RGB_MATRIX_DISABLE_KEYCODES
+#   define RGB_MATRIX_DISABLE_SHARED_KEYCODES
 
 #   define RBG_INDEX_CAPS                  62  /** Caps 指示灯索引 **/
 #   define RBG_INDEX_SCROLL                14  /** Scorll 指示灯索引 **/
