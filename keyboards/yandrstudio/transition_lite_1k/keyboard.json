@@ -29,7 +29,7 @@
   },
   "ws2812": {
     "pin": "B13",
-    "driver": "pwm"
+    "driver": "custom"
   },
   "rgblight": {
     "driver": "custom",

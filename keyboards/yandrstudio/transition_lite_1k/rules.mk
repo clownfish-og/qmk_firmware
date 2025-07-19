@@ -1,3 +1,1 @@
 MCU_LDSCRIPT 		= STM32F103xB
-
-SRC += ws2812_dual_pwm.c  # RGBLIGHT_ENABLE custom
