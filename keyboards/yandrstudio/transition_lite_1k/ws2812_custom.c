@@ -67,12 +67,48 @@ void ws2812_init(void) {
     for (i = 0; i < UNDERGLOW_RESET_BITS; i++)
         underglow_frame_buffer[i + UNDERGLOW_COLOR_BITS] = 0; // Reset bits are zero
 
-    // Configure pins using QMK pin abstraction
-    setPinOutput(B13);  // Will be reconfigured by PWM driver
-    setPinOutput(A2);   // Will be reconfigured by PWM driver
+    // Configure pins for PWM alternate functions
+    // B13 for TIM1_CH1N (complementary output) - RGB Matrix
+    palSetPadMode(GPIOB, 13, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+    // A2 for TIM2_CH3 - RGBLIGHT
+    palSetPadMode(GPIOA, 2, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
 
-    // TODO: Initialize PWM and DMA for both chains
-    // For now, just clear the LED buffer to get a working compilation
+    // PWM Configuration for Matrix LEDs (TIM1_CH1N on B13)
+    static const PWMConfig matrix_pwm_config = {
+        .frequency = WS2812_PWM_TICK_FREQUENCY,
+        .period    = WS2812_PWM_PERIOD,
+        .callback  = NULL,
+        .channels = {
+            [0] = {.mode = PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // CH1N for B13
+            [1] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+            [2] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+            [3] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
+        },
+        .cr2  = 0,
+        .dier = TIM_DIER_UDE, // DMA on update event
+    };
+
+    // PWM Configuration for Underglow LEDs (TIM2_CH3 on A2)
+    static const PWMConfig underglow_pwm_config = {
+        .frequency = WS2812_PWM_TICK_FREQUENCY,
+        .period    = WS2812_PWM_PERIOD,
+        .callback  = NULL,
+        .channels = {
+            [0] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+            [1] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+            [2] = {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // CH3 for A2
+            [3] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
+        },
+        .cr2  = 0,
+        .dier = TIM_DIER_UDE, // DMA on update event
+    };
+
+    // Start PWM drivers
+    pwmStart(&PWMD1, &matrix_pwm_config);
+    pwmStart(&PWMD2, &underglow_pwm_config);
+
+    // TODO: Configure DMA streams (requires DMA driver to be enabled)
+    // For now, use basic PWM without DMA to get the foundation working
 
     // Clear LED buffer
     for (int i = 0; i < 116; i++) {
@@ -131,9 +167,24 @@ void ws2812_flush(void) {
         write_underglow_led(i, ws2812_leds[led_index].r, ws2812_leds[led_index].g, ws2812_leds[led_index].b);
     }
 
-    // TODO: Trigger DMA transmission for both chains
-    // For now, just add a delay to simulate the transmission time
-    chThdSleepMicroseconds(50); // WS2812 reset time
+    // Manual PWM transmission for matrix LEDs (TIM1_CH1N on B13)
+    for (uint32_t bit = 0; bit < MATRIX_COLOR_BITS; bit++) {
+        pwmEnableChannel(&PWMD1, 0, matrix_frame_buffer[bit]);
+        // Small delay for bit timing - this is simplified, real implementation would use DMA
+        chThdSleepMicroseconds(1); // Approximate WS2812 bit time
+    }
+    pwmDisableChannel(&PWMD1, 0); // End transmission
+
+    // Manual PWM transmission for underglow LEDs (TIM2_CH3 on A2)
+    for (uint32_t bit = 0; bit < UNDERGLOW_COLOR_BITS; bit++) {
+        pwmEnableChannel(&PWMD2, 2, underglow_frame_buffer[bit]);
+        // Small delay for bit timing - this is simplified, real implementation would use DMA
+        chThdSleepMicroseconds(1); // Approximate WS2812 bit time
+    }
+    pwmDisableChannel(&PWMD2, 2); // End transmission
+
+    // WS2812 reset time
+    chThdSleepMicroseconds(WS2812_TRST_US);
 }
 
 // RGB light driver structure for RGBLIGHT subsystem
