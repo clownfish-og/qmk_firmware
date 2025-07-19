@@ -1,0 +1,37 @@
+ClownFish
+ — 7/15/2025 1:44 PM
+I feel this won't be a popular question, especially among those who may know the answer, but here goes:
+What are the major considerations / sticking points needed to run ws2812 with PWM on two pins for separate matrix and underglow LED chains wired to separate pins? I'm trying to get the transition lite 1k working and it has this unfortunate wiring configuration. it all works with the stock firmware, and it works with my own firmware with only matrix, but the custom driver in the initial PR won't compile with the recent driver changes, and the changes I made to attempt to update it will compile but the board is not detected on init. bootmagic still worked though, so something was on, just errors in device manager and no input (edit- cutting the trace and bodging the LEDs is my absolute last resort so please don't suggest it 😅 )
+
+Drashna Jael're
+ — 7/15/2025 5:32 PM
+it's much simpler on AVR, since there is basically only one driver, and it's bitbang.
+For the pwm driver, it's more complicated, since you'd need to set up two separate pwm drivers (I'm assuming), and configure them independently, and make sure they're not using the same DMA channels or conflicting with other hardware using DMA.
+Additionally, you'd need to change the defines and names to get it working (the work louder boards are an avr based instance of this, due to being designed well before firmware was even considered).
+also, the likelihood of that code being accepted upstream is probably 0%, on a good day.
+
+ClownFish
+ — 7/15/2025 5:48 PM
+heh, I would've assumed the opposite, that bitbang compatibility on AVR was the source of the difficulty, as it seems not possible to drive two pins simultaneously... while PWM on ARM can have multiple timers configured for different pins
+
+tzarc
+ — 7/15/2025 5:55 PM
+It’s not simultaneous
+The whole AVR implementation is bitbang and having two chains would mean two bitbang sequentially
+Same with the ARM bitbang driver, same with the ARM SPI driver, etc. etc.
+
+tzarc
+ — 7/15/2025 6:11 PM
+Though the ARM SPI driver has a circular mode that basically just continually sends but you’d tie up all the SPI pins just for the WS2812 chain, and if you wanted two you’re tying up two SPI peripherals and at least 7 pins
+
+ClownFish
+ — 7/15/2025 7:02 PM
+well, I'm hardware-bound at this point, I don't think spi would work. Its STM32F103xB_uf2boot with the keylight string on B13 and the underglow on A2
+the commits following that one are my attempts to update and fix it
+ngl there were a lot more attempts made locally, but those were the major ones I was at least somewhat confident in
+
+sigprof
+ — 7/16/2025 7:19 AM
+For STM32 chips which are better than Cortex-M0[+] it is possible to make another variant of the WS2812 PWM driver which can use any GPIO pin configurable at runtime (need to reconfigure DMA channels to point to the appropriate GPIO ports and modify the bit masks), but at the cost of using 3 DMA streams (all of which need to be triggered by the same timer). This won't work for Cortex-M0[+] based chips (F0/L0/G0), because on those chips the GPIO registers are on a dedicated bus which is not accessible from the DMA controllers.
+
+Not sure how to make a proper API for that though.
