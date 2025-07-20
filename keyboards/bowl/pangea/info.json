@@ -1,0 +1,28 @@
+{
+    "manufacturer": "bowlxgondo",
+    "maintainer": "Gondolindrim",
+    "bootloader": "stm32-dfu",
+    "build": {
+        "lto": true
+    },
+    "diode_direction": "COL2ROW",
+    "eeprom": {
+        "driver": "wear_leveling",
+        "wear_leveling": {
+            "backing_size": 4096,
+            "driver": "embedded_flash"
+        }
+    },
+    "features": {
+        "bootmagic": true,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true
+    },
+    "processor": "STM32F401",
+    "url": "",
+    "usb": {
+        "device_version": "0.0.1",
+        "vid": "0x4257"
+    }
+}
