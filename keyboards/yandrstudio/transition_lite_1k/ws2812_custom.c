@@ -1,196 +1,200 @@
-// Custom WS2812 driver for dual RGB subsystems
-// Matrix LEDs (RGB_MATRIX) on pin B13 using TIM1_CH1N, DMA1_STREAM5
-// Underglow LEDs (RGBLIGHT) on pin A2 using TIM2_CH3, DMA1_STREAM2
+/* Copyright 2024 JasonRen(biu)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+// Custom WS2812 driver for dual-pin LED control
+// RGB Matrix: 90 LEDs on pin B13 (TIM1_CH1N)
+// RGBLIGHT: 26 LEDs on pin A2 (TIM2_CH3)
 
 #include "ws2812.h"
 #include "rgblight/rgblight_drivers.h"
-#include "gpio.h"
-#include "chibios_config.h"
-#include "hal.h"
+#include "quantum.h"
+#include <string.h>
+#include <stdbool.h>
 
-// Configuration constants based on original WS2812 PWM driver
-#define WS2812_CHANNELS 3                   // RGB (no RGBW)
-#define WS2812_TIMING 1250                  // 1.25us period
-#define WS2812_T1H 900                      // High time for '1' bit
-#define WS2812_T0H 350                      // High time for '0' bit
-#define WS2812_TRST_US 280                  // Reset time
+// Use QMK's global WS2812 LED array for RGB matrix
+// Declare it ourselves since the platform driver isn't included
+ws2812_led_t ws2812_leds[WS2812_LED_COUNT];
 
-// Matrix LED configuration (90 LEDs on TIM1)
-#define MATRIX_LED_COUNT 90
-#define MATRIX_COLOR_BITS (MATRIX_LED_COUNT * WS2812_CHANNELS * 8)
-#define MATRIX_RESET_BITS (1000 * WS2812_TRST_US / WS2812_TIMING)
-#define MATRIX_TOTAL_BITS (MATRIX_COLOR_BITS + MATRIX_RESET_BITS)
+// LED counts
+#define MATRIX_LED_COUNT 90      // RGB matrix LEDs on B13
+#define UNDERGLOW_LED_COUNT 26   // RGBLIGHT LEDs on A2
 
-// Underglow LED configuration (26 LEDs on TIM2)
-#define UNDERGLOW_LED_COUNT 26
-#define UNDERGLOW_COLOR_BITS (UNDERGLOW_LED_COUNT * WS2812_CHANNELS * 8)
-#define UNDERGLOW_RESET_BITS (1000 * WS2812_TRST_US / WS2812_TIMING)
-#define UNDERGLOW_TOTAL_BITS (UNDERGLOW_COLOR_BITS + UNDERGLOW_RESET_BITS)
+// LED buffers for both chains
+static ws2812_led_t matrix_leds[MATRIX_LED_COUNT];
+static ws2812_led_t underglow_leds[UNDERGLOW_LED_COUNT];
 
-// PWM timing calculations (assuming 72MHz system clock)
-#define WS2812_PWM_TICK_FREQUENCY (72000000 / 2)        // 36MHz
-#define WS2812_PWM_PERIOD (WS2812_PWM_TICK_FREQUENCY / (1000000000 / WS2812_TIMING))  // Period for 800kHz
-#define WS2812_DUTYCYCLE_0 (WS2812_PWM_TICK_FREQUENCY / (1000000000 / WS2812_T0H))   // Duty cycle for '0'
-#define WS2812_DUTYCYCLE_1 (WS2812_PWM_TICK_FREQUENCY / (1000000000 / WS2812_T1H))   // Duty cycle for '1'
+// Simple state tracking
+static bool initialized = false;
+static bool matrix_needs_update = false;
+static bool underglow_needs_update = false;
 
-// Global LED buffer array (90 matrix + 26 underglow)
-ws2812_led_t ws2812_leds[116];
+// Simple WS2812 bit-bang implementation
+static void send_ws2812_bit(pin_t pin, bool bit_value) {
+    if (bit_value) {
+        // Send '1' bit: ~800ns high, ~450ns low
+        writePinHigh(pin);
+        wait_us(1);  // ~1us high (close to 800ns)
+        writePinLow(pin);
+        // No delay for 450ns - the next instruction provides enough delay
+    } else {
+        // Send '0' bit: ~400ns high, ~850ns low
+        writePinHigh(pin);
+        // Minimal delay for ~400ns
+        writePinLow(pin);
+        wait_us(1);   // ~1us low (close to 850ns)
+    }
+}
 
-// Frame buffers for PWM DMA
-static uint16_t matrix_frame_buffer[MATRIX_TOTAL_BITS];
-static uint16_t underglow_frame_buffer[UNDERGLOW_TOTAL_BITS];
+static void send_ws2812_byte(pin_t pin, uint8_t byte) {
+    // Send bits MSB first
+    for (int i = 7; i >= 0; i--) {
+        send_ws2812_bit(pin, (byte >> i) & 1);
+    }
+}
 
-// Matrix bit calculation macros (GRB order)
-#define MATRIX_BIT(led, byte, bit) (WS2812_CHANNELS * 8 * (led) + 8 * (byte) + (7 - (bit)))
-#define MATRIX_GREEN_BIT(led, bit) MATRIX_BIT((led), 0, (bit))
-#define MATRIX_RED_BIT(led, bit)   MATRIX_BIT((led), 1, (bit))
-#define MATRIX_BLUE_BIT(led, bit)  MATRIX_BIT((led), 2, (bit))
+static void send_ws2812_led(pin_t pin, uint8_t r, uint8_t g, uint8_t b) {
+    // WS2812 expects GRB order
+    send_ws2812_byte(pin, g);
+    send_ws2812_byte(pin, r);
+    send_ws2812_byte(pin, b);
+}
 
-// Underglow bit calculation macros (GRB order)
-#define UNDERGLOW_BIT(led, byte, bit) (WS2812_CHANNELS * 8 * (led) + 8 * (byte) + (7 - (bit)))
-#define UNDERGLOW_GREEN_BIT(led, bit) UNDERGLOW_BIT((led), 0, (bit))
-#define UNDERGLOW_RED_BIT(led, bit)   UNDERGLOW_BIT((led), 1, (bit))
-#define UNDERGLOW_BLUE_BIT(led, bit)  UNDERGLOW_BIT((led), 2, (bit))
+static void send_ws2812_reset(pin_t pin) {
+    // Send reset signal: >280us low
+    writePinLow(pin);
+    wait_us(300);
+}
 
-// Initialization function for WS2812 driver
+// Initialize WS2812 driver - called by both RGB matrix and RGBLIGHT
 void ws2812_init(void) {
-    // Initialize matrix frame buffer (TIM1)
-    uint32_t i;
-    for (i = 0; i < MATRIX_COLOR_BITS; i++)
-        matrix_frame_buffer[i] = WS2812_DUTYCYCLE_0;    // All color bits start as '0'
-    for (i = 0; i < MATRIX_RESET_BITS; i++)
-        matrix_frame_buffer[i + MATRIX_COLOR_BITS] = 0; // Reset bits are zero
+    if (initialized) return;
 
-    // Initialize underglow frame buffer (TIM2)
-    for (i = 0; i < UNDERGLOW_COLOR_BITS; i++)
-        underglow_frame_buffer[i] = WS2812_DUTYCYCLE_0;    // All color bits start as '0'
-    for (i = 0; i < UNDERGLOW_RESET_BITS; i++)
-        underglow_frame_buffer[i + UNDERGLOW_COLOR_BITS] = 0; // Reset bits are zero
+    // Clear LED buffers
+    memset(matrix_leds, 0, sizeof(matrix_leds));
+    memset(underglow_leds, 0, sizeof(underglow_leds));
+    memset(ws2812_leds, 0, sizeof(ws2812_leds));
 
-    // Configure pins for PWM alternate functions
-    // B13 for TIM1_CH1N (complementary output) - RGB Matrix
-    palSetPadMode(GPIOB, 13, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
-    // A2 for TIM2_CH3 - RGBLIGHT
-    palSetPadMode(GPIOA, 2, PAL_MODE_STM32_ALTERNATE_PUSHPULL);
+    // Configure pins as outputs
+    setPinOutput(B13);
+    setPinOutput(A2);
 
-    // PWM Configuration for Matrix LEDs (TIM1_CH1N on B13)
-    static const PWMConfig matrix_pwm_config = {
-        .frequency = WS2812_PWM_TICK_FREQUENCY,
-        .period    = WS2812_PWM_PERIOD,
-        .callback  = NULL,
-        .channels = {
-            [0] = {.mode = PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // CH1N for B13
-            [1] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-            [2] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-            [3] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
-        },
-        .cr2  = 0,
-        .dier = TIM_DIER_UDE, // DMA on update event
-    };
+    // Send initial reset
+    send_ws2812_reset(B13);
+    send_ws2812_reset(A2);
 
-    // PWM Configuration for Underglow LEDs (TIM2_CH3 on A2)
-    static const PWMConfig underglow_pwm_config = {
-        .frequency = WS2812_PWM_TICK_FREQUENCY,
-        .period    = WS2812_PWM_PERIOD,
-        .callback  = NULL,
-        .channels = {
-            [0] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-            [1] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-            [2] = {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // CH3 for A2
-            [3] = {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
-        },
-        .cr2  = 0,
-        .dier = TIM_DIER_UDE, // DMA on update event
-    };
-
-    // Start PWM drivers
-    pwmStart(&PWMD1, &matrix_pwm_config);
-    pwmStart(&PWMD2, &underglow_pwm_config);
-
-    // TODO: Configure DMA streams (requires DMA driver to be enabled)
-    // For now, use basic PWM without DMA to get the foundation working
-
-    // Clear LED buffer
-    for (int i = 0; i < 116; i++) {
-        ws2812_leds[i].r = 0;
-        ws2812_leds[i].g = 0;
-        ws2812_leds[i].b = 0;
-    }
+    initialized = true;
 }
 
-// Set color for a specific LED
+// Set color for a single LED - used by RGB matrix
 void ws2812_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
-    if (index >= 0 && index < 116) {
-        ws2812_leds[index].r = red;
-        ws2812_leds[index].g = green;
-        ws2812_leds[index].b = blue;
+    if (index >= 0 && index < MATRIX_LED_COUNT) {
+        matrix_leds[index].r = red;
+        matrix_leds[index].g = green;
+        matrix_leds[index].b = blue;
+        matrix_needs_update = true;
+
+        // Also update the global QMK WS2812 array used by the platform driver
+        if (index < WS2812_LED_COUNT) {
+            ws2812_leds[index].r = red;
+            ws2812_leds[index].g = green;
+            ws2812_leds[index].b = blue;
+        }
     }
 }
 
-// Set all LEDs to the same color
+// Set all LEDs to same color - used by RGB matrix
 void ws2812_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
-    for (int i = 0; i < 116; i++) {
-        ws2812_set_color(i, red, green, blue);
+    for (int i = 0; i < MATRIX_LED_COUNT; i++) {
+        matrix_leds[i].r = red;
+        matrix_leds[i].g = green;
+        matrix_leds[i].b = blue;
+
+        // Also update the global QMK WS2812 array
+        if (i < WS2812_LED_COUNT) {
+            ws2812_leds[i].r = red;
+            ws2812_leds[i].g = green;
+            ws2812_leds[i].b = blue;
+        }
     }
+    matrix_needs_update = true;
 }
 
-// Helper function to write LED data to matrix frame buffer
-static void write_matrix_led(uint16_t led_number, uint8_t r, uint8_t g, uint8_t b) {
-    // Write color to matrix frame buffer (GRB order)
-    for (uint8_t bit = 0; bit < 8; bit++) {
-        matrix_frame_buffer[MATRIX_GREEN_BIT(led_number, bit)] = ((g >> bit) & 0x01) ? WS2812_DUTYCYCLE_1 : WS2812_DUTYCYCLE_0;
-        matrix_frame_buffer[MATRIX_RED_BIT(led_number, bit)]   = ((r >> bit) & 0x01) ? WS2812_DUTYCYCLE_1 : WS2812_DUTYCYCLE_0;
-        matrix_frame_buffer[MATRIX_BLUE_BIT(led_number, bit)]  = ((b >> bit) & 0x01) ? WS2812_DUTYCYCLE_1 : WS2812_DUTYCYCLE_0;
-    }
-}
-
-// Helper function to write LED data to underglow frame buffer
-static void write_underglow_led(uint16_t led_number, uint8_t r, uint8_t g, uint8_t b) {
-    // Write color to underglow frame buffer (GRB order)
-    for (uint8_t bit = 0; bit < 8; bit++) {
-        underglow_frame_buffer[UNDERGLOW_GREEN_BIT(led_number, bit)] = ((g >> bit) & 0x01) ? WS2812_DUTYCYCLE_1 : WS2812_DUTYCYCLE_0;
-        underglow_frame_buffer[UNDERGLOW_RED_BIT(led_number, bit)]   = ((r >> bit) & 0x01) ? WS2812_DUTYCYCLE_1 : WS2812_DUTYCYCLE_0;
-        underglow_frame_buffer[UNDERGLOW_BLUE_BIT(led_number, bit)]  = ((b >> bit) & 0x01) ? WS2812_DUTYCYCLE_1 : WS2812_DUTYCYCLE_0;
-    }
-}
-
-// Flush LED data to both chains
+// Flush RGB matrix LEDs to hardware - used by RGB matrix
 void ws2812_flush(void) {
-    // Process matrix LEDs (indices 0-89) -> pin B13 via TIM1_CH1N
-    for (int i = 0; i < MATRIX_LED_COUNT && i < 116; i++) {
-        write_matrix_led(i, ws2812_leds[i].r, ws2812_leds[i].g, ws2812_leds[i].b);
-    }
+    if (!matrix_needs_update) return;
 
-    // Process underglow LEDs (indices 90-115) -> pin A2 via TIM2_CH3
-    for (int i = 0; i < UNDERGLOW_LED_COUNT && (i + MATRIX_LED_COUNT) < 116; i++) {
-        int led_index = i + MATRIX_LED_COUNT;  // Offset by matrix LED count (90)
-        write_underglow_led(i, ws2812_leds[led_index].r, ws2812_leds[led_index].g, ws2812_leds[led_index].b);
+    // Send all matrix LEDs via proper WS2812 protocol on pin B13
+    // Disable interrupts for precise timing
+    __disable_irq();
+    for (int i = 0; i < MATRIX_LED_COUNT; i++) {
+        send_ws2812_led(B13, matrix_leds[i].r, matrix_leds[i].g, matrix_leds[i].b);
     }
+    send_ws2812_reset(B13); // Send reset to latch the data
+    __enable_irq(); // Re-enable interrupts
 
-    // Manual PWM transmission for matrix LEDs (TIM1_CH1N on B13)
-    for (uint32_t bit = 0; bit < MATRIX_COLOR_BITS; bit++) {
-        pwmEnableChannel(&PWMD1, 0, matrix_frame_buffer[bit]);
-        // Small delay for bit timing - this is simplified, real implementation would use DMA
-        chThdSleepMicroseconds(1); // Approximate WS2812 bit time
-    }
-    pwmDisableChannel(&PWMD1, 0); // End transmission
-
-    // Manual PWM transmission for underglow LEDs (TIM2_CH3 on A2)
-    for (uint32_t bit = 0; bit < UNDERGLOW_COLOR_BITS; bit++) {
-        pwmEnableChannel(&PWMD2, 2, underglow_frame_buffer[bit]);
-        // Small delay for bit timing - this is simplified, real implementation would use DMA
-        chThdSleepMicroseconds(1); // Approximate WS2812 bit time
-    }
-    pwmDisableChannel(&PWMD2, 2); // End transmission
-
-    // WS2812 reset time
-    chThdSleepMicroseconds(WS2812_TRST_US);
+    matrix_needs_update = false;
 }
 
-// RGB light driver structure for RGBLIGHT subsystem
+// RGBLIGHT driver functions
+
+// Initialize custom RGBLIGHT driver
+static void init_custom(void) {
+    ws2812_init(); // Ensure WS2812 is initialized
+}
+
+// Set individual RGBLIGHT LED color
+static void set_color_custom(int index, uint8_t red, uint8_t green, uint8_t blue) {
+    if (index >= 0 && index < UNDERGLOW_LED_COUNT) {
+        underglow_leds[index].r = red;
+        underglow_leds[index].g = green;
+        underglow_leds[index].b = blue;
+        underglow_needs_update = true;
+    }
+}
+
+// Set all RGBLIGHT LEDs to same color
+static void set_color_all_custom(uint8_t red, uint8_t green, uint8_t blue) {
+    for (int i = 0; i < UNDERGLOW_LED_COUNT; i++) {
+        underglow_leds[i].r = red;
+        underglow_leds[i].g = green;
+        underglow_leds[i].b = blue;
+    }
+    underglow_needs_update = true;
+}
+
+// Flush RGBLIGHT LEDs to hardware
+static void flush_custom(void) {
+    if (!underglow_needs_update) return;
+
+    // Send all underglow LEDs via proper WS2812 protocol on pin A2
+    // Disable interrupts for precise timing
+    __disable_irq();
+    for (int i = 0; i < UNDERGLOW_LED_COUNT; i++) {
+        send_ws2812_led(A2, underglow_leds[i].r, underglow_leds[i].g, underglow_leds[i].b);
+    }
+    send_ws2812_reset(A2); // Send reset to latch the data
+    __enable_irq(); // Re-enable interrupts
+
+    underglow_needs_update = false;
+}
+
+// RGBLIGHT driver structure for underglow LEDs
 const rgblight_driver_t rgblight_driver = {
-    .init          = ws2812_init,
-    .set_color     = ws2812_set_color,
-    .set_color_all = ws2812_set_color_all,
-    .flush         = ws2812_flush,
+    .init          = init_custom,
+    .set_color     = set_color_custom,
+    .set_color_all = set_color_all_custom,
+    .flush         = flush_custom,
 };
