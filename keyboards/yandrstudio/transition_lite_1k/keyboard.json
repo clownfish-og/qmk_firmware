@@ -28,8 +28,7 @@
     "rows": ["B9", "B8", "C13", "B12", "B11", "B10"]
   },
   "ws2812": {
-    "pin": "B13",
-    "driver": "custom"
+    "pin": "B13"
   },
   "rgblight": {
     "pin": "A2",
