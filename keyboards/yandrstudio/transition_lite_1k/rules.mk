@@ -1,3 +1,4 @@
-MCU_LDSCRIPT 		= STM32F103xB_uf2boot
+MCU_LDSCRIPT = STM32F103xB
 
-SRC += ws2812_custom.c  # RGBLIGHT_ENABLE custom
+# Custom rgblight driver for dual-pin setup
+SRC += ws2812_rgblight.c
