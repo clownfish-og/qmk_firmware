@@ -1,19 +1,6 @@
-/*
-Copyright 2012,2013 Jun Wako <wakojun@gmail.com>
+// Copyright 2025 ClownFish (@clownfish-og)
+// SPDX-License-Identifier: GPL-2.0-or-later
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #include QMK_KEYBOARD_H
 
 enum layer_names {
@@ -22,24 +9,8 @@ enum layer_names {
     _FUN,
 };
 
-/* ANSI layout
-    * ,---.,---------------.,---------------.,---------------.,---. ,-----------.
-    * |Esc||  1|  2|  3|  4||  5|  6|  7|  8||  9|  0|  -|  =||Bsp| |Ins|Hom|PgU|
-    * `---'`---------------'`---------------'`---------------'`---' `-----------'
-    * ,-----------------------------------------------------------. ,-----------.
-    * |Tab  |  Q|  W|  E|  R|  T|  Y|  U|  I|  O|  P|  [|  ]|  \  | |Del|End|PgD|
-    * |-----------------------------------------------------------| `-----------'
-    * |CapsL |  A|  S|  D|  F|  G|  H|  J|  K|  L|  ;|  '|  Return|
-    * |-----------------------------------------------------------|     ,---.
-    * |Shift   |  Z|  X|  C|  V|  B|  N|  M|  ,|  .|  /|Shift     |     |Up |
-    * |-----------------------------------------------------------| ,-----------.
-    * |Ctl|Gui|Alt|             Space                |Alt|FN|Ctl| | |Lef|Dow|Rig|
-    * `-----------------------------------------------------------' `-----------'
-    */
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_tkl_ansi(
-        // 1     2        3        4        5        6        7        8        9        10       11       12       13       14         15       16       17
         KC_ESC,           KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,    KC_PSCR, KC_SCRL, KC_PAUS,
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,   KC_INS,  KC_HOME, KC_PGUP,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,   KC_DEL,  KC_END,  KC_PGDN,
@@ -48,21 +19,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LGUI, KC_LALT,                            LT(_FN, KC_SPC),                    KC_RALT, KC_RGUI, MO(_FN), KC_RCTL,   KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [_FN] = LAYOUT_tkl_ansi(
-        // 1     2        3        4        5        6        7        8        9        10       11       12        13      14         15       16       17
-        KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, UG_TOGG, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   UG_HUEU, UG_SATU, UG_SPDU,
-        RM_TOGG, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   UG_HUED, UG_SATD, UG_SPDD,
-        RM_NEXT, RM_VALU, RM_HUEU, RM_SATU, RM_SPDU, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS,
-        RM_PREV, RM_VALD, RM_HUED, RM_SATD, RM_SPDD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                   KC_TRNS,            UG_VALU,
-        KC_TRNS, KC_TRNS, KC_TRNS,                            KC_TRNS,                            KC_TRNS, MO(_FUN),KC_TRNS, KC_TRNS,   UG_PREV,UG_VALD, UG_NEXT
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, UG_TOGG, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   UG_HUEU, UG_SATU, UG_SPDU,
+        RM_TOGG, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   UG_HUED, UG_SATD, UG_SPDD,
+        RM_NEXT, RM_VALU, RM_HUEU, RM_SATU, RM_SPDU, _______, _______, _______, _______, _______, _______, _______,          _______,
+        RM_PREV, RM_VALD, RM_HUED, RM_SATD, RM_SPDD, _______, _______, _______, _______, _______, _______,                   _______,            UG_VALU,
+        _______, _______, _______,                            _______,                            _______, MO(_FUN),_______, _______,   UG_PREV,UG_VALD, UG_NEXT
     ),
     [_FUN] = LAYOUT_tkl_ansi(
-        // 1     2        3        4        5        6        7        8        9        10       11       12        13      14         15       16       17
-        KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, EE_CLR,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                   KC_TRNS,            KC_TRNS,
-        QK_BOOT, KC_TRNS, KC_TRNS,                            KC_TRNS,                            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, EE_CLR,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______,            _______,
+        QK_BOOT, _______, _______,                            _______,                            _______, _______, _______, _______,   _______, _______, _______
     )
 };

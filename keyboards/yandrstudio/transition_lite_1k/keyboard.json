@@ -1,7 +1,7 @@
 {
   "keyboard_name": "Transition lite 1k",
   "manufacturer": "Swagkeys",
-  "maintainer": "Tab",
+  "maintainer": "ClownFish",
   "url": "https://swagkeys.com/",
   "processor": "STM32F103",
   "bootloader": "uf2boot",
@@ -58,12 +58,7 @@
     "driver": "ws2812",
     "max_brightness": 240,
     "sleep": true,
-    "default": {
-        "animation":"rainbow_moving_chevron",
-        "val": 160
-    },
     "animations": {
-        "solid_color": true,
         "alphas_mods": true,
         "gradient_up_down": true,
         "gradient_left_right": true,

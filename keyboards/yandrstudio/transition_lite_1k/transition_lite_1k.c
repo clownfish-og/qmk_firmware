@@ -1,4 +1,4 @@
-// Copyright 2024 Y&R-Biu (@jiaxin96)
+// Copyright 2025 ClownFish (@clownfish-og)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "quantum.h"
