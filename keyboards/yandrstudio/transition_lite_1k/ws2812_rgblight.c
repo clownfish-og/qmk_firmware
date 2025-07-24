@@ -3,15 +3,13 @@
 
 // RGBLIGHT WS2812 PWM driver for pin A2 (TIM2_CH3)
 // DMA-based PWM implementation for dual RGB setup
+// STM32F103 specific configuration
 
 #include "rgblight/rgblight_drivers.h"
 #include "hal.h"
 #include "ws2812.h"
 #include "chibios_config.h"
 #include "gpio.h"
-
-// STM32F103 specific configuration (no portability needed)
-#define RGBLIGHT_OUTPUT_MODE PAL_MODE_ALTERNATE_PUSHPULL
 
 // Calculate PWM frequency, tick frequency and period
 #define RGBLIGHT_PWM_FREQUENCY (1000000000 / WS2812_TIMING)
