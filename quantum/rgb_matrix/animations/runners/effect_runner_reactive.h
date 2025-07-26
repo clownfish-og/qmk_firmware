@@ -19,7 +19,7 @@ bool effect_runner_reactive(effect_params_t* params, reactive_f effect_func) {
             }
         }
 
-        uint16_t offset = scale16by8(tick, qadd8(rgb_matrix_config.speed, 1));
+        uint16_t offset = scale16by8(max_tick - tick, qadd8(rgb_matrix_config.speed, 1));
         rgb_t    rgb    = rgb_matrix_hsv_to_rgb(effect_func(rgb_matrix_config.hsv, offset));
         rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
     }

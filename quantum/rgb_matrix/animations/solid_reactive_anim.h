@@ -7,7 +7,7 @@ static hsv_t SOLID_REACTIVE_math(hsv_t hsv, uint16_t offset) {
 #            ifdef RGB_MATRIX_SOLID_REACTIVE_GRADIENT_MODE
     hsv.h = scale16by8(g_rgb_timer, qadd8(rgb_matrix_config.speed, 8) >> 4);
 #            endif
-    hsv.h += scale8(255 - offset, 64);
+    hsv.h += scale8(offset, 64);
     return hsv;
 }
 
