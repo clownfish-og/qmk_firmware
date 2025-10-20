@@ -16,12 +16,25 @@
 
 #include "quantum.h"
 
-bool led_update_kb(led_t led_state) {
-    bool res = led_update_user(led_state);
-    if(res) {
-        led_state.caps_lock ? rgblight_setrgb_at(RGB_WHITE, 0) : rgblight_setrgb_at(RGB_OFF, 0);
-        led_state.caps_lock ? rgblight_setrgb_at(RGB_WHITE, 1) : rgblight_setrgb_at(RGB_OFF, 1); 
-        led_state.num_lock  ? rgblight_setrgb_at(RGB_WHITE, 2) : rgblight_setrgb_at(RGB_OFF, 2); 
+void keyboard_post_init_kb(void) {
+    rgblight_setrgb(RGB_BLACK);
+    keyboard_post_init_user();
+}
+
+void housekeeping_task_kb(void) {
+    if (host_keyboard_led_state().caps_lock){
+        rgblight_sethsv_at(rgblight_get_hue(), rgblight_get_sat(), rgblight_get_val(), 0);
+        rgblight_sethsv_at(rgblight_get_hue(), rgblight_get_sat(), rgblight_get_val(), 1);
     }
-    return res;
+    else {
+        rgblight_sethsv_at(RGB_BLACK, 0);
+        rgblight_sethsv_at(RGB_BLACK, 1);
+    }
+    if (host_keyboard_led_state().num_lock) {
+        rgblight_sethsv_at(rgblight_get_hue(), rgblight_get_sat(), rgblight_get_val(), 2);
+    }
+    else {
+        rgblight_sethsv_at(RGB_BLACK, 2);
+    }
+    housekeeping_task_user();
 }

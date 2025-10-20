@@ -10,7 +10,10 @@
     "rgblight": {
         "brightness_steps": 20,
         "led_count": 3,
-        "sleep": true
+        "sleep": true,
+        "default": {
+            "hue": 80
+        }
     },
     "usb": {
         "pid": "0x5054"
