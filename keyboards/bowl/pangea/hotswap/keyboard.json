@@ -8,11 +8,12 @@
         "rows": ["B5", "C11", "C12", "D2", "B3", "B4"]
     },
     "rgblight": {
-        "brightness_steps": 20,
+        "brightness_steps": 12,
+        "hue_steps": 4,
         "led_count": 3,
         "sleep": true,
         "default": {
-            "hue": 80
+            "hue": 169
         }
     },
     "usb": {
