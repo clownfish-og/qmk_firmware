@@ -10,6 +10,9 @@
     "rgb_matrix": {
         "brightness_steps": 12,
         "hue_steps": 4,
+        "animations": {
+            "breathing": true
+        },
         "sleep": true,
         "default": {
             "hue": 169

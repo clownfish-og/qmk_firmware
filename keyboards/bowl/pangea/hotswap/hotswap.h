@@ -16,5 +16,6 @@
 
 #include "quantum.h"
 enum custom_keycodes {
-    CAPS_LT = QK_KB_0
+    CAPS_LT = QK_KB_0,
+    UG_BREATH
 };

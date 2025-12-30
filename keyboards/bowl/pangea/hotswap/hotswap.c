@@ -16,6 +16,7 @@
 
 #include "quantum.h"
 #include "hotswap.h"
+#include "lib/lib8tion/lib8tion.h"
 
 // Track which LED to use for caps lock (false = LED 0, true = LED 1)
 static bool caps_led_toggle = false;
@@ -28,6 +29,17 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         case CAPS_LT:
             if (record->event.pressed) {
                 caps_led_toggle = !caps_led_toggle;
+            }
+            return false;
+        case UG_BREATH:
+            if (record->event.pressed) {
+                // Toggle between solid (mode 1) and breathing (mode 2)
+                uint8_t current_mode = rgb_matrix_get_mode();
+                if (current_mode == 2) {
+                    rgb_matrix_mode(1); // Switch to solid
+                } else {
+                    rgb_matrix_mode(2); // Switch to breathing
+                }
             }
             return false;
     }
@@ -45,14 +57,33 @@ bool rgb_matrix_indicators_kb(void) {
     }
 
     hsv_t hsv = {rgb_matrix_get_hue(), rgb_matrix_get_sat(), rgb_matrix_get_val()};
-    rgb_t rgb = hsv_to_rgb(hsv);
+
+    // Check if breathing mode is active (mode 1)
+    bool breathing_active = (rgb_matrix_get_mode() == 2);
+    uint8_t time = 0;
+
+    if (breathing_active) {
+        // Breathing effect parameters (only calculate if needed)
+        time = scale16by8(g_rgb_timer, qadd8(rgb_matrix_get_speed() / 4, 1));
+    }
 
     // Handle caps lock indication on LED 0 or 1 based on toggle state
     uint8_t caps_led = caps_led_toggle ? 1 : 0;
     uint8_t other_led = caps_led_toggle ? 0 : 1;
 
     if (host_keyboard_led_state().caps_lock) {
-        rgb_matrix_set_color(caps_led, rgb.r, rgb.g, rgb.b);
+        if (breathing_active) {
+            // Apply breathing effect to caps lock LED
+            hsv_t breathing_hsv = hsv;
+            breathing_hsv.v = scale8(abs8(sin8(time) - 128) * 2, hsv.v);
+            rgb_t breathing_rgb = hsv_to_rgb(breathing_hsv);
+
+            rgb_matrix_set_color(caps_led, breathing_rgb.r, breathing_rgb.g, breathing_rgb.b);
+        } else {
+            // Solid color for caps lock LED
+            rgb_t rgb = hsv_to_rgb(hsv);
+            rgb_matrix_set_color(caps_led, rgb.r, rgb.g, rgb.b);
+        }
         rgb_matrix_set_color(other_led, RGB_BLACK);
     } else {
         rgb_matrix_set_color(0, RGB_BLACK);
@@ -61,7 +92,18 @@ bool rgb_matrix_indicators_kb(void) {
 
     // Handle num lock indication on LED 2
     if (host_keyboard_led_state().num_lock) {
-        rgb_matrix_set_color(2, rgb.r, rgb.g, rgb.b);
+        if (breathing_active) {
+            // Apply breathing effect to num lock LED
+            hsv_t breathing_hsv = hsv;
+            breathing_hsv.v = scale8(abs8(sin8(time) - 128) * 2, hsv.v);
+            rgb_t breathing_rgb = hsv_to_rgb(breathing_hsv);
+
+            rgb_matrix_set_color(2, breathing_rgb.r, breathing_rgb.g, breathing_rgb.b);
+        } else {
+            // Solid color for num lock LED
+            rgb_t rgb = hsv_to_rgb(hsv);
+            rgb_matrix_set_color(2, rgb.r, rgb.g, rgb.b);
+        }
     } else {
         rgb_matrix_set_color(2, RGB_BLACK);
     }
